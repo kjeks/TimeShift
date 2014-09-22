@@ -7,12 +7,7 @@ $(function() {
   Parse.initialize("6fr8ox9aLNZPnTF0kC0wVmbDusiQUmEen0jZzP39",
                    "PPAkV30D2UkOBHT62KNzA50gnZ2aLqW0WgojLF0M");
 
-  // This is the transient application state, not persisted on Parse
-  var AppState = Parse.Object.extend("AppState", {
-    defaults: {
-      filter: "all"
-    }
-  });
+
   
   var menuView = Parse.View.extend({
 	 events: {
@@ -28,6 +23,8 @@ $(function() {
 	 },
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
+		new quizView();
+		this.undelegateEvents();
 	 },
 	 logOut: function(){
 		 Parse.User.logOut();
@@ -42,15 +39,46 @@ $(function() {
 	 },
 	 
   });
+  var quizView = Parse.View.extend({
+	  events: {
+		"click #answer": "answer",
+		"click .toMenu": "toMenu" 
+	  },
+	  el: ".content",
+	  
+	  initialize: function (){
+		  this.render();
+	  },
+	  answer: function(){
+		  console.log("answer clicked");
+	  },
+	  toMenu: function(){
+		 console.log("toMenu");
+		 new menuView();
+		 this.undelegateEvents();		  
+	  },
+	  render: function(){
+		this.$el.html(_.template($("#quiz-template").html()));
+		this.delegateEvents(); 
+	  }
+  	  
+  	
+  });
   var anotherTestView = Parse.View.extend({
 	 events: {
 		 "click #getEmail": "getEmail",
-		 "click #writeTo": "writeTo"
+		 "click #writeTo": "writeTo",
+		 "click #toMenuButton": "toMenu"
 	 },
 	 el: ".content",
 	 
 	 initialize: function(){
 		 this.render();
+	 },
+	 toMenu: function(){
+		 console.log("toMenu");
+		 new menuView();
+		 this.undelegateEvents();
 	 },
 	 writeTo: function(){
 		 console.log("writeto");
@@ -61,7 +89,7 @@ $(function() {
 		 question.save(null, {
 			  success: function(question) {
 			    // Execute any logic that should take place after the object is saved.
-			    alert(question.get("text"));
+			    alert("it worked");
 			  },
 			  error: function(question, error) {
 			    // Execute any logic that should take place if the save fails.
@@ -110,7 +138,6 @@ $(function() {
 	 },
 	 toAnother: function(){
 		 new anotherTestView();
-		 new LoginView();
 		 this.undelegateEvents();
 	 },
 	 logOut: function(){
@@ -223,7 +250,6 @@ $(function() {
     }
   });
 
-  var state = new AppState;
 
   new AppRouter;
   new AppView;
