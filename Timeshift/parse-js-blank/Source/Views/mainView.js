@@ -13,25 +13,84 @@ $(function() {
       filter: "all"
     }
   });
-  var anotherTestView = Parse.View.extend({
+  
+  var menuView = Parse.View.extend({
 	 events: {
-		 "click #backButton": "test"
-			 
+		 "click #startGameButton": "startGame",
+		 "click #logOutButton": "logOut"
+		 
+	 },
+	 el: ".content",
+	 
+	 initialize: function(){
+		 this.render();
+		 
+	 },
+	 startGame: function(){
+		console.log("TODO: add gameView"); 
+	 },
+	 logOut: function(){
+		 Parse.User.logOut();
+		 new LogInView();
+	     this.undelegateEvents();
+	     delete this; 
 	 },
 	 
+	 render: function(){
+		 this.$el.html(_.template($("#menu-template").html()));
+		 this.delegateEvents();
+	 },
+	 
+  });
+  var anotherTestView = Parse.View.extend({
+	 events: {
+		 "click #getEmail": "getEmail",
+		 "click #writeTo": "writeTo"
+	 },
 	 el: ".content",
 	 
 	 initialize: function(){
 		 this.render();
 	 },
-	 test: function(){
-		 console.log("test done");
+	 writeTo: function(){
+		 console.log("writeto");
+		 var Question = Parse.Object.extend("Question");
+		 var question = new Question();
+		 question.addUnique("answers", "a");
+		 question.addUnique("answers", "b");
+		 question.save(null, {
+			  success: function(question) {
+			    // Execute any logic that should take place after the object is saved.
+			    alert(question.get("text"));
+			  },
+			  error: function(question, error) {
+			    // Execute any logic that should take place if the save fails.
+			    // error is a Parse.Error with an error code and message.
+			    alert('Failed to create new object, with error code: ' + error.message);
+			  }
+			});
+	 },
+	 getEmail: function(){
+		 console.log("getEmail");
+		 var user = Parse.Object.extend("User");
+		 var query = new Parse.Query(user);
+		 query.equalTo("username", "kjeks");
+		 query.first({
+			 success: function(results){
+				 console.log(results.get("email"));
+			 },
+		 error: function(error){
+			 console.log("error");
+		 }
+		 });
 	 },
 	 
 	 render: function(){
 		 this.$el.html(_.template($("#anotherTest-template").html()));
 		 this.delegateEvents();
-	 }
+	 },
+	 
+
   });
   var TestView = Parse.View.extend({
 	  events: {
