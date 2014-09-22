@@ -16,10 +16,9 @@
   </head>
 
   <body>
-
     <!-- Todo App Interface -->
 
-    <div id="todoapp">
+    <div id="timeshift">
       <div class="title">
         <h1>Timeshift</h1>
       </div>
@@ -28,58 +27,35 @@
       </div>
     </div>
     
-    <!--  dette skal inn i anotherTest-template -->
-    
-    
-	
-	<!-- end av det som skal inn i anotherTest-template -->
-
-    <!-- Templates -->
-
-    <script type="text/template" id="test-template">
-<h2 id="logoutButton">click me to log out</h2>
-
-<p id="toAnother">click me to go to a different view</p>
-
-<ul>
-	<li>Create <strong>bold</strong> or <em>italic</em> text.</li>
-	<li>Change the <span style="color:#800000;">text color</span></li>
-	<li><img alt="" src="http://eofdreams.com/data_images/dreams/smile/smile-06.jpg" style="line-height: 20.7999992370605px; width: 100px; height: 100px; float: right;" />Change the <span style="font-family:comic sans ms,cursive;">font family</span> or <span style="font-size:12px;">font size</span></li>
-	<li>Create <a href="http://www.html.am/html-codes/links/">hyperlinks</a></li>
-	<li>Create a bulleted list...</li>
-	<li>...and much more!</li>
-</ul>
-
-<p>To view the source code, click on the &quot;Source&quot; button above (on the left).</p>
-
-<p>&nbsp;</p>
-
     </script>
+      <script type="text/template" id="quizSelector-template">
+		<input type="textbox" id="quizID">
+		<button id="IDSubmit">submit</button>
+	  </script>
       <script type="text/template" id="quiz-template">
 		<h1> quiz </h1>
 		<button class="toMenu">back to menu</button>
 	  </script>
+      
       <script type="text/template" id="anotherTest-template">
-
-<h2 id="logoutButton">click me to log out</h2>
-
-	
-	<div class="menuButtons">
-    	<button id="something" class="btn btn-success">Start new quiz</button>
-		</br>
-		<button id="writeTo" class="btn btn-primary">Leaderboard</button>
-		</br>
-		<button id="getEmail" class="btn btn-danger">Log out</button>
-    </div>
-
-
+		<div class="menuButtons">
+    		<button class="toMenu btn btn-success"> to menu</button>
+			</br>
+			<button id="writeTo" class="btn btn-primary">write to server</button>
+			</br>
+			<button id="getEmail" class="btn btn-danger">read from server</button>
+    	</div>
     </script>
     
     <script type="text/template" id="menu-template">
-		<button id="startGameButton">Start game</button>
+
+	<div class="menuButtons">
+    	<button id="startGameButton" class="btn btn-success">Start new quiz</button>
 		</br>
-		<button id="logOutButton">log out</button>
+		<button id="toTests" class="btn btn-primary">To Tests</button>
 		</br>
+		<button id="logOutButton" class="btn btn-danger">Log out</button>
+    </div>
 	</script>
     
     <script type="text/template" id="login-template">
@@ -103,7 +79,5 @@
       </div>
     </script>
 
-
   </body>
-
 </html>

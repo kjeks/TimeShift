@@ -12,8 +12,8 @@ $(function() {
   var menuView = Parse.View.extend({
 	 events: {
 		 "click #startGameButton": "startGame",
-		 "click #logOutButton": "logOut"
-		 
+		 "click #logOutButton": "logOut",
+		 "click #toTests": "toTests"
 	 },
 	 el: ".content",
 	 
@@ -23,7 +23,7 @@ $(function() {
 	 },
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
-		new quizView();
+		new quizSelectorView();
 		this.undelegateEvents();
 	 },
 	 logOut: function(){
@@ -32,12 +32,36 @@ $(function() {
 	     this.undelegateEvents();
 	     delete this; 
 	 },
+	 toTests: function(){
+		 new anotherTestView();
+		 this.undelegateEvents();
+	 },
+	
 	 
 	 render: function(){
 		 this.$el.html(_.template($("#menu-template").html()));
 		 this.delegateEvents();
 	 },
 	 
+  });
+  var quizSelectorView = Parse.View.extend({
+	 events: {
+		 "click #IDSubmit": "startQuiz"
+	 }, 
+  	 el: ".content",
+  	 
+  	 initialize: function(){
+  		 this.render();
+  	 },
+  	 startQuiz: function(){
+  		 console.log(" do something");
+  		 var id= $("#quizID");
+  		 new quizView();
+  	 },
+  	 render: function(){
+ 		this.$el.html(_.template($("#quizSelector-template").html()));
+		this.delegateEvents(); 
+  	 }
   });
   var quizView = Parse.View.extend({
 	  events: {
@@ -68,7 +92,7 @@ $(function() {
 	 events: {
 		 "click #getEmail": "getEmail",
 		 "click #writeTo": "writeTo",
-		 "click #toMenuButton": "toMenu"
+		 "click .toMenu": "toMenu"
 	 },
 	 el: ".content",
 	 
@@ -79,6 +103,12 @@ $(function() {
 		 console.log("toMenu");
 		 new menuView();
 		 this.undelegateEvents();
+	 },
+
+	 
+	 render: function(){
+		 this.$el.html(_.template($("#anotherTest-template").html()));
+		 this.delegateEvents();
 	 },
 	 writeTo: function(){
 		 console.log("writeto");
@@ -113,45 +143,8 @@ $(function() {
 		 });
 	 },
 	 
-	 render: function(){
-		 this.$el.html(_.template($("#anotherTest-template").html()));
-		 this.delegateEvents();
-	 },
-	 
 
   });
-  var TestView = Parse.View.extend({
-	  events: {
-		 "click #something": "test",
-		 "click #logoutButton": "logOut",
-		 "click #toAnother": "toAnother"
-	 },
-	 
-	 el: ".content",
-	 
-	 initialize: function(){
-		 this.render();
-	 },
-	 
-	 test: function(){
-		 console.log("test done");
-	 },
-	 toAnother: function(){
-		 new anotherTestView();
-		 this.undelegateEvents();
-	 },
-	 logOut: function(){
-		 Parse.User.logOut();
-		 new LogInView();
-	     this.undelegateEvents();
-	     delete this;
-	 },
-	 
-	 render: function() {
-	    this.$el.html(_.template($("#test-template").html()));
-	    this.delegateEvents();
-	   }
-	 });
 
   var LogInView = Parse.View.extend({
     events: {
@@ -173,7 +166,7 @@ $(function() {
       
       Parse.User.logIn(username, password, {
         success: function(user) {
-          new TestView();
+          new menuView();
           self.undelegateEvents();
           delete self;
         },
@@ -196,7 +189,7 @@ $(function() {
       
       Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
         success: function(user) {
-          new TestView();
+          new menuView();
           self.undelegateEvents();
           delete self;
         },
@@ -222,7 +215,7 @@ $(function() {
   var AppView = Parse.View.extend({
     // Instead of generating a new element, bind to the existing skeleton of
     // the App already present in the HTML.
-    el: $("#todoapp"),
+    el: $("#timeshift"),
 
     initialize: function() {
       this.render();
@@ -230,7 +223,7 @@ $(function() {
 
     render: function() {
       if (Parse.User.current()) {
-        new TestView();
+        new menuView();
       } else {
         new LogInView();
       }
@@ -239,7 +232,8 @@ $(function() {
 
   var AppRouter = Parse.Router.extend({
     routes: {
-      "test": "test"
+      "test": "test",
+      "quiz": "quiz"
     },
 
     initialize: function(options) {
@@ -247,6 +241,9 @@ $(function() {
     
     test: function() {
     	state.set({ filter: "test"});
+    },
+    quiz: function(){
+    	new quizView();
     }
   });
 
