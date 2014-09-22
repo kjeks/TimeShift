@@ -29,7 +29,13 @@
     </div>
     
     <!--  dette skal inn i anotherTest-template -->
-    
+    <div class="menuButtons">
+    	<button id="something" class="btn btn-success">Start new quiz</button>
+		</br>
+		<button id="writeTo" class="btn btn-primary">Leaderboard</button>
+		</br>
+		<button id="getEmail" class="btn btn-danger">Log out</button>
+    </div>
     
 	
 	<!-- end av det som skal inn i anotherTest-template -->
@@ -60,13 +66,12 @@
 <h2 id="logoutButton">click me to log out</h2>
 
 	
-	<div class="menuButtons">
-    	<button id="something" class="btn btn-success">Start new quiz</button>
-		</br>
-		<button id="writeTo" class="btn btn-primary">Leaderboard</button>
-		</br>
-		<button id="getEmail" class="btn btn-danger">Log out</button>
-    </div>
+	<button id="something" class="btn btn-success">Start new quiz</button>
+	</br>
+	<button id="writeTo" class="btn btn-primary">Leaderboard</button>
+	</br>
+	<button id="getEmail" class="btn btn-danger">Log out</button>
+	</br>
 
     </script>
     <script type="text/template" id="menu-template">

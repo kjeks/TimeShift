@@ -5,8 +5,7 @@
     <title>Timeshift</title>
     <!--<link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/mainMenu.css">
+    <link rel="stylesheet" href="csss/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/underscore.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
@@ -29,8 +28,11 @@
     </div>
     
     <!--  dette skal inn i anotherTest-template -->
-    
-    
+    <button id="something" class="btn btn-success">Start new quiz</button>
+	</br>
+	<button id="writeTo" class="btn btn-primary">Leaderboard</button>
+	</br>
+	<button id="getEmail" class="btn btn-danger">Log out</button>
 	
 	<!-- end av det som skal inn i anotherTest-template -->
 
@@ -60,13 +62,12 @@
 <h2 id="logoutButton">click me to log out</h2>
 
 	
-	<div class="menuButtons">
-    	<button id="something" class="btn btn-success">Start new quiz</button>
-		</br>
-		<button id="writeTo" class="btn btn-primary">Leaderboard</button>
-		</br>
-		<button id="getEmail" class="btn btn-danger">Log out</button>
-    </div>
+	<button id="something" class="btn btn-success">Start new quiz</button>
+	</br>
+	<button id="writeTo" class="btn btn-primary">Leaderboard</button>
+	</br>
+	<button id="getEmail" class="btn btn-danger">Log out</button>
+	</br>
 
     </script>
     <script type="text/template" id="menu-template">
