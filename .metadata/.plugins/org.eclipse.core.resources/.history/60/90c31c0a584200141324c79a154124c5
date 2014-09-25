@@ -1,0 +1,23 @@
+body {
+	background-color: white;
+}
+
+button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	align: center;
+	height: 5em;
+	width: 25em;
+}
+
+.button-container {
+	width: 50em;
+	height: 26em;
+	align: center;
+	background-color: grey;
+	
+}
+
+#test {
+	background-color: yellow;
+}
