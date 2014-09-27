@@ -8,7 +8,6 @@ $(function() {
                    "PPAkV30D2UkOBHT62KNzA50gnZ2aLqW0WgojLF0M");
 
 
-  
   var menuView = Parse.View.extend({
 	 events: {
 		 "click #startGameButton": "startGame",
@@ -23,17 +22,17 @@ $(function() {
 	 },
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
-		new quizSelectorView();
+		Parse.history.navigate("quizSelector", {trigger:true});
 		this.undelegateEvents();
 	 },
 	 logOut: function(){
 		 Parse.User.logOut();
-		 new LogInView();
+		 Parse.history.navigate("", {trigger:true});
 	     this.undelegateEvents();
 	     delete this; 
 	 },
 	 toTests: function(){
-		 new anotherTestView();
+		 Parse.history.navigate("anotherTest", {trigger:true});
 		 this.undelegateEvents();
 	 },
 	
@@ -55,30 +54,80 @@ $(function() {
   	 },
   	 startQuiz: function(){
   		 console.log(" do something");
-  		 var id= $("#quizID");
-  		 new quizView();
+  		 var id= $("#quizID").val();
+  		 localStorage.setItem("Quizid", id);
+  		 Parse.history.navigate("quiz", {trigger:true});
   	 },
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
 		this.delegateEvents(); 
   	 }
   });
+  var correctAnswer;
   var quizView = Parse.View.extend({
+
 	  events: {
-		"click #answer": "answer",
+		"click .answer": "answer",
 		"click .toMenu": "toMenu" 
 	  },
 	  el: ".content",
 	  
 	  initialize: function (){
+		  var correctAnswer;
+		  var theQuiz;
+		  self=this;	
 		  this.render();
+		  console.log("getEmail");
+	 	  var quiz = Parse.Object.extend("Quiz");
+		  var query = new Parse.Query(quiz);
+		  var id = localStorage.getItem("Quizid");
+		  var numberId=Number(id);
+		  console.log(numberId);
+		  query.equalTo("code", numberId);
+		  query.first({
+			  success: function(results){	 
+				  console.log(results);
+				  self.theQuiz=results;
+				  var firstQ=self.theQuiz.attributes.questions.shift();	
+				  self.newQuestion(firstQ);
+				 },
+			  error: function(error){
+				 console.log("no quiz with that code");
+			  }
+			  });
 	  },
-	  answer: function(){
-		  console.log("answer clicked");
+	  answer: function(e){
+		  answer=$(e.target).text();
+		  if(answer==self.correctAnswer){
+			  self.correct();
+		  }
+		  else{
+			  console.log("you guessed wrong");
+		  }
 	  },
+	  correct: function(){
+		  quiz = self.theQuiz;
+		  self.newQuestion(quiz.attributes.questions.shift());
+	  },
+	  newQuestion: function(q){
+		  var question= Parse.Object.extend("Question");
+		  var questionQuery = new Parse.Query(question);
+		  questionQuery.equalTo("objectId", q);
+		  questionQuery.first({
+			success:function(res){
+				self.correctAnswer=res.get("correctAnswer");
+				$("#question").html(res.get("text"));
+				$("#alt1").html(res.get("answers").shift());
+				$("#alt2").html(res.get("answers").shift());
+				$("#alt3").html(res.get("answers").shift());
+				$("#alt4").html(res.get("answers").shift());
+			}
+	  });
+	 },
+	 
 	  toMenu: function(){
 		 console.log("toMenu");
-		 new menuView();
+		 Parse.history.navigate("menu", {trigger:true});
 		 this.undelegateEvents();		  
 	  },
 	  render: function(){
@@ -101,7 +150,7 @@ $(function() {
 	 },
 	 toMenu: function(){
 		 console.log("toMenu");
-		 new menuView();
+		 Parse.history.navigate("menu", {trigger:true});
 		 this.undelegateEvents();
 	 },
 
@@ -118,12 +167,9 @@ $(function() {
 		 question.addUnique("answers", "b");
 		 question.save(null, {
 			  success: function(question) {
-			    // Execute any logic that should take place after the object is saved.
 			    alert("it worked");
 			  },
 			  error: function(question, error) {
-			    // Execute any logic that should take place if the save fails.
-			    // error is a Parse.Error with an error code and message.
 			    alert('Failed to create new object, with error code: ' + error.message);
 			  }
 			});
@@ -166,7 +212,7 @@ $(function() {
       
       Parse.User.logIn(username, password, {
         success: function(user) {
-          new menuView();
+          Parse.history.navigate("menu", {trigger:true});
           self.undelegateEvents();
           delete self;
         },
@@ -189,7 +235,7 @@ $(function() {
       
       Parse.User.signUp(username, password, { ACL: new Parse.ACL() }, {
         success: function(user) {
-          new menuView();
+        	Parse.history.navigate("menu", {trigger:true});
           self.undelegateEvents();
           delete self;
         },
@@ -211,21 +257,22 @@ $(function() {
     }
   });
 
-  // The main view for the app
   var AppView = Parse.View.extend({
-    // Instead of generating a new element, bind to the existing skeleton of
-    // the App already present in the HTML.
     el: $("#timeshift"),
 
     initialize: function() {
       this.render();
+      console.log("when is this run?");
     },
 
     render: function() {
       if (Parse.User.current()) {
-        new menuView();
+    	console.log("current user");
+      	new menuView();
+      	Parse.history.navigate("menu", {trigger:true});
       } else {
-        new LogInView();
+    	  console.log("no current user");
+    	  Parse.history.navigate("", {trigger:true});
       }
     }
   });
@@ -233,7 +280,12 @@ $(function() {
   var AppRouter = Parse.Router.extend({
     routes: {
       "test": "test",
-      "quiz": "quiz"
+      "quiz": "quiz",
+      "":	  "login",
+      "menu": "menu",
+      "anotherTest": "anotherTest",
+      "quizSelector": "quizSelector"
+      
     },
 
     initialize: function(options) {
@@ -244,9 +296,21 @@ $(function() {
     },
     quiz: function(){
     	new quizView();
-    }
-  });
+    },
 
+    anotherTest: function(){
+    	new anotherTestView();
+    },
+    login: function(){	
+    	new LogInView();
+    },
+    menu: function(){
+    	new menuView();
+    },
+    quizSelector: function(){
+    	new quizSelectorView();
+    },
+  });
 
   new AppRouter;
   new AppView;
