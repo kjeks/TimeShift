@@ -62,7 +62,7 @@
 	<script type="text/template" id="menu-template">
 
 	<div class="container-fluid">
-		<div class="">
+		<div class="container">
 			<button id="startGameButton" class="menuButton">Start new game1</button><br>
 			<button id="toTests" class="menuButton">To tests</button><br>
 			<button id="logOutButton" class="menuButton">Log out</button>
@@ -74,7 +74,7 @@
 
 	<div class="">
 		
-			<button id="startGameButton" class="menuButton ">Start new game</button>
+			<button id="startGameButton" class="menuButton">Start new game</button>
 			<button id="toTests" class="menuButton">To tests</button>
 			<button id="logOutButton" class="menuButton">Log out</button>
 	</div>

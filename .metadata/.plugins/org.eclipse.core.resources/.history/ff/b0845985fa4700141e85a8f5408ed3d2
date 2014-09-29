@@ -1,0 +1,59 @@
+body {
+	background-color: white;
+}
+
+button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 5em;
+	width: 25em;
+	
+}
+
+.button-container {
+	background-color: grey;
+	
+}
+
+.centering {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    background-color: #b0e0e6;
+}
+
+.menuButton(@color){
+	box-sizing: border-box;
+	margin: 20px;
+	padding: 0 10px 0 10px;
+	width: 300px;
+	height: 44px;
+	border: none;
+	border-radius: 10px;
+	background-color: @color;
+	background-image: linear-gradient(
+    	top,
+    	lighten(@color, 20%) 0%,
+    	lighten(@color, 5%) 40%,
+    	@color 80%,
+    	lighten(@color, 8%) 100%
+    	);
+	box-shadow:
+	inset 0 1px 1px hsla(0,0,100%,.2),
+	0 1px 2px hsla(0,0,0,.8),
+	0 1px 0 4px hsla(0,0,100%,.15),
+	0 0 0 4px hsla(220, 8%, 10%, 0.8);
+	color:#fff;
+	list-style-type: none;
+	text-align:center;
+	text-shadow: 0 -1px 0 darken(@color, 40%);
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 44px;
+}
+
+.testButton{
+	menuButton(hsla(215, 12%, 19%,1));
+}

@@ -62,22 +62,22 @@
 	<script type="text/template" id="menu-template">
 
 	<div class="container-fluid">
-		<div class="">
-			<button id="startGameButton" class="menuButton">Start new game1</button><br>
-			<button id="toTests" class="menuButton">To tests</button><br>
+		
+			<button id="startGameButton" class="menuButton">Start new game</button>
+			<button id="toTests" class="menuButton">To tests</button>
 			<button id="logOutButton" class="menuButton">Log out</button>
-		</div>
 	</div>
 	</script>
 	
 	<script type="text/template" id="signup-template">
 
-	<div class="">
-		
-			<button id="startGameButton" class="menuButton ">Start new game</button>
-			<button id="toTests" class="menuButton">To tests</button>
-			<button id="logOutButton" class="menuButton">Log out</button>
-	</div>
+	<form class="signup-form">
+          <h2>Sign Up</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="signup-username" placeholder="Username" /><br>
+          <input type="password" id="signup-password" placeholder="Create a Password" /><br>
+          <button class="menuButton">Sign Up</button>
+    </form>
 	</script>
 
 	<script type="text/template" id="login-template">
@@ -91,13 +91,7 @@
           <button class="menuButton">Log In</button>
         </form>
 
-        <form class="signup-form">
-          <h2>Sign Up</h2>
-          <div class="error" style="display:none"></div>
-          <input type="text" id="signup-username" placeholder="Username" /><br>
-          <input type="password" id="signup-password" placeholder="Create a Password" /><br>
-          <button class="menuButton">Sign Up</button>
-        </form>
+        
       </div>
     </script>
 

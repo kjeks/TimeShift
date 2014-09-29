@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Timeshift/parse-js-blank/css/mainMenu.css&apos; to &apos;main.css&apos;" description="Rename resource &apos;mainMenu.css&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="parse-js-blank/css/mainMenu.css" name="main.css" stamp="1412012202897" updateReferences="true"/>
+</session>

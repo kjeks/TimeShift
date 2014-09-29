@@ -6,7 +6,7 @@
 <!--<link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>-->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/mainMenu.css">
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <script src="js/underscore.js"></script>
 <script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
@@ -62,19 +62,8 @@
 	<script type="text/template" id="menu-template">
 
 	<div class="container-fluid">
-		<div class="">
-			<button id="startGameButton" class="menuButton">Start new game1</button><br>
-			<button id="toTests" class="menuButton">To tests</button><br>
-			<button id="logOutButton" class="menuButton">Log out</button>
-		</div>
-	</div>
-	</script>
-	
-	<script type="text/template" id="signup-template">
-
-	<div class="">
 		
-			<button id="startGameButton" class="menuButton ">Start new game</button>
+			<button id="startGameButton" class="menuButton">Start new game</button>
 			<button id="toTests" class="menuButton">To tests</button>
 			<button id="logOutButton" class="menuButton">Log out</button>
 	</div>
@@ -86,17 +75,17 @@
         <form class="login-form">
           <h2>Log In</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="login-username" placeholder="Username" /><br>
-          <input type="password" id="login-password" placeholder="Password" /><br>
+          <input type="text" id="login-username" placeholder="Username" />
+          <input type="password" id="login-password" placeholder="Password" />
           <button class="menuButton">Log In</button>
         </form>
 
         <form class="signup-form">
           <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
-          <input type="text" id="signup-username" placeholder="Username" /><br>
-          <input type="password" id="signup-password" placeholder="Create a Password" /><br>
-          <button class="menuButton">Sign Up</button>
+          <input type="text" id="signup-username" placeholder="Username" />
+          <input type="password" id="signup-password" placeholder="Create a Password" />
+          <button>Sign Up</button>
         </form>
       </div>
     </script>
