@@ -64,6 +64,7 @@ $(function() {
   	 }
   });
   var correctAnswer;
+  var score;
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -73,7 +74,23 @@ $(function() {
 	  el: ".content",
 	  
 	  initialize: function (){
-		  var correctAnswer;
+		  var scoreObj= Parse.Object.extend("Score");
+		  score = new scoreObj();
+		  score.set("points", 0);
+		  //score.set("points", 100);
+		  //score.save(null, {
+		//	  success: function(res){
+		//		  console.log("saved");
+		//	  },
+		//	  error: function(error){
+		//		  console.log("error");
+		//	  }
+		//  });
+		  console.log("scoreObj + score");
+		  console.log(scoreObj);
+		  console.log(score);
+		  
+		  correctAnswer;
 		  var theQuiz;
 		  self=this;	
 		  this.render();
@@ -103,11 +120,25 @@ $(function() {
 		  }
 		  else{
 			  console.log("you guessed wrong");
+			  
 		  }
 	  },
 	  correct: function(){
+		  
+		  var points=score.get("points")+100;
+		  score.set("points", points);
+		  console.log(points);
 		  quiz = self.theQuiz;
-		  self.newQuestion(quiz.attributes.questions.shift());
+		  question= quiz.attributes.questions.shift()
+		  console.log(question);
+		  if(question!=undefined){
+			  self.newQuestion(question);  
+		  }
+		  else{
+			  alert("no more questions");
+			  Parse.history.navigate("score", {trigger:true});
+			  
+		  }
 	  },
 	  newQuestion: function(q){
 		  var question= Parse.Object.extend("Question");
@@ -136,6 +167,22 @@ $(function() {
 	  }
   	  
   	
+  });
+  var scoreView = Parse.View.extend({
+	 events: { 
+		 "click #getUser": "getUser"
+	 },
+	 el: ".content",
+	 
+	 initialize: function(){
+		 this.render();
+	 },
+	 render: function(){
+		 this.$el.html(_.template($("#score-template").html()));
+	 },
+	 getUser: function(){
+		 console.log(Parse.User.current());
+	 }
   });
   var anotherTestView = Parse.View.extend({
 	 events: {
@@ -188,8 +235,6 @@ $(function() {
 		 }
 		 });
 	 },
-	 
-
   });
 
   var LogInView = Parse.View.extend({
@@ -283,6 +328,7 @@ $(function() {
       "quiz": "quiz",
       "":	  "login",
       "menu": "menu",
+      "score": "score",
       "anotherTest": "anotherTest",
       "quizSelector": "quizSelector"
       
@@ -306,6 +352,9 @@ $(function() {
     },
     menu: function(){
     	new menuView();
+    },
+    score: function(){
+    	new scoreView();
     },
     quizSelector: function(){
     	new quizSelectorView();
