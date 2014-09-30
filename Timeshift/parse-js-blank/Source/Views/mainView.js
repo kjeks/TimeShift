@@ -3,7 +3,17 @@ $(function() {
   Parse.initialize("6fr8ox9aLNZPnTF0kC0wVmbDusiQUmEen0jZzP39",
                    "PPAkV30D2UkOBHT62KNzA50gnZ2aLqW0WgojLF0M");
 
-
+  function authenticate(){
+	Parse.Cloud.run("loggedIn", {},{
+	 success:function(result){
+		 console.log(result);
+		 },
+	 error: function(error){
+		 console.log(error);
+		 Parse.history.navigate("", {trigger:true});
+			 }
+		 });	  
+  }
   var menuView = Parse.View.extend({
 	 events: {
 		 "click #startGameButton": "startGame",
@@ -27,15 +37,7 @@ $(function() {
 				 console.log(error);
 			 }
 		 });
-		 Parse.Cloud.run("loggedIn", {},{
-			 success:function(result){
-				 console.log(result);
-			 },
-			 error: function(error){
-				 console.log(error);
-				 Parse.history.navigate("", {trigger:true});
-			 }
-		 });
+		 authenticate();
 	 },
 	 
 	 startGame: function(){
@@ -69,6 +71,7 @@ $(function() {
   	 
   	 initialize: function(){
   		 this.render();
+  		authenticate();
   	 },
   	 startQuiz: function(){
   		 console.log(" do something");
@@ -92,6 +95,7 @@ $(function() {
 	  el: ".content",
 	  
 	  initialize: function (){
+		  authenticate();
 		  var scoreObj= Parse.Object.extend("Score");
 		  score = new scoreObj();
 		  score.set("points", 0);
@@ -182,6 +186,7 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
+		 authenticate();
 		 this.render();
 	 },
 	 render: function(){
@@ -200,6 +205,7 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
+		 authenticate();
 		 this.render();
 	 },
 	 toMenu: function(){
@@ -253,7 +259,7 @@ $(function() {
     el: ".content",
     
     initialize: function() {
-      _.bindAll(this, "logIn", "signUp");
+    	_.bindAll(this, "logIn", "signUp");
       this.render();
     },
 
@@ -313,7 +319,7 @@ $(function() {
     el: $("#timeshift"),
 
     initialize: function() {
-      this.render();
+    	this.render();
       console.log("when is this run?");
     },
 

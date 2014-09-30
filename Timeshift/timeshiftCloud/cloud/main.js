@@ -22,3 +22,6 @@ Parse.Cloud.define("loggedIn", function(request,response){
 		response.success(user);
 	}
 });
+Parse.Cloud.define("multiplayer", function(request,resonse){
+	
+});
