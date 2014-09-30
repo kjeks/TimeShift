@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Timeshift": {
+            "applicationId": "6fr8ox9aLNZPnTF0kC0wVmbDusiQUmEen0jZzP39", 
+            "masterKey": "E4io00Znp2ZFhemWFUsR85fHpDjjYvTDrXITKCzA"
+        }, 
+        "_default": {
+            "link": "Timeshift"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.0"
+    }
+}

@@ -1,8 +1,4 @@
-
-
 $(function() {
-
-  Parse.$ = jQuery;
 
   Parse.initialize("6fr8ox9aLNZPnTF0kC0wVmbDusiQUmEen0jZzP39",
                    "PPAkV30D2UkOBHT62KNzA50gnZ2aLqW0WgojLF0M");
@@ -18,7 +14,11 @@ $(function() {
 	 
 	 initialize: function(){
 		 this.render();
-		 
+		 Parse.Cloud.run("hello", {}, {
+			 success: function(result){
+				 console.log(result);
+			 },
+		 });
 	 },
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
@@ -77,15 +77,6 @@ $(function() {
 		  var scoreObj= Parse.Object.extend("Score");
 		  score = new scoreObj();
 		  score.set("points", 0);
-		  //score.set("points", 100);
-		  //score.save(null, {
-		//	  success: function(res){
-		//		  console.log("saved");
-		//	  },
-		//	  error: function(error){
-		//		  console.log("error");
-		//	  }
-		//  });
 		  console.log("scoreObj + score");
 		  console.log(scoreObj);
 		  console.log(score);
@@ -120,7 +111,6 @@ $(function() {
 		  }
 		  else{
 			  console.log("you guessed wrong");
-			  
 		  }
 	  },
 	  correct: function(){
@@ -137,7 +127,6 @@ $(function() {
 		  else{
 			  alert("no more questions");
 			  Parse.history.navigate("score", {trigger:true});
-			  
 		  }
 	  },
 	  newQuestion: function(q){
