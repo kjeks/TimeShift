@@ -19,7 +19,25 @@ $(function() {
 				 console.log(result);
 			 },
 		 });
+		 Parse.Cloud.run("testu", {test: "testy"}, {
+			 success: function(result){
+				 console.log(result);
+			 },
+			 error: function(error){
+				 console.log(error);
+			 }
+		 });
+		 Parse.Cloud.run("loggedIn", {},{
+			 success:function(result){
+				 console.log(result);
+			 },
+			 error: function(error){
+				 console.log(error);
+				 Parse.history.navigate("", {trigger:true});
+			 }
+		 });
 	 },
+	 
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
 		Parse.history.navigate("quizSelector", {trigger:true});
