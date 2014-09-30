@@ -1,5 +1,5 @@
 body {
-	background-color: hsl(217, 6%, 41%);
+	background-color: hsla(217, 6%, 41%, 1);
 	display: box;
 	height: 300px;
 	background-color: #62676f;
@@ -20,11 +20,8 @@ input {
       inset 0 0 8px  rgba(0,0,0,0.1),
             0 0 16px rgba(0,0,0,0.1); 
     padding: 15px;
-    background: hsl(217, 6%, 60%);
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    width: 300px;
+    background: hsla(217, 6%, 60%, 1);
+    margin: 0 0 10px 0;
 }
 
 *::-webkit-input-placeholder {
@@ -43,40 +40,32 @@ input {
     color: black;
 }
 
-.blueText {
-	color: #8282ff;
-}
-.centering{
-	width: 330px;
+.container{
+	width: 720px;
+	height: 1280px;
 	margin-left: auto;
-	margin-right: auto;
-	/*background-color: hsl(217, 6%, 70%);*/
+	margin-rigt: auto;
+	background-color: hsla(217, 6%, 85%, 1);
 }
 
-.logo{
-	margin-top: 20px;
-	margin-right: auto;
-	margin-bottom: 20px;
-	margin-left: auto;
-	width: 330px;
-	
+.centering {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 .menuButton {
-  /*box-sizing: border-box;*/
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  /*padding: 0 10px 0 10px;*/
+  box-sizing: border-box;
+  margin: 20px;
+  padding: 0 10px 0 10px;
   width: 300px;
   height: 44px;
   border: none;
-  border-radius: 1px;
+  border-radius: 10px;
   background-color: #2b2f36;
   background-image: linear-gradient(top, #58616f 0%, #363c45 40%, #2b2f36 80%, #3d434d 100%);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 0 4px rgba(255, 255, 255, 0.15), 0 0 0 4px rgba(23, 25, 28, 0.8);
-  color: #8282ff;
+  color: #fff;
   list-style-type: none;
   text-align: center;
   text-shadow: 0 -1px 0 #000000;

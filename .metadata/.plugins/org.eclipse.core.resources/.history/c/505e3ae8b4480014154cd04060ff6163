@@ -43,23 +43,11 @@ input {
     color: black;
 }
 
-.blueText {
-	color: #8282ff;
-}
 .centering{
 	width: 330px;
 	margin-left: auto;
 	margin-right: auto;
 	/*background-color: hsl(217, 6%, 70%);*/
-}
-
-.logo{
-	margin-top: 20px;
-	margin-right: auto;
-	margin-bottom: 20px;
-	margin-left: auto;
-	width: 330px;
-	
 }
 
 .menuButton {

@@ -20,8 +20,8 @@
 	<!-- Todo App Interface -->
 
 	<div id="timeshift">
-		<div class="logo">
-			<img src="images/logo1.png" alt="Logo">
+		<div class="title">
+			<h1>Timeshift</h1>
 		</div>
 
 		<div class="content"></div>
@@ -29,40 +29,42 @@
 
 	</script>
 	<script type="text/template" id="quizSelector-template">
-	<div class="centering">
-		<input type="textbox" id="quizID" placeholder="Enter quiz code">
-		<button id="IDSubmit" class="menuButton">Submit</button>
-	</div>
-	</script>
-    <script type="text/template" id="quiz-template">
+	
+<input type="textbox" id="quizID">
+		<button id="IDSubmit">submit</button>
+	  </script>
+      <script type="text/template" id="quiz-template">
 
 		<button class="toMenu">back to menu</button>
 		<h2 id="question">question</h2>
-		<div class="answer">
+	<div class="answer">
 		<button id="alt1">alt1</button>
 		<button id="alt2">alt2</button>
 		<button id="alt3">alt3</button>
 		<button id="alt4">alt4</button>
 	</div>
-	</script>
+	  </script>
 	<script type="text/template" id="score-template">
 
 		<h1 id="getUser">score view</h1>
     </script>
     
 	<script type="text/template" id="anotherTest-template">
-	<div class="centering">
-    		<button class="toMenu menuButton">To menu</button>
+	<div>
+		<div class="menuButtons>
+    		<button class="toMenu btn btn-success"> to menu</button>
 			</br>
-			<button id="writeTo" class="menuButton">Write to server</button>
+			<button id="writeTo" class="btn btn-primary">write to server</button>
 			</br>
-			<button id="getEmail" class="menuButton">Read from server</button>
+			<button id="getEmail" class="btn btn-danger">read from server</button>
+    	</div>
 	</div>
     </script>
 
 	<script type="text/template" id="menu-template">
 
-	<div class="centering">
+	<div class="container">
+<button>123</button>
 		<div class="">
 			<button id="startGameButton" class="menuButton">Start new game</button><br>
 			<button id="toTests" class="menuButton">To tests</button><br>
@@ -83,9 +85,9 @@
 
 	<script type="text/template" id="login-template">
       <header id="header"></header>
-      <div class="centering">
+      <div class="login">
         <form class="login-form">
-          <!-- <h2>Log In</h2> -->
+          <h2>Log In</h2>
           <div class="error" style="display:none"></div>
           <input type="text" id="login-username" placeholder="Username" /><br>
           <input type="password" id="login-password" placeholder="Password" /><br>
@@ -93,7 +95,7 @@
         </form>
 
         <form class="signup-form">
-          <h2>****Sign Up**** Lage nytt template for denne så forsiden blir enkel og fin?</h2>
+          <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
           <input type="text" id="signup-username" placeholder="Username" /><br>
           <input type="password" id="signup-password" placeholder="Create a Password" /><br>

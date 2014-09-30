@@ -20,8 +20,9 @@
 	<!-- Todo App Interface -->
 
 	<div id="timeshift">
-		<div class="logo">
-			<img src="images/logo1.png" alt="Logo">
+		<div class="centering">
+			<img src="images/logo1" alt="Logo">
+			<h1>Timeshift</h1>
 		</div>
 
 		<div class="content"></div>
@@ -51,12 +52,14 @@
     </script>
     
 	<script type="text/template" id="anotherTest-template">
-	<div class="centering">
-    		<button class="toMenu menuButton">To menu</button>
+	<div>
+		<div class="centering>
+    		<button class="toMenu btn btn-success"> to menu</button>
 			</br>
-			<button id="writeTo" class="menuButton">Write to server</button>
+			<button id="writeTo" class="btn btn-primary">write to server</button>
 			</br>
-			<button id="getEmail" class="menuButton">Read from server</button>
+			<button id="getEmail" class="btn btn-danger">read from server</button>
+    	</div>
 	</div>
     </script>
 
@@ -85,7 +88,7 @@
       <header id="header"></header>
       <div class="centering">
         <form class="login-form">
-          <!-- <h2>Log In</h2> -->
+          <h2>Log In</h2>
           <div class="error" style="display:none"></div>
           <input type="text" id="login-username" placeholder="Username" /><br>
           <input type="password" id="login-password" placeholder="Password" /><br>
@@ -93,7 +96,7 @@
         </form>
 
         <form class="signup-form">
-          <h2>****Sign Up**** Lage nytt template for denne så forsiden blir enkel og fin?</h2>
+          <h2>Sign Up</h2>
           <div class="error" style="display:none"></div>
           <input type="text" id="signup-username" placeholder="Username" /><br>
           <input type="password" id="signup-password" placeholder="Create a Password" /><br>

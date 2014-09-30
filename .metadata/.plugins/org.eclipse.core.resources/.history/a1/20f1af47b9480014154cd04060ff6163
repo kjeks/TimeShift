@@ -51,12 +51,14 @@
     </script>
     
 	<script type="text/template" id="anotherTest-template">
-	<div class="centering">
-    		<button class="toMenu menuButton">To menu</button>
+	<div>
+		<div class="centering>
+    		<button class="toMenu menuButton"> to menu</button>
 			</br>
-			<button id="writeTo" class="menuButton">Write to server</button>
+			<button id="writeTo" class="menuButton">write to server</button>
 			</br>
-			<button id="getEmail" class="menuButton">Read from server</button>
+			<button id="getEmail" class="menuButton">read from server</button>
+    	</div>
 	</div>
     </script>
 
