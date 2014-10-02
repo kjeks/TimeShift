@@ -99,9 +99,6 @@ $(function() {
 		  var scoreObj= Parse.Object.extend("Score");
 		  score = new scoreObj();
 		  score.set("points", 0);
-		  console.log("scoreObj + score");
-		  console.log(scoreObj);
-		  console.log(score);
 		  
 		  correctAnswer;
 		  var theQuiz;
@@ -132,8 +129,22 @@ $(function() {
 			  self.correct();
 		  }
 		  else{
+			  self.wrong();
 			  console.log("you guessed wrong");
 		  }
+	  },
+	  wrong: function(){
+		
+		quiz=self.theQuiz;
+		question= quiz.attributes.questions.shift();
+		if(question!=undefined){
+			self.newQuestion(question);
+		}
+		else{
+			localstorage.setItem("totScore", score.get("points"));
+			Parse.history.navigate("score", {trigger:true});
+		}
+		
 	  },
 	  correct: function(){
 		  
@@ -141,14 +152,16 @@ $(function() {
 		  score.set("points", points);
 		  console.log(points);
 		  quiz = self.theQuiz;
-		  question= quiz.attributes.questions.shift()
+		  question= quiz.attributes.questions.shift();
 		  console.log(question);
 		  if(question!=undefined){
 			  self.newQuestion(question);  
 		  }
 		  else{
 			  alert("no more questions");
+			  localStorage.setItem("totScore", points);
 			  Parse.history.navigate("score", {trigger:true});
+			  
 		  }
 	  },
 	  newQuestion: function(q){
@@ -191,11 +204,13 @@ $(function() {
 	 },
 	 render: function(){
 		 this.$el.html(_.template($("#score-template").html()));
+		 $("#getUser").html(localStorage.getItem("totScore"));
 	 },
 	 getUser: function(){
 		 console.log(Parse.User.current());
 	 }
   });
+  
   var anotherTestView = Parse.View.extend({
 	 events: {
 		 "click #getEmail": "getEmail",
