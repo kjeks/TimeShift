@@ -18,3 +18,5 @@
 .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
 .metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
 .metadata/version.ini
+Timeshift/parse.exe
+Timeshift/ParseConsole.exe

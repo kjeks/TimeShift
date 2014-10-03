@@ -47,7 +47,7 @@ input {
 	color: #8282ff;
 }
 .centering{
-	width: 330px;
+	width: 304px;
 	margin-left: auto;
 	margin-right: auto;
 	/*background-color: hsl(217, 6%, 70%);*/
@@ -58,17 +58,14 @@ input {
 	margin-right: auto;
 	margin-bottom: 20px;
 	margin-left: auto;
-	width: 330px;
-	
+	width: 330px;	
 }
 
 .menuButton {
-  /*box-sizing: border-box;*/
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
-  /*padding: 0 10px 0 10px;*/
   width: 300px;
   height: 44px;
   border: none;
@@ -84,3 +81,48 @@ input {
   font-size: 18px;
   line-height: 44px;
 }
+
+/* Progress bar styling*/
+progress {
+	width: 300px;
+	height: 18px;
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	/* Important Thing */
+	-webkit-appearance: none;
+	border: none;
+}
+
+/* All good till now. Now we'll style the background */
+progress::-webkit-progress-bar {
+	background: black;
+	border-radius: 5px;
+	padding: 2px;
+	box-shadow: 0 1px 0px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Now the value part */
+progress::-webkit-progress-value {
+	border-radius: 5px;
+	box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+	background:
+		-webkit-linear-gradient(45deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
+		-webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.2)),
+		-webkit-linear-gradient(left, #8282ff, #ff4f4f);
+	
+	/* Looks great, now animating it */
+	background-size: 25px 14px, 100% 100%, 100% 100%;
+	-webkit-animation: move 5s linear 0 infinite;
+}
+
+/* That's it! Now let's try creating a new stripe pattern and animate it using animation and keyframes properties  */
+
+@-webkit-keyframes move {
+	0% {background-position: 0px 0px, 0 0, 0 0}
+	100% {background-position: -100px 0px, 0 0, 0 0}
+}
+
+/* Prefix-free was creating issues with the animation */
+
+

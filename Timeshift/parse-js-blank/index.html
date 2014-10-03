@@ -13,6 +13,8 @@
 <script src="Source/Views/mainView.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/test.js"></script>
+<script src="js/jquery.js" type="text/javascript"></script> 
+<script src="js/progressbar.js"></script> 
 
 </head>
 
@@ -35,14 +37,20 @@
 	</div>
 	</script>
     <script type="text/template" id="quiz-template">
+	<div class="centering">
+		
+		<h2 id="question">Question 1</h2>
+		<p>Lorem ipsum Ibsen Bjørnson Kielland Lie Ole Brum trlallalalalalallalalalalalalalalalla</p>
+		
+		<progress id="progressbar" value="0" max="1000"></progress> 
 
-		<button class="toMenu">back to menu</button>
-		<h2 id="question">question</h2>
 		<div class="answer">
-		<button id="alt1">alt1</button>
-		<button id="alt2">alt2</button>
-		<button id="alt3">alt3</button>
-		<button id="alt4">alt4</button>
+			<button class="menuButton" id="alt1">alt1</button>
+			<button class="menuButton" id="alt2">alt2</button>
+			<button class="menuButton" id="alt3">alt3</button>
+			<button class="menuButton" id="alt4">alt4</button>
+		</div>
+		<button class="toMenu menuButton">Back to menu</button>
 	</div>
 	</script>
 	<script type="text/template" id="score-template">
