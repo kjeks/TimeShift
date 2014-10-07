@@ -40,7 +40,6 @@
 	<div class="centering">
 		
 		<h2 class="questionCentering" id="question">Question 1</h2>
-		<img id="number" src="images/number3.png" alt="number">
 		
 		<progress id="progressbar" value="0" max="1000"></progress> 
 
@@ -62,28 +61,11 @@
     
 	<script type="text/template" id="anotherTest-template">
 	<div class="centering">
-    		
-		<div class="centering">
-		
-			<h2 class="questionCentering" id="question">Question 1</h2>
-			<img id="numbertest" src="images/number3.png" alt="number">
-		
-			<progress id="progressbar" value="0" max="1000"></progress> 
-
-			<div class="answer">
-				<button class="menuButton" id="test1">alt1</button>
-				<button class="menuButton" id="test2">alt2</button>
-				<button class="menuButton" id="test3">alt3</button>
-				<button class="menuButton" id="test4">alt4</button>
-			</div>
-		<button class="toMenu menuButton">To menu</button>
-		</br>
-		<button id="writeTo" class="menuButton">Write to server</button>
-		</br>
-		<button id="getEmail" class="menuButton">Read from server</button>
-		</br>
-		<button class="toMenu menuButton">Back to menu</button> 
-	</div>
+    		<button class="toMenu menuButton">To menu</button>
+			</br>
+			<button id="writeTo" class="menuButton">Write to server</button>
+			</br>
+			<button id="getEmail" class="menuButton">Read from server</button>
 	</div>
     </script>
 

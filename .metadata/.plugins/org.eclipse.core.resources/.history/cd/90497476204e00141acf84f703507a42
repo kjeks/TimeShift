@@ -7,7 +7,7 @@ $(document).ready(function () {
 	});
 	
 	//Legg til alt1 også når testing er ferdig
-	$("#test2, #test3, #test4").click(function () {
+	$("#alt2, #alt3, #alt4").click(function () {
 		answer = true;
 		getScore();
 	});
@@ -55,9 +55,8 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
-	document.getElementById("numbertest").src = "images/number3.png";
-	$("#numbertest").show();
 	
+	//$("#numbertest").hide();
 	$("#question").hide()
 	$("#progressbar").hide();
 	$("#test1").hide();

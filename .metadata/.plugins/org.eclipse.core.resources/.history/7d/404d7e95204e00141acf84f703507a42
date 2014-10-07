@@ -55,9 +55,8 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
-	document.getElementById("numbertest").src = "images/number3.png";
-	$("#numbertest").show();
 	
+	//$("#numbertest").hide();
 	$("#question").hide()
 	$("#progressbar").hide();
 	$("#test1").hide();

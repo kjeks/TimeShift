@@ -1,22 +1,21 @@
 var answer = false;
 
 $(document).ready(function () {
-	$("#test1").click(function() {
-		console.log("Calling sequence");
-		setTimeout(function(){gameSequence()}, 100);
+	$("#alt1").click(function() {
+		gameSequence();
 	});
 	
 	//Legg til alt1 også når testing er ferdig
-	$("#test2, #test3, #test4").click(function () {
+	$("#alt2, #alt3, #alt4").click(function () {
 		answer = true;
 		getScore();
 	});
 });
 
-
 function progressbar(){
 	$("#progressbar").show();
 	answer = false;
+	$('.progress-value').html(10 + '%');
 	clearInterval(animate);
 	var progressbar = $('#progressbar'),
 	max = progressbar.attr('max'),
@@ -55,23 +54,21 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
-	document.getElementById("numbertest").src = "images/number3.png";
-	$("#numbertest").show();
 	
-	$("#question").hide()
+	$("#question").html('3');//bytt ut dette med bilder, ser mer fancy ut da
+	setTimeout(function(){$("#question").html('2')}, 1000);
+	setTimeout(function(){$("#question").html('1')}, 2000);
+	$("#alt1").hide();
+	$("#alt2").hide();
+	$("#alt3").hide();
+	$("#alt4").hide();
 	$("#progressbar").hide();
-	$("#test1").hide();
-	$("#test2").hide();
-	$("#test3").hide();
-	$("#test4").hide();
-	setTimeout(function(){document.getElementById("numbertest").src = "images/number2.png"}, 1000);
-	setTimeout(function(){document.getElementById("numbertest").src = "images/number1.png"}, 2000);
-	setTimeout(function(){$("#numbertest").hide()}, 3000);
 	
-	setTimeout(function(){$("#question").show()}, 3000);
-	setTimeout(function(){$("#test1").show()}, 3000);
-	setTimeout(function(){$("#test2").show()}, 3000);
-	setTimeout(function(){$("#test3").show()}, 3000);
-	setTimeout(function(){$("#test4").show()}, 3000);
+	setTimeout(function(){$("#alt1").show()}, 3000);
+	setTimeout(function(){$("#alt2").show()}, 3000);
+	setTimeout(function(){$("#alt3").show()}, 3000);
+	setTimeout(function(){$("#alt4").show()}, 3000);
 	setTimeout(function(){progressbar()}, 3000);
+	
+	
 }
