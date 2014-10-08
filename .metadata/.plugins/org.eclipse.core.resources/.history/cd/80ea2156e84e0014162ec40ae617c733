@@ -67,9 +67,8 @@
 			
 			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>
 			</h3>
-			
-			<button id="nextQuestion" class="menuButton"> Next question </button>
 			<button class="menuButton toMenu">Back to menu </button>
+			<button id="nextQuestion" class="menuButton"> Next question </button>
 		</div>
 		
 		

@@ -110,9 +110,9 @@ input {
   list-style-type: none;
   text-align: center;
   text-shadow: 0 -1px 0 #000000;
-  font-weight: 130;
+  font-weight: 120;
   font-size: 34px;
-  line-height: 130px;
+  line-height: 120px;
 }
 
 /* Progress bar styling*/
