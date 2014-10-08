@@ -14,6 +14,86 @@ $(function() {
 			 }
 		 });	  
   }
+  var quiz = Parse.Object.extend("Quiz",{
+	  	  
+	  initialize: function(){
+		  var scores = Parse.Object.extend("Scores");
+		  var score = new scores();
+
+		  score.set("userid", Parse.User.current().getUsername());
+		  score.set("quizid", Number("12345"));
+		  score.set("scores",[0]);
+		  score.add("scores", 1);
+		  console.warn(score.get("scores"));
+//		  score.save(null, {
+//			  success: function(question) {
+//				   alert("it worked");
+//			  },
+//			  error: function(question, error) {
+//				  alert('Failed to create new object, with error code: ' + error.message);
+//			  }
+//			});
+		  
+		  
+	  },
+	  newQuestion: function(q){
+			  var self= this;
+			  var question= Parse.Object.extend("Question");
+			  var questionQuery = new Parse.Query(question);
+			  questionQuery.equalTo("objectId", q);
+			  questionQuery.first({
+				success:function(res){
+					self.correctAnswer=res.get("correctAnswer");
+					
+					$("#question").html(res.get("text"));
+					$("#alt1").html(res.get("answers").shift());
+					$("#alt2").html(res.get("answers").shift());
+					$("#alt3").html(res.get("answers").shift());
+					$("#alt4").html(res.get("answers").shift());
+				}
+		  });
+		  },
+			 answer: function(e){
+				  answer=$(e.target).text();
+				  if(answer==this.correctAnswer){
+					  this.correct();
+				  }
+				  else{
+					  this.wrong();
+					  console.log("you guessed wrong");
+				  }
+			  },
+			  test: function(){
+				  alert("test");
+			  },
+			  wrong: function(){
+				
+				quiz=this
+				question= quiz.attributes.questions.shift();
+				if(question!=undefined){
+					this.newQuestion(question);
+				}
+				else{
+					Parse.history.navigate("score", {trigger:true});
+				}
+			  },
+			  correct: function(){
+				  console.log("correct");
+
+				  question= this.attributes.questions.length;
+				  if(question>0){
+					  Parse.history.navigate("score", {trigger: true});
+					  //this.newQuestion(question);  
+				  }
+				  else{
+					  alert("no more questions");
+					  Parse.history.navigate("score", {trigger:true});					  
+				  }
+			  },
+	  });
+  
+  
+  var theQuiz = new quiz();
   var menuView = Parse.View.extend({
 	 events: {
 		 "click #startGameButton": "startGame",
@@ -26,15 +106,12 @@ $(function() {
 		 this.render();
 		 Parse.Cloud.run("hello", {}, {
 			 success: function(result){
-				 console.log(result);
 			 },
 		 });
 		 Parse.Cloud.run("testu", {test: "testy"}, {
 			 success: function(result){
-				 console.log(result);
 			 },
 			 error: function(error){
-				 console.log(error);
 			 }
 		 });
 		 authenticate();
@@ -74,7 +151,6 @@ $(function() {
   		authenticate();
   	 },
   	 startQuiz: function(){
-  		 console.log(" do something");
   		 var id= $("#quizID").val();
   		 localStorage.setItem("Quizid", id);
   		 Parse.history.navigate("quiz", {trigger:true});
@@ -86,100 +162,48 @@ $(function() {
   });
   var correctAnswer;
   var score;
+  var tQuiz;
+  var query;
   var quizView = Parse.View.extend({
 
 	  events: {
 		"click .answer": "answer",
-		"click .toMenu": "toMenu" 
+		"click .toMenu": "toMenu",
 	  },
 	  el: ".content",
 	  
 	  initialize: function (){
 		  authenticate();
-		  var scoreObj= Parse.Object.extend("Score");
-		  score = new scoreObj();
-		  score.set("points", 0);
-		  
-		  correctAnswer;
-		  var theQuiz;
-		  self=this;	
-		  this.render();
-		  console.log("getEmail");
-	 	  var quiz = Parse.Object.extend("Quiz");
-		  var query = new Parse.Query(quiz);
-		  var id = localStorage.getItem("Quizid");
-		  var numberId=Number(id);
-		  console.log(numberId);
-		  query.equalTo("code", numberId);
-		  query.first({
-			  success: function(results){	 
-				  console.log(results);
-				  self.theQuiz=results;
-				  var firstQ=self.theQuiz.attributes.questions.shift();	
-				  self.newQuestion(firstQ);
-				 },
-			  error: function(error){
-				 console.log("no quiz with that code");
-			  }
+		  if(query==undefined){
+			  correctAnswer;
+			  self=this;	
+			  this.render();
+			  query = new Parse.Query(quiz);
+			  var id = localStorage.getItem("Quizid");
+			  var numberId=Number(id);
+			  query.equalTo("code", numberId);
+			  query.first({
+				  success: function(results){	 
+					  theQuiz=results;
+					  tQuiz=results;
+					  results.newQuestion(results.attributes.questions.shift());
+				  
+				  },
+				  error: function(error){
+					  console.log("no quiz with that code");
+				  }
 			  });
-	  },
+		  }
+		  else{
+			  theQuiz.newQuestion(theQuiz.attributes.questions.shift());
+			  this.render();
+		  }
+		  },
+	  
 	  answer: function(e){
-		  answer=$(e.target).text();
-		  if(answer==self.correctAnswer){
-			  self.correct();
-		  }
-		  else{
-			  self.wrong();
-			  console.log("you guessed wrong");
-		  }
+		  tQuiz.answer(e);
 	  },
-	  wrong: function(){
-		
-		quiz=self.theQuiz;
-		question= quiz.attributes.questions.shift();
-		if(question!=undefined){
-			self.newQuestion(question);
-		}
-		else{
-			localstorage.setItem("totScore", score.get("points"));
-			Parse.history.navigate("score", {trigger:true});
-		}
-		
-	  },
-	  correct: function(){
-		  
-		  var points=score.get("points")+100;
-		  score.set("points", points);
-		  console.log(points);
-		  quiz = self.theQuiz;
-		  question= quiz.attributes.questions.shift();
-		  console.log(question);
-		  if(question!=undefined){
-			  self.newQuestion(question);  
-		  }
-		  else{
-			  alert("no more questions");
-			  localStorage.setItem("totScore", points);
-			  Parse.history.navigate("score", {trigger:true});
-			  
-		  }
-	  },
-	  newQuestion: function(q){
-		  var question= Parse.Object.extend("Question");
-		  var questionQuery = new Parse.Query(question);
-		  questionQuery.equalTo("objectId", q);
-		  questionQuery.first({
-			success:function(res){
-				self.correctAnswer=res.get("correctAnswer");
-				$("#question").html(res.get("text"));
-				$("#alt1").html(res.get("answers").shift());
-				$("#alt2").html(res.get("answers").shift());
-				$("#alt3").html(res.get("answers").shift());
-				$("#alt4").html(res.get("answers").shift());
-			}
-	  });
-	 },
-	 
+
 	  toMenu: function(){
 		 console.log("toMenu");
 		 Parse.history.navigate("menu", {trigger:true});
@@ -194,7 +218,9 @@ $(function() {
   });
   var scoreView = Parse.View.extend({
 	 events: { 
-		 "click #getUser": "getUser"
+		 "click #getUser": "getUser",
+		 "click .toMenu": "toMenu",
+		 "click #nextQuestion": "nextQuestion"
 	 },
 	 el: ".content",
 	 
@@ -208,8 +234,17 @@ $(function() {
 	 },
 	 getUser: function(){
 		 console.log(Parse.User.current());
-	 }
+	 },
+	 nextQuestion: function(){
+		 Parse.history.navigate("quiz", {trigger:true});
+	 },
+	 toMenu: function(){
+			 console.log("toMenu");
+			 Parse.history.navigate("menu", {trigger:true});
+			 this.undelegateEvents();		  
+		  }
   });
+	 
   
   var anotherTestView = Parse.View.extend({
 	 events: {
@@ -228,8 +263,6 @@ $(function() {
 		 Parse.history.navigate("menu", {trigger:true});
 		 this.undelegateEvents();
 	 },
-
-	 
 	 render: function(){
 		 this.$el.html(_.template($("#anotherTest-template").html()));
 		 this.delegateEvents();
@@ -335,7 +368,6 @@ $(function() {
 
     initialize: function() {
     	this.render();
-      console.log("when is this run?");
     },
 
     render: function() {
