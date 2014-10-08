@@ -40,16 +40,15 @@
 	<div class="centering">
 		
 		<h2 class="questionCentering" id="question">Question 1</h2>
-		<img id="ghost" src="images/logo1.png" onload="setTimeout(function(){gameSequence()}, 100)">
 		<img id="number" src="images/number3.png" alt="number">
 		
 		<progress id="progressbar" value="0" max="1000"></progress> 
 
 		<div class="answer">
-			<button class="menuButton" id="alt1" onclick="altClicked()">alt1</button>
-			<button class="menuButton" id="alt2" onclick="altClicked()">alt2</button>
-			<button class="menuButton" id="alt3" onclick="altClicked()">alt3</button>
-			<button class="menuButton" id="alt4" onclick="altClicked()">alt4</button>
+			<button class="menuButton" id="alt1">alt1</button>
+			<button class="menuButton" id="alt2">alt2</button>
+			<button class="menuButton" id="alt3">alt3</button>
+			<button class="menuButton" id="alt4">alt4</button>
 		</div>
 		
 		<button class="toMenu menuButton">Back to menu</button> 
@@ -67,16 +66,16 @@
 		<div class="centering">
 		
 			<h2 class="questionCentering" id="question">Question 1</h2>
-			<img id="ghost" src="images/logo1.png" onload="setTimeout(function(){gameSequence()}, 100)">
+			<img id="ghost" src="images/logo1.png" onload="gameSequence()">
 			<img id="numbertest" src="images/number3.png" alt="number" >
 
 			<progress id="progressbar" value="0" max="1000"></progress> 
 
 			<div class="answer">
-				<button class="menuButton" id="test1" onclick="altClicked()">alt1</button>
-				<button class="menuButton" id="test2" onclick="altClicked()">alt2</button>
-				<button class="menuButton" id="test3" onclick="altClicked()">alt3</button>
-				<button class="menuButton" id="test4" onclick="altClicked()">alt4</button>
+				<button class="menuButton" id="test1" onclick="altClicked)">alt1</button>
+				<button class="menuButton" id="test2" onclick="altClicked)">alt2</button>
+				<button class="menuButton" id="test3">alt3</button>
+				<button class="menuButton" id="test4">alt4</button>
 			</div>
 		<button class="toMenu menuButton">To menu</button>
 		</br>

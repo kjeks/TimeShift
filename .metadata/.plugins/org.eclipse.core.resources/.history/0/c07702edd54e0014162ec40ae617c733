@@ -44,7 +44,6 @@ function progressbar(){
 		if (answer) {
 			clearInterval(animate);
 			$('.progress-value').html(zero + '%');
-			console.log(progressbar.val(value));
 			console.log("zero?");
 		}
 	};

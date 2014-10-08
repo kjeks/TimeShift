@@ -17,7 +17,6 @@ function altClicked(){
 	console.log("Clicked an alt");
 	answer = true;
 	getScore();
-	progressbar
 }
 
 
@@ -27,7 +26,6 @@ function progressbar(){
 	clearInterval(animate);
 	var progressbar = $('#progressbar'),
 	max = progressbar.attr('max'),
-	zero = 0,
 	time = (1000/max)*20,	
 	value = 0;
 		
@@ -43,9 +41,7 @@ function progressbar(){
 	    }
 		if (answer) {
 			clearInterval(animate);
-			$('.progress-value').html(zero + '%');
-			console.log(progressbar.val(value));
-			console.log("zero?");
+			$('.progress-value').html(0 + '%');
 		}
 	};
 	var animate = setInterval(function() {
@@ -65,7 +61,7 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
-	document.getElementById("number").src = "images/number3.png";
+	document.getElementById("numbertest").src = "images/number3.png";
 	$("#number").show();
 	$("#ghost").hide()
 	$("#question").hide()
@@ -74,14 +70,14 @@ function gameSequence() {
 	$("#alt2").hide();
 	$("#alt3").hide();
 	$("#alt4").hide();
-	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
-	setTimeout(function(){document.getElementById("number").src = "images/number1.png"}, 2000);
+	setTimeout(function(){document.getElementById("numbertest").src = "images/number2.png"}, 1000);
+	setTimeout(function(){document.getElementById("numbertest").src = "images/number1.png"}, 2000);
 	setTimeout(function(){$("#number").hide()}, 3000);
 	
 	setTimeout(function(){$("#question").show()}, 3000);
 	setTimeout(function(){$("#alt1").show()}, 3000);
 	setTimeout(function(){$("#alt2").show()}, 3000);
 	setTimeout(function(){$("#alt3").show()}, 3000);
-	setTimeout(function(){$("#alt4").show()}, 3000);
+	setTimeout(function(){$("#alt").show()}, 3000);
 	setTimeout(function(){progressbar()}, 3000);
 }
