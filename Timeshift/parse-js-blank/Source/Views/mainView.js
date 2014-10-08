@@ -14,16 +14,19 @@ $(function() {
 			 }
 		 });	  
   }
+  var view = this;
   var quiz = Parse.Object.extend("Quiz",{
 	  	  
 	  initialize: function(){
+		  
+		  var self= this;
 		  var scores = Parse.Object.extend("Scores");
 		  var score = new scores();
+		  this.score= score;
 
 		  score.set("userid", Parse.User.current().getUsername());
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);
-		  score.add("scores", 1);
 		  console.warn(score.get("scores"));
 //		  score.save(null, {
 //			  success: function(question) {
@@ -33,8 +36,6 @@ $(function() {
 //				  alert('Failed to create new object, with error code: ' + error.message);
 //			  }
 //			});
-		  
-		  
 	  },
 	  newQuestion: function(q){
 			  var self= this;
@@ -56,6 +57,7 @@ $(function() {
 			 answer: function(e){
 				  answer=$(e.target).text();
 				  if(answer==this.correctAnswer){
+					  console.warn("how many times?");
 					  this.correct();
 				  }
 				  else{
@@ -67,25 +69,31 @@ $(function() {
 				  alert("test");
 			  },
 			  wrong: function(){
-				
-				quiz=this
-				question= quiz.attributes.questions.shift();
-				if(question!=undefined){
-					this.newQuestion(question);
+				console.warn(this.score.get("userid"));
+				this.score.add("scores", 0);
+				question= this.attributes.questions.length;
+				if(question>0){
+					self.undelegateEvents();
+					Parse.history.navigate("score", {trigger: true});
 				}
 				else{
+					console.log("wrong more questions");
+					self.undelegateEvents();
 					Parse.history.navigate("score", {trigger:true});
 				}
 			  },
 			  correct: function(){
 				  console.log("correct");
-
+				  this.score.add("scores", 100);
 				  question= this.attributes.questions.length;
 				  if(question>0){
+					  self.undelegateEvents();
 					  Parse.history.navigate("score", {trigger: true});
 					  //this.newQuestion(question);  
 				  }
 				  else{
+					  self.undelegateEvents();
+					  console.warn(this.score.get("scores"));
 					  alert("no more questions");
 					  Parse.history.navigate("score", {trigger:true});					  
 				  }
@@ -201,6 +209,7 @@ $(function() {
 		  },
 	  
 	  answer: function(e){
+		  this.undelegateEvents();
 		  tQuiz.answer(e);
 	  },
 
@@ -230,12 +239,20 @@ $(function() {
 	 },
 	 render: function(){
 		 this.$el.html(_.template($("#score-template").html()));
-		 $("#getUser").html(localStorage.getItem("totScore"));
+		 var sum= theQuiz.score.get("scores");
+		 var totSum=0;
+		 console.warn(sum);
+		 for(a=0; a<sum.length; a++){
+			 totSum+=sum[a];
+		 }
+		 
+		 $("#getUser").html(totSum);
 	 },
 	 getUser: function(){
 		 console.log(Parse.User.current());
 	 },
 	 nextQuestion: function(){
+		 this.undelegateEvents();
 		 Parse.history.navigate("quiz", {trigger:true});
 	 },
 	 toMenu: function(){
