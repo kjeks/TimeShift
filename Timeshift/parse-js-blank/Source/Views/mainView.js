@@ -23,8 +23,9 @@ $(function() {
 		  var scores = Parse.Object.extend("Scores");
 		  var score = new scores();
 		  this.score= score;
-
-		  score.set("userid", Parse.User.current().getUsername());
+		  if(Parse.User.current()!=undefined){
+			  score.set("userid", Parse.User.current().getUsername());
+		  }
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);
 		  console.warn(score.get("scores"));
@@ -36,6 +37,9 @@ $(function() {
 //				  alert('Failed to create new object, with error code: ' + error.message);
 //			  }
 //			});
+	  },
+	  getProgress: function(){
+		return 1000-$("#progressbar").val(); 
 	  },
 	  newQuestion: function(q){
 			  var self= this;
@@ -69,7 +73,6 @@ $(function() {
 				  alert("test");
 			  },
 			  wrong: function(){
-				console.warn(this.score.get("userid"));
 				this.score.add("scores", 0);
 				question= this.attributes.questions.length;
 				if(question>0){
@@ -77,6 +80,7 @@ $(function() {
 					Parse.history.navigate("score", {trigger: true});
 				}
 				else{
+					this.score.save();
 					console.log("wrong more questions");
 					self.undelegateEvents();
 					Parse.history.navigate("score", {trigger:true});
@@ -84,7 +88,7 @@ $(function() {
 			  },
 			  correct: function(){
 				  console.log("correct");
-				  this.score.add("scores", 100);
+				  this.score.add("scores", this.getProgress());
 				  question= this.attributes.questions.length;
 				  if(question>0){
 					  self.undelegateEvents();
@@ -92,6 +96,7 @@ $(function() {
 					  //this.newQuestion(question);  
 				  }
 				  else{
+					  this.score.save();
 					  self.undelegateEvents();
 					  console.warn(this.score.get("scores"));
 					  alert("no more questions");
