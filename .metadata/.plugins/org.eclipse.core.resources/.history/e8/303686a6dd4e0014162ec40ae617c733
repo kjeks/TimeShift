@@ -39,37 +39,26 @@
     <script type="text/template" id="quiz-template">
 	<div class="centering">
 		
-		<h2 class="questionCentering hidez" id="question"></h2>
-		<img id="ghost" src="images/logo1.png" class="hidez" onload="setTimeout(function(){gameSequence()}, 100)">
+		<h2 class="questionCentering" id="question">Question 1</h2>
+		<img id="ghost" src="images/logo1.png" onload="setTimeout(function(){gameSequence()}, 100)">
 		<img id="number" src="images/number3.png" alt="number">
 		
-		<progress class="hidez" id="progressbar" value="0" max="1000"></progress> 
+		<progress id="progressbar" value="0" max="1000"></progress> 
 
 		<div class="answer">
-			<button class="menuButton hidez" id="alt1" onclick="altClicked()">alt1</button>
-			<button class="menuButton hidez" id="alt2" onclick="altClicked()">alt2</button>
-			<button class="menuButton hidez" id="alt3" onclick="altClicked()">alt3</button>
-			<button class="menuButton hidez" id="alt4" onclick="altClicked()">alt4</button>
+			<button class="menuButton hide" id="alt1" onclick="altClicked()">alt1</button>
+			<button class="menuButton hide" id="alt2" onclick="altClicked()">alt2</button>
+			<button class="menuButton hide" id="alt3" onclick="altClicked()">alt3</button>
+			<button class="menuButton hide" id="alt4" onclick="altClicked()">alt4</button>
 		</div>
 		
-		<button class="toMenu menuButton hidez" id="menubutton">Back to menu</button> 
+		<button class="toMenu menuButton">Back to menu</button> 
 	</div>
 	</script>
 	<script type="text/template" id="score-template">
-		<div class="centering">
-			<h2>Top 3:</h2>
-			<h3>
-			<ul>
-				<li>Adam  : 1337</li>
-				<li>Bernt : 123</li>
-				<li>Eva   : -1</li>
-			</ul>
-			
-			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>
-			</h3>
-			<button class="menuButton toMenu">Back to menu </button>
-			<button id="nextQuestion" class="menuButton"> Next question </button>
-		</div>
+		<h1> you got: <span id="getUser">if you can read this, something went wrong:(</span> points</h1>
+		<button class="toMenu"> back to menu </button>
+		<button id="nextQuestion"> next question </button>
 		
 		
     </script>

@@ -65,16 +65,23 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
+	$("#ghost").hide()
+	$("#question").hide()
+	$("#progressbar").hide();
+	//$("#alt1").hide();
+	//$("#alt2").hide();
+	//$("#alt3").hide();
+	//$("#alt4").hide();
 	document.getElementById("number").src = "images/number3.png";
 	$("#number").show();
 	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
 	setTimeout(function(){document.getElementById("number").src = "images/number1.png"}, 2000);
 	setTimeout(function(){$("#number").hide()}, 3000);
+	
 	setTimeout(function(){$("#question").show()}, 3000);
 	setTimeout(function(){$("#alt1").show()}, 3000);
 	setTimeout(function(){$("#alt2").show()}, 3000);
 	setTimeout(function(){$("#alt3").show()}, 3000);
 	setTimeout(function(){$("#alt4").show()}, 3000);
-	setTimeout(function(){$("#menubutton").show()}, 3000);
 	setTimeout(function(){progressbar()}, 3000);
 }

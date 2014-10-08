@@ -57,18 +57,9 @@
 	</script>
 	<script type="text/template" id="score-template">
 		<div class="centering">
-			<h2>Top 3:</h2>
-			<h3>
-			<ul>
-				<li>Adam  : 1337</li>
-				<li>Bernt : 123</li>
-				<li>Eva   : -1</li>
-			</ul>
-			
-			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>
-			</h3>
-			<button class="menuButton toMenu">Back to menu </button>
-			<button id="nextQuestion" class="menuButton"> Next question </button>
+			<h1> you got: <span id="getUser">if you can read this, something went wrong:(</span> points</h1>
+			<button class="menuButton toMenu"> back to menu </button>
+			<button id="menuButton nextQuestion"> next question </button>
 		</div>
 		
 		

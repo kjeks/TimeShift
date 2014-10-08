@@ -65,6 +65,14 @@ function getScore(){
 
 function gameSequence() {
 	console.log("Started sequence");
+	$("#menubutton").hide();
+	/*$("#ghost").hide()
+	$("#question").hide()
+	$("#progressbar").hide();
+	$("#alt1").hide();
+	$("#alt2").hide();
+	$("#alt3").hide();
+	$("#alt4").hide();*/
 	document.getElementById("number").src = "images/number3.png";
 	$("#number").show();
 	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
