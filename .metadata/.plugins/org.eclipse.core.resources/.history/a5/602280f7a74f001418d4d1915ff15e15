@@ -135,7 +135,7 @@
           <button class="menuButton">Log In</button>
         </form>
 		
-		<p id="showsignuptext" align="right" class="blueText" onclick="showSignup()">Don't have an account?</p>
+		<p id="showsignuptext"align="right" class="blueText" onclick="showSignup()">Don't have an account?</p>
 
         <form id="signupForm" class="signup-form hidez">
           <h2>Sign Up</h2>

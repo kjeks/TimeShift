@@ -43,12 +43,10 @@ input {
     color: black;
 }
 
-.blueText{
-	color: #8282ff;
-}
-
+@blueText:#8282ff
+	
 li {
-	color: #8282ff;
+	color: @blueText;
 	list-style-type: none;
 }
 .centering{

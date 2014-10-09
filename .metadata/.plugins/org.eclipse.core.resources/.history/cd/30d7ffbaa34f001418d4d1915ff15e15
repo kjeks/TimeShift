@@ -1,3 +1,7 @@
+/*TODO: Lage egne knapper for svaralternativer som er lettere å trykke på*/
+
+
+
 body {
 	background-color: hsl(217, 6%, 41%);
 	display: box;
@@ -43,14 +47,18 @@ input {
     color: black;
 }
 
-.blueText{
+.blueText {
 	color: #8282ff;
 }
 
-li {
-	color: #8282ff;
-	list-style-type: none;
+.blueText a{
+	color: red;
 }
+
+.blueText a:hover{
+	color: yellow;
+}
+
 .centering{
 	width: 304px;
 	margin-left: auto;
@@ -68,6 +76,10 @@ li {
 
 a:link, a:hover, a:visited{
 	color: #8282ff;
+}
+
+.hidez a:hover{
+	color: yellow;
 }
 
 .logo{
@@ -160,4 +172,7 @@ progress::-webkit-progress-value {
 	0% {background-position: 0px 0px, 0 0, 0 0}
 	100% {background-position: -100px 0px, 0 0, 0 0}
 }
+
+/* Prefix-free was creating issues with the animation */
+
 

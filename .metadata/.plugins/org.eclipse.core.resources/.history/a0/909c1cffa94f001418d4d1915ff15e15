@@ -161,3 +161,6 @@ progress::-webkit-progress-value {
 	100% {background-position: -100px 0px, 0 0, 0 0}
 }
 
+/* Prefix-free was creating issues with the animation */
+
+

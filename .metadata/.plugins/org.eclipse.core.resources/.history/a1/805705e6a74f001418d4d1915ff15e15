@@ -1,3 +1,7 @@
+/*TODO: Lage egne knapper for svaralternativer som er lettere å trykke på*/
+
+
+
 body {
 	background-color: hsl(217, 6%, 41%);
 	display: box;
@@ -47,10 +51,10 @@ input {
 	color: #8282ff;
 }
 
-li {
+.showsignuptext {
 	color: #8282ff;
-	list-style-type: none;
 }
+
 .centering{
 	width: 304px;
 	margin-left: auto;
@@ -160,4 +164,7 @@ progress::-webkit-progress-value {
 	0% {background-position: 0px 0px, 0 0, 0 0}
 	100% {background-position: -100px 0px, 0 0, 0 0}
 }
+
+/* Prefix-free was creating issues with the animation */
+
 
