@@ -49,11 +49,18 @@ input {
 /*gold #FFD700, silver #C0C0C0, bronze #cd7f32*/
 
 li {
-	list-style-type: disc;
+	list-style-type: none;
 }
 
 li span{
 	color: #2b2f36;
+}
+
+li:before {
+    content:"· ";
+    font-size:14px;
+    /*vertical-align:middle;*/
+    line-height:14px;
 }
 
 li.gold{

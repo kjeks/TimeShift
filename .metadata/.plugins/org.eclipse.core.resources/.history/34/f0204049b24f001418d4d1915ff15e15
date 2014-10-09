@@ -51,7 +51,6 @@ input {
 li {
 	list-style-type: disc;
 }
-
 li span{
 	color: #2b2f36;
 }

@@ -60,9 +60,9 @@
 			<h2>Top 3:</h2>
 			<h3>
 			<ul>
-				<li class="gold"><span>Adam  : 1337</span></li>
-				<li class="silver"><span>Bernt : 123</span></li>
-				<li class="bronze"><span>Eva   : -1</span></li>
+				<li>Adam  : 1337</li>
+				<li>Bernt : 123</li>
+				<li>Eva   : -1</li>
 			</ul>
 			
 			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>

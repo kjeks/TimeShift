@@ -49,25 +49,9 @@ input {
 /*gold #FFD700, silver #C0C0C0, bronze #cd7f32*/
 
 li {
-	list-style-type: disc;
+	color: #8282ff;
+	list-style-type: none;
 }
-
-li span{
-	color: #2b2f36;
-}
-
-li.gold{
-    color: #FFD700;
-}
-
-li.silver {
-	color: #C0C0C0;
-}
-
-li.bronze {
-	color: #cd7f32
-}
-
 .centering{
 	width: 304px;
 	margin-left: auto;
