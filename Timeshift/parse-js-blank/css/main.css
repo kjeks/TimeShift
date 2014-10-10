@@ -68,6 +68,47 @@ li.bronze {
 	color: #cd7f32
 }
 
+li.lobbyelement:nth-child(odd) {
+	list-style-type: none;
+	margin-left: -40px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 18px;
+	border-top-style: solid;
+    border-width: 1px;
+	border-color: black;
+	background-color: #7f8286;
+}
+
+li.lobbyelement:nth-child(even) {
+	list-style-type: none;
+	margin-left: -40px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 18px;
+	border-top-style: solid;
+    border-width: 1px;
+	border-color: black
+	background-color: #62676f;
+}
+
+li.userlobbyelement {
+	list-style-type: none;
+	margin-left: -40px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 20px;
+	background-color: #7f8286;
+}
+
+.glyphiconGreen {
+	color: green;
+}
+
+.glyphiconRed {
+	color: #e50000;
+}
+
 .centering{
 	width: 304px;
 	margin-left: auto;
@@ -140,7 +181,7 @@ a:link, a:hover, a:visited{
 .readyButton {
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: auto;
+  margin-left: 52px;
   margin-right: auto;
   width: 200px;
   height: 35px;
@@ -156,6 +197,7 @@ a:link, a:hover, a:visited{
   font-weight: 200;
   font-size: 18px;
   line-height: 35px;
+  position: relative;
 }
 
 /* Progress bar styling*/

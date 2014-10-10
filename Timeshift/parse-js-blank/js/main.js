@@ -6,11 +6,29 @@ function altClicked(){
 	getScore();
 }
 
+function readyClicked(){
+	console.log("Clicked ready");
+	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphicon-remove(?!\S)/g , '' );
+	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphiconRed(?!\S)/g , '' );
+	document.getElementById("userLine").className += " glyphicon-ok";
+	document.getElementById("userLine").className += " glyphiconGreen";
+	$("#readyIcon").show();
+}
+
 function showSignup(){
 	$("#signupForm").show();
 	$("#showsignuptext").hide();
 }
 
+function dots(){
+	var dots = window.setInterval( function() {
+		var wait = document.getElementById("waitDots");
+		if ( wait.innerHTML.length > 2 ) 
+   	 		wait.innerHTML = "";
+		else 
+    		wait.innerHTML += ".";
+		}, 400);
+}
 
 function progressbar(){
 	$("#progressbar").show();

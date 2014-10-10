@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Timeshift</title>
+<!--<link href="css/todos.css" media="all" rel="stylesheet" type="text/css"/>-->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/main.css">
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="js/underscore.js"></script>
+<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+<script src="Source/Views/mainView.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/test.js"></script>
+<script src="js/jquery.js" type="text/javascript"></script> 
+<script src="js/main.js"></script> 
+
+</head>
+
+<body>
+	<!-- Todo App Interface -->
+
+	<div id="timeshift">
+		<div class="logo">
+			<img src="images/logo1.png" alt="Logo">
+		</div>
+
+		<div class="content"></div>
+	</div>
+
+	</script>
+	<script type="text/template" id="quizSelector-template">
+	<div class="centering">
+		<input type="textbox" id="quizID" placeholder="Enter quiz code">
+		<button id="IDSubmit" class="menuButton">Submit</button>
+	</div>
+	</script>
+    <script type="text/template" id="quiz-template">
+	<div class="centering">
+		
+		<h2 class="questionCentering hidez" id="question"></h2>
+		<img id="ghost" src="images/logo1.png" class="hidez" onload="setTimeout(function(){gameSequence()}, 100)">
+		<img id="number" src="images/number3.png" alt="number">
+		
+		<progress class="hidez" id="progressbar" value="0" max="1000"></progress> 
+
+		<div class="answer">
+			<button class="answerButton hidez" id="alt1" onclick="altClicked()">alt1</button>
+			<button class="answerButton hidez" id="alt2" onclick="altClicked()">alt2</button>
+			<button class="answerButton hidez" id="alt3" onclick="altClicked()">alt3</button>
+			<button class="answerButton hidez" id="alt4" onclick="altClicked()">alt4</button>
+		</div>
+		
+		<button class="toMenu menuButton hidez" id="menubutton">Back to menu</button> 
+	</div>
+	</script>
+	
+	<script type="text/template" id="lobby-template">
+		<div class="centering">
+			<h2>Waiting for players<span id="waitDots">.</h2>
+			<ul>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconGreen"></span> HEi på deg</li>
+				<li class="lobbyelement"><span id="userLine" class="glyphicon glyphicon-remove glyphiconRed"></span> HEi på deg</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconGreen"></span> HEi på deg</li>
+			</ul>
+			
+			
+			<button class="readyButton" id="readybutton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
+		</div>
+		
+		//Dot script
+		var dots = window.setInterval( function() {
+    	var wait = document.getElementById("waitDots");
+    	if ( wait.innerHTML.length > 3 ) 
+       	 	wait.innerHTML = "";
+    	else 
+        	wait.innerHTML += ".";
+    	}, 100);
+</script>
+    </script>
+    
+	<script type="text/template" id="score-template">
+		<div class="centering">
+			<h2>Top 3:</h2>
+			<h3>
+			<ul>
+				<li class="gold"><span>Adam  : 1337</span></li>
+				<li class="silver"><span>Bernt : 123</span></li>
+				<li class="bronze"><span>Eva   : -1</span></li>
+			</ul>
+			
+			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>
+			</h3>
+			
+			<button id="nextQuestion" class="menuButton"> Next question </button>
+			<button class="menuButton toMenu">Back to menu </button>
+		</div>
+		
+		
+    </script>
+    
+	<script type="text/template" id="anotherTest-template">
+	<div class="centering">
+    		
+		<div class="centering">
+		
+			<h2 class="questionCentering" id="question">Question 1</h2>
+			<img id="ghost" src="images/logo1.png" onload="setTimeout(function(){gameSequence()}, 100)">
+			<img id="numbertest" src="images/number3.png" alt="number" >
+
+			<progress id="progressbar" value="0" max="1000"></progress> 
+
+			<div class="answer">
+				<button class="menuButton" id="test1" onclick="altClicked()">alt1</button>
+				<button class="menuButton" id="test2" onclick="altClicked()">alt2</button>
+				<button class="menuButton" id="test3" onclick="altClicked()">alt3</button>
+				<button class="menuButton" id="test4" onclick="altClicked()">alt4</button>
+			</div>
+		<button class="toMenu menuButton">To menu</button>
+		</br>
+		<button id="writeTo" class="menuButton">Write to server</button>
+		</br>
+		<button id="getEmail" class="menuButton">Read from server</button>
+		</br>
+		<button class="toMenu menuButton">Back to menu</button> 
+	</div>
+	</div>
+    </script>
+
+	<script type="text/template" id="menu-template">
+
+	<div class="centering">
+		<div class="">
+			<button id="startGameButton" class="menuButton">Start new game</button><br>
+			<button id="toTests" class="menuButton">To tests</button><br>
+			<button id="logOutButton" class="menuButton">Log out</button>
+		</div>
+	</div>
+	</script>
+	
+	<script type="text/template" id="signup-template">
+
+	<div class="">
+		
+			<button id="startGameButton" class="menuButton ">Start new game</button>
+			<button id="toTests" class="menuButton">To tests</button>
+			<button id="logOutButton" class="menuButton">Log out</button>
+	</div>
+	</script>
+
+	<script type="text/template" id="login-template">
+      <header id="header"></header>
+      <div class="centering">
+        <form class="login-form">
+          <!-- <h2>Log In</h2> -->
+          <div class="error" style="display:none"></div>
+          <input type="text" id="login-username" placeholder="Username" /><br>
+          <input type="password" id="login-password" placeholder="Password" /><br>
+          <button class="menuButton">Log In</button>
+        </form>
+		
+		<p id="showsignuptext" align="right" class="blueText" onclick="showSignup()">Don't have an account?</p>
+
+        <form id="signupForm" class="signup-form hidez">
+          <h2>Sign Up</h2>
+          <div class="error" style="display:none"></div>
+          <input type="text" id="signup-username" placeholder="Username" /><br>
+          <input type="password" id="signup-password" placeholder="Create a Password" /><br>
+          <button class="menuButton">Sign Up</button>
+        </form>
+      </div>
+    </script>
+
+</body>
+</html>
