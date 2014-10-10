@@ -434,8 +434,7 @@ $(function() {
       "menu": "menu",
       "score": "score",
       "anotherTest": "anotherTest",
-      "quizSelector": "quizSelector",
-      "lobby": "lobby"
+      "quizSelector": "quizSelector"
       
     },
 
@@ -464,9 +463,6 @@ $(function() {
     quizSelector: function(){
     	new quizSelectorView();
     },
-    lobby: function(){
-    	new lobbyView();
-    }
   });
 
   new AppRouter;

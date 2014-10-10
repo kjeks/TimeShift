@@ -155,7 +155,7 @@ $(function() {
   });
   var quizSelectorView = Parse.View.extend({
 	 events: {
-		 "click #IDSubmit": "toLobby"
+		 "click #IDSubmit": "startQuiz"
 	 }, 
   	 el: ".content",
   	 
@@ -163,12 +163,10 @@ $(function() {
   		 this.render();
   		authenticate();
   	 },
-  	 toLobby: function(){
-  		 Parse.history.navigate("lobby", {trigger:true});
-  	 },
   	 startQuiz: function(){
   		 var id= $("#quizID").val();
   		 localStorage.setItem("Quizid", id);
+  		 Parse.history.navigate("quiz", {trigger:true});
   	 },
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
@@ -176,7 +174,7 @@ $(function() {
   	 }
   });
   
-  var lobbyView = Parse.View.extend({
+  var lobbyelectorView = Parse.View.extend({
 		 events: {
 			 "click #readyButton": "startQuiz"
 		 }, 
@@ -187,10 +185,12 @@ $(function() {
 	  		authenticate();
 	  	 },
 	  	 startQuiz: function(){
+	  		 var id= $("#quizID").val();
+	  		 localStorage.setItem("Quizid", id);
 	  		 Parse.history.navigate("quiz", {trigger:true});
 	  	 },
 	  	 render: function(){
-	 		this.$el.html(_.template($("#lobby-template").html()));
+	 		this.$el.html(_.template($("#quizSelector-template").html()));
 			this.delegateEvents(); 
 	  	 }
 	  });
@@ -434,8 +434,7 @@ $(function() {
       "menu": "menu",
       "score": "score",
       "anotherTest": "anotherTest",
-      "quizSelector": "quizSelector",
-      "lobby": "lobby"
+      "quizSelector": "quizSelector"
       
     },
 
@@ -464,9 +463,6 @@ $(function() {
     quizSelector: function(){
     	new quizSelectorView();
     },
-    lobby: function(){
-    	new lobbyView();
-    }
   });
 
   new AppRouter;

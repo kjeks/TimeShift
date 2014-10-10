@@ -464,9 +464,6 @@ $(function() {
     quizSelector: function(){
     	new quizSelectorView();
     },
-    lobby: function(){
-    	new lobbyView();
-    }
   });
 
   new AppRouter;

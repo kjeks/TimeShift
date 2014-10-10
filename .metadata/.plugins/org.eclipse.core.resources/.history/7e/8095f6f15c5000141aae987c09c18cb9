@@ -4,6 +4,7 @@ function altClicked(){
 	console.log("Clicked an alt");
 	answer = true;
 	getScore();
+	progressbar
 }
 
 function showSignup(){

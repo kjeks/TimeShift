@@ -64,7 +64,7 @@
 				<li class="lobbyuser"><span>Earnie</span></li>
 			</ul>
 			
-			<button id="readyButton" class="readyButton">Ready<span class="glyphicon glyphicon-remove</span></button>
+			<button id="" class="readyButton">Ready<span class="glyphicon glyphicon-remove</span></button>
 			
 		</div>
 		

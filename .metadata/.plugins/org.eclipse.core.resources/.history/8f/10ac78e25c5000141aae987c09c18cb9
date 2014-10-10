@@ -1,9 +1,23 @@
 var answer = false;
 
+
+$("#test1").click(function() {
+	console.log("Calling sequence");
+	setTimeout(function(){gameSequence()}, 100);
+});
+	
+//Legg til alt1 også når testing er ferdig
+$("#test2, #test3, #test4").click(function () {
+	console.log("Clicked an alt");
+	answer = true;
+	getScore();
+});
+
 function altClicked(){
 	console.log("Clicked an alt");
 	answer = true;
 	getScore();
+	progressbar
 }
 
 function showSignup(){

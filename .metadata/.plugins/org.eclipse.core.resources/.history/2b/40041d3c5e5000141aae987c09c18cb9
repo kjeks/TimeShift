@@ -155,7 +155,7 @@ $(function() {
   });
   var quizSelectorView = Parse.View.extend({
 	 events: {
-		 "click #IDSubmit": "toLobby"
+		 "click #IDSubmit": "startQuiz"
 	 }, 
   	 el: ".content",
   	 
@@ -163,38 +163,16 @@ $(function() {
   		 this.render();
   		authenticate();
   	 },
-  	 toLobby: function(){
-  		 Parse.history.navigate("lobby", {trigger:true});
-  	 },
   	 startQuiz: function(){
   		 var id= $("#quizID").val();
   		 localStorage.setItem("Quizid", id);
+  		 Parse.history.navigate("quiz", {trigger:true});
   	 },
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
 		this.delegateEvents(); 
   	 }
   });
-  
-  var lobbyView = Parse.View.extend({
-		 events: {
-			 "click #readyButton": "startQuiz"
-		 }, 
-	  	 el: ".content",
-	  	 
-	  	 initialize: function(){
-	  		 this.render();
-	  		authenticate();
-	  	 },
-	  	 startQuiz: function(){
-	  		 Parse.history.navigate("quiz", {trigger:true});
-	  	 },
-	  	 render: function(){
-	 		this.$el.html(_.template($("#lobby-template").html()));
-			this.delegateEvents(); 
-	  	 }
-	  });
-  
   var correctAnswer;
   var score;
   var tQuiz;
@@ -434,8 +412,7 @@ $(function() {
       "menu": "menu",
       "score": "score",
       "anotherTest": "anotherTest",
-      "quizSelector": "quizSelector",
-      "lobby": "lobby"
+      "quizSelector": "quizSelector"
       
     },
 
@@ -464,9 +441,6 @@ $(function() {
     quizSelector: function(){
     	new quizSelectorView();
     },
-    lobby: function(){
-    	new lobbyView();
-    }
   });
 
   new AppRouter;

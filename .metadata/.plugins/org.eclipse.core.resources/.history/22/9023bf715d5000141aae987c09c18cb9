@@ -55,22 +55,6 @@
 		<button class="toMenu menuButton hidez" id="menubutton">Back to menu</button> 
 	</div>
 	</script>
-	
-	<script type="text/template" id="lobby-template">
-		<div class="centering">
-			<ul>
-				<li class="lobbyuser"><span>Bobby</span></li>
-				<li class="lobbyuser"><span>Bern</span></li>
-				<li class="lobbyuser"><span>Earnie</span></li>
-			</ul>
-			
-			<button id="readyButton" class="readyButton">Ready<span class="glyphicon glyphicon-remove</span></button>
-			
-		</div>
-		
-		
-    </script>
-    
 	<script type="text/template" id="score-template">
 		<div class="centering">
 			<h2>Top 3:</h2>
