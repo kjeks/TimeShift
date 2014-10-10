@@ -29,14 +29,6 @@ $(function() {
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);
 		  console.warn(score.get("scores"));
-//		  score.save(null, {
-//			  success: function(question) {
-//				   alert("it worked");
-//			  },
-//			  error: function(question, error) {
-//				  alert('Failed to create new object, with error code: ' + error.message);
-//			  }
-//			});
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -261,18 +253,38 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
+		 var self=this;
 		 authenticate();
 		 this.render();
 	 },
 	 render: function(){
+		 
 		 this.$el.html(_.template($("#score-template").html()));
 		 var sum= theQuiz.score.get("scores");
 		 var totSum=0;
-		 console.warn(sum);
-		 for(a=0; a<sum.length; a++){
+		 for(a=1; a<sum.length; a++){
 			 totSum+=sum[a];
 		 }
 		 
+		 var topScores = Parse.Object.extend("Scores");
+		 var topQuery = new Parse.Query(topScores);
+		 var opponents;
+		 topQuery.limit(3);
+		 topQuery.descending("totalScore");
+		 topQuery.find({
+			 success:function(result){
+				 console.warn(result);
+				 opponents=result;
+				 for(a=0; a<opponents.length; a++){
+					 var test=opponents[a].attributes.scores[1];
+					 console.log("test");
+					 console.log(test);
+				 }
+			 }
+		 });
+
+		 theQuiz.score.set("totalScore", totSum);
+		 theQuiz.score.save();
 		 $("#getUser").html(totSum);
 	 },
 	 getUser: function(){
