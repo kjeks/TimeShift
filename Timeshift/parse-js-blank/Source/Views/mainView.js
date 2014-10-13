@@ -156,7 +156,19 @@ $(function() {
   		authenticate();
   	 },
   	 toLobby: function(){
-  		 Parse.history.navigate("lobby", {trigger:true});
+  		 console.warn("quizid");
+  		 console.warn(localStorage.getItem("Quizid"));
+  		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
+			 success: function(result){
+				console.log("result");
+				 console.log(result);
+				Parse.history.navigate("lobby", {trigger:true});
+			 },
+			 failure: function(error){
+				 alert(error);
+			 }
+		 });
+  		 
   	 },
   	 startQuiz: function(){
   		 var id= $("#quizID").val();
@@ -179,8 +191,8 @@ $(function() {
 	  		authenticate();
 	  	 },
 	  	 startQuiz: function(){
-	  		 Parse.history.navigate("quiz", {trigger:true});
-	  	 },
+	  		Parse.history.navigate("quiz", {trigger:true}); 
+	  	 },	 
 	  	 render: function(){
 	 		this.$el.html(_.template($("#lobby-template").html()));
 			this.delegateEvents(); 
