@@ -27,38 +27,39 @@ function Lobby(lobbyNr, player){
 	this.players = [player];
 }
 
-var lobbyList= [];
+var lobbyListu= Parse.Object.extend("LobbyList");
+var lobbyList = [];
 
-Parse.Cloud.define("checkLobby", function(request, response) {
-	lobby = new Lobby(request.params.gameNumber+1, request.user);
-	lobby2 = new Lobby(request.params.gameNumber+2, request.user);
-	lobbyList.push(lobby);
-	lobbyList.push(lobby2);
+Parse.Cloud.define("checkLobby", function(request, response) { 
+	var theLobbyList = new lobbyListu();
+	theLobbyList.add("lobby",new Lobby(request.params.gameNumber, request.user));
 	
-	response.success(lobbyList);	
+	response.success(theLobbyList.get("lobby"));	
 });
 
 Parse.Cloud.define("toLobby", function(request, response) {
-	    if(lobbyList.length>0){
-	    	for(a=0; a<lobbyList.length; a++){
-		    	if(request.params.gameNumber==lobbyList[a].lobbyNr){
-		    		//lobbyList[a].players.push(request.user);
-		    		//response.success(lobbyList[a]);
-		    		response.success("in if if");
-		    	}
-		    	else
-		    		lobby = new Lobby(request.params.gameNumber, request.user);
-		    		lobbyList.push(lobby);
-		    		response.success("in if else");
-		    }
-	    }
-	    else{
-    		lobby = new Lobby(request.params.gameNumber, request.user);
-    		lobbyList.push(lobby);
-    		response.success("in else");
-	    }
-		
-		//lobby = new Lobby(request.params.gameNumber, request.user);
-		
-		//response.success(lobby);
+		var lobbyQuery = new Parse.Query(lobbyListu);
+	    var theLobbyList = new lobbyListu();
+	    lobbyQuery.equalTo("lobbyId", Number(request.params.gameNumber));
+	    lobbyQuery.find({
+	    	success:function(results){
+	    		if(results.length>0){
+	    			theLobbyList.add("players", request.user);
+	    			theLobbyList.save();
+	    			response.success(results);
+	    		}
+	    		else{
+	    			//response.success("added new lobby");
+		    		theLobbyList.set("lobbyId", Number(request.params.gameNumber));
+		    		theLobbyList.add("players", request.user);
+		    		theLobbyList.save();
+		    		response.success(theLobbyList.get("players"));
+		    		
+	    		}
+	    	},
+	    	error:function(error){
+	    		response.error(error);
+	    	}
+
+	    });
 	});

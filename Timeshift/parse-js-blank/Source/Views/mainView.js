@@ -162,7 +162,7 @@ $(function() {
   		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
 			 success: function(result){
 				console.log("result");
-				 console.log(result);
+				console.log(result);
 				Parse.history.navigate("lobby", {trigger:true});
 			 },
 			 failure: function(error){
@@ -173,7 +173,7 @@ $(function() {
   	 },
 
   	checkLobby: function(){
-  	  	Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid")},{
+  		Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid") },{
   	  		success: function(result){
   	  			console.log(result);
   	  		}
