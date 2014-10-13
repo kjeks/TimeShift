@@ -1,0 +1,93 @@
+var answer = false;
+var inLobby = true;
+
+function altClicked(){
+	console.log("Clicked an alt");
+	answer = true;
+	getScore();
+}
+
+function readyClicked(){
+	console.log("Clicked ready");
+	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphicon-remove(?!\S)/g , '' );
+	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphiconRed(?!\S)/g , '' );
+	document.getElementById("userLine").className += " glyphicon-ok";
+	document.getElementById("userLine").className += " glyphiconGreen";
+	lobby = false;
+	$("#readyIcon").show();
+}
+
+function showSignup(){
+	$("#signupForm").show();
+	$("#showsignuptext").hide();
+}
+
+function dots(){
+	while(true){
+		var dots = window.setInterval( function() {
+			var wait = document.getElementById("waitDots");
+			if ( wait.innerHTML.length > 2 ) 
+	   	 		wait.innerHTML = "";
+			else 
+	    		wait.innerHTML += ".";
+			}, 400);
+	}	
+}
+
+function progressbar(){
+	$("#progressbar").show();
+	answer = false;
+	clearInterval(animate);
+	var progressbar = $('#progressbar'),
+	max = progressbar.attr('max'),
+	zero = 0,
+	time = (1000/max)*20,	
+	value = 0;
+		
+	var loading = function() {
+		value += 1;
+		var val = progressbar.val(value);
+	        
+		$('.progress-value').html(value + '%');
+
+		if (value == max) {
+			clearInterval(animate);
+	        $('.progress-value').html(max + '%');
+	    }
+		if (answer) {
+			clearInterval(animate);
+			$('.progress-value').html(zero + '%');
+			console.log(progressbar.val(value));
+			console.log("zero?");
+		}
+	};
+	var animate = setInterval(function() {
+		loading();
+	}, time);
+	
+}
+
+function getScore(){
+	var 
+	progressbar = $('#progressbar'),
+	value = progressbar.val();
+	
+	console.log("Value: " + value);
+	console.log("Score: " + (1000-value));
+}
+
+function gameSequence() {
+	console.log("Started sequence");
+	document.getElementById("number").src = "images/number3.png";
+	$("#number").show();
+	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
+	setTimeout(function(){document.getElementById("number").src = "images/number1.png"}, 2000);
+	setTimeout(function(){$("#number").hide()}, 3000);
+	setTimeout(function(){$("#question").show()}, 3000);
+	setTimeout(function(){$("#alt1").show()}, 3000);
+	setTimeout(function(){$("#alt2").show()}, 3000);
+	setTimeout(function(){$("#alt3").show()}, 3000);
+	setTimeout(function(){$("#alt4").show()}, 3000);
+	setTimeout(function(){$("#menubutton").show()}, 3000);
+	setTimeout(function(){progressbar()}, 3000);
+}

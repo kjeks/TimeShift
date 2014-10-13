@@ -30,6 +30,7 @@
 		<div class="content"></div>
 	</div>
 
+	</script>
 	<script type="text/template" id="quizSelector-template">
 	<div class="centering">
 		<h1 id= "test"> test </h1>

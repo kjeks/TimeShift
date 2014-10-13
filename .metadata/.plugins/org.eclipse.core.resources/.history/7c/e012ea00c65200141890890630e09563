@@ -34,7 +34,7 @@
 	<div class="centering">
 		<h1 id= "test"> test </h1>
 		<input type="textbox" id="quizID" placeholder="Enter quiz code">
-		<button id="IDSubmit" class="menuButton">Submit</button>
+		<button id="IDSubmit" class="menuButton" onclick="enterLobby()">Submit</button>
 	</div>
 	</script>
     <script type="text/template" id="quiz-template">
