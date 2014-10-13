@@ -198,6 +198,18 @@ $(function() {
 	  	 initialize: function(){
 	  		 this.render();
 	  		authenticate();
+	  		var quizId = Number(localStorage.getItem("Quizid"));
+	  		console.warn(quizId);
+	  		var lobby = Parse.Object.extend("LobbyList");
+	  		var lobbyQuery = new Parse.Query(lobby);
+	  		lobbyQuery.equalTo("lobbyId", quizId);
+	  		lobbyQuery.first({
+	  			success:function(results){
+	  				console.warn("seher");
+	  				console.warn(results.attributes.players.length);
+	  			}
+	  		});
+	  		
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 

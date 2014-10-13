@@ -45,17 +45,21 @@ Parse.Cloud.define("toLobby", function(request, response) {
 	    	success:function(results){
 	    		if(results.length>0){
 	    			theLobbyList = results[0];
-	    			theLobbyList.add("players", request.user);
+	    			theLobbyList.addUnique("players", request.user);
+	    			var created = theLobbyList.createdAt;
+	    			var startTime = new Date();
+	    			startTime.setTime(created.getTime()+(5*60*1000));
+	    			theLobbyList.set("startTime", startTime);
 	    			theLobbyList.save();
-	    			response.success(results);
+	    			response.success(startTime);
 	    		}
 	    		else{
 	    			theLobbyList = new lobbyListu();
 	    			//response.success("added new lobby");
 		    		theLobbyList.set("lobbyId", Number(request.params.gameNumber));
-		    		theLobbyList.add("players", request.user);
+		    		theLobbyList.addUnique("players", request.user);
 		    		theLobbyList.save();
-		    		response.success(theLobbyList.get("players"));
+		    		response.success("in else");
 		    		
 	    		}
 	    	},
