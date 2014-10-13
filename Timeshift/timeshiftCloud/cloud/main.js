@@ -39,16 +39,18 @@ Parse.Cloud.define("checkLobby", function(request, response) {
 
 Parse.Cloud.define("toLobby", function(request, response) {
 		var lobbyQuery = new Parse.Query(lobbyListu);
-	    var theLobbyList = new lobbyListu();
+		var theLobbyList;
 	    lobbyQuery.equalTo("lobbyId", Number(request.params.gameNumber));
 	    lobbyQuery.find({
 	    	success:function(results){
 	    		if(results.length>0){
+	    			theLobbyList = results[0];
 	    			theLobbyList.add("players", request.user);
 	    			theLobbyList.save();
 	    			response.success(results);
 	    		}
 	    		else{
+	    			theLobbyList = new lobbyListu();
 	    			//response.success("added new lobby");
 		    		theLobbyList.set("lobbyId", Number(request.params.gameNumber));
 		    		theLobbyList.add("players", request.user);

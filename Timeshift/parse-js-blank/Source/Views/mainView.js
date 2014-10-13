@@ -157,6 +157,8 @@ $(function() {
   		authenticate();
   	 },
   	 toLobby: function(){
+  		 var id= $("#quizID").val();
+  		 localStorage.setItem("Quizid", id)
   		 console.warn("quizid");
   		 console.warn(localStorage.getItem("Quizid"));
   		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
@@ -173,16 +175,14 @@ $(function() {
   	 },
 
   	checkLobby: function(){
+  		localStorage.setItem("Quizid", Number(123));
   		Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid") },{
   	  		success: function(result){
   	  			console.log(result);
   	  		}
   	  	});
   	}, 
-  	startQuiz: function(){
-  		 var id= $("#quizID").val();
-  		 localStorage.setItem("Quizid", id);
-  	 },
+
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
 		this.delegateEvents(); 
