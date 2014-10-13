@@ -61,8 +61,8 @@
 		<div class="centering">
 			<img id="ghostDOts" src="images/logo1.png" class="hidez" onload="dots()">
 			<h2>Waiting for players<span id="waitDots">.</h2>
-			<ul id="playerList">
-				<li class="userlobbyelement" onclick="addPlayerToList()"><span id="userLine" class="glyphicon glyphicon-remove glyphiconRed"></span> Kjeks</li>
+			<ul>
+				<li class="userlobbyelement"><span id="userLine" class="glyphicon glyphicon-remove glyphiconRed"></span> Kjeks</li>
 				
 			</ul>
 			

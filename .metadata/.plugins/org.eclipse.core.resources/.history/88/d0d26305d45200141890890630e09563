@@ -30,13 +30,6 @@ function dots(){
 		}, 400);
 }
 
-function addPlayerToList(name){
-	var ul = document.getElementById("playerList");
-	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(name));
-	ul.appendChild(li);
-}
-
 function progressbar(){
 	$("#progressbar").show();
 	answer = false;

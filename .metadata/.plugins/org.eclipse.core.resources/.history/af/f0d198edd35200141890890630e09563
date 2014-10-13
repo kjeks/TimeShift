@@ -61,9 +61,19 @@
 		<div class="centering">
 			<img id="ghostDOts" src="images/logo1.png" class="hidez" onload="dots()">
 			<h2>Waiting for players<span id="waitDots">.</h2>
-			<ul id="playerList">
-				<li class="userlobbyelement" onclick="addPlayerToList()"><span id="userLine" class="glyphicon glyphicon-remove glyphiconRed"></span> Kjeks</li>
-				
+			<ul>
+				<li class="userlobbyelement"><span id="userLine" class="glyphicon glyphicon-remove glyphiconRed"></span> Kjeks</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Per</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Ole</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Kristian</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Berit</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Olga</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Eiril</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Petter</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Anne</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Kjell</li>
+				<li class="lobbyelement"><span class="glyphicon glyphicon-remove glyphiconRed"></span> Dag</li>
+		
 			</ul>
 			
 			

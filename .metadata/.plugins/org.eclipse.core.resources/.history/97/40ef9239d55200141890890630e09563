@@ -30,10 +30,10 @@ function dots(){
 		}, 400);
 }
 
-function addPlayerToList(name){
+function addPlayerToList(){
 	var ul = document.getElementById("playerList");
 	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(name));
+	li.appendChild(document.createTextNode("Bot army"));
 	ul.appendChild(li);
 }
 
