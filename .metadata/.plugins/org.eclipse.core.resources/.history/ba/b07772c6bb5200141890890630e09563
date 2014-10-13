@@ -77,7 +77,7 @@
 			</ul>
 			
 			
-			<button class="readyButton" id="readyButton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
+			<button class="readyButton" id="readybutton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
 		</div>
 		
 
