@@ -29,6 +29,12 @@ function Lobby(lobbyNr, player){
 
 var lobbyList= [];
 
+Parse.Cloud.define("checkLobby", function(request, response) {
+	lobby = new Lobby(request.params.gameNumber, request.user);
+	lobbyList.push(lobby);
+	response.success(lobbyList);	
+});
+
 Parse.Cloud.define("toLobby", function(request, response) {
 	    if(lobbyList.length>0){
 	    	for(a=0; a<lobbyList.length; a++){

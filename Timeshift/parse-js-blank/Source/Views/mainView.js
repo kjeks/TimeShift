@@ -147,7 +147,8 @@ $(function() {
   });
   var quizSelectorView = Parse.View.extend({
 	 events: {
-		 "click #IDSubmit": "toLobby"
+		 "click #IDSubmit": "toLobby",
+		 "click #test": "checkLobby"
 	 }, 
   	 el: ".content",
   	 
@@ -158,7 +159,7 @@ $(function() {
   	 toLobby: function(){
   		 console.warn("quizid");
   		 console.warn(localStorage.getItem("Quizid"));
-  		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
+  		/*Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
 			 success: function(result){
 				console.log("result");
 				 console.log(result);
@@ -169,8 +170,17 @@ $(function() {
 			 }
 		 });
   		 
-  	 },
-  	 startQuiz: function(){
+  	 },*/
+
+  	},
+  	checkLobby: function(){
+  	  	Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid")},{
+  	  		success: function(result){
+  	  			console.log(result);
+  	  		}
+  	  	});
+  	}, 
+  	startQuiz: function(){
   		 var id= $("#quizID").val();
   		 localStorage.setItem("Quizid", id);
   	 },
