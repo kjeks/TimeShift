@@ -159,7 +159,7 @@ $(function() {
   	 toLobby: function(){
   		 console.warn("quizid");
   		 console.warn(localStorage.getItem("Quizid"));
-  		/*Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
+  		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
 			 success: function(result){
 				console.log("result");
 				 console.log(result);
@@ -170,9 +170,8 @@ $(function() {
 			 }
 		 });
   		 
-  	 },*/
+  	 },
 
-  	},
   	checkLobby: function(){
   	  	Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid")},{
   	  		success: function(result){
