@@ -209,7 +209,13 @@ $(function() {
 	  	 },
 	  	 redir: function(){
 	  		 var startTime = theLobby.get("startTime");
-	  		 var currentTime = Date.now();
+	  		 var currentTime;
+	   		Parse.Cloud.run("getTime", {},{
+	  	  		success: function(result){
+	  	  			currentTime=result;
+	  	  		}
+	  	  	});
+	  		 
 	  		 
 	  		 console.log((startTime.getTime()-currentTime)/1000);
 	  	 },

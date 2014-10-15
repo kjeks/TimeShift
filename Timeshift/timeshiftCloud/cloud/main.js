@@ -43,6 +43,9 @@ function setStartTime(lobbyList){
 	lobbyList.set("startTime", startTime);
 	lobbyList.save();
 }
+Parse.Cloud.define("getTime", function(request, response){
+	response.success(Date.now());
+});
 Parse.Cloud.define("toLobby", function(request, response) {
 		var self = this;
 		var lobbyQuery = new Parse.Query(lobbyListu);
