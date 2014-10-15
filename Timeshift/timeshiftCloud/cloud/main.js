@@ -36,8 +36,15 @@ Parse.Cloud.define("checkLobby", function(request, response) {
 	
 	response.success(theLobbyList.get("lobby"));	
 });
-
+function setStartTime(lobbyList){
+	var created= lobbyList.createdAt;
+	var startTime = new Date();
+	startTime.setTime(created.getTime()+(30*1000));
+	lobbyList.set("startTime", startTime);
+	lobbyList.save();
+}
 Parse.Cloud.define("toLobby", function(request, response) {
+		var self = this;
 		var lobbyQuery = new Parse.Query(lobbyListu);
 		var theLobbyList;
 	    lobbyQuery.equalTo("lobbyId", Number(request.params.gameNumber));
@@ -46,20 +53,22 @@ Parse.Cloud.define("toLobby", function(request, response) {
 	    		if(results.length>0){
 	    			theLobbyList = results[0];
 	    			theLobbyList.addUnique("players", request.user.attributes.username);
-	    			var created = theLobbyList.createdAt;
-	    			var startTime = new Date();
-	    			startTime.setTime(created.getTime()+(5*60*1000));
-	    			theLobbyList.set("startTime", startTime);
 	    			theLobbyList.save();
-	    			response.success(startTime);
+	    			response.success("joined lobby");
 	    		}
 	    		else{
 	    			theLobbyList = new lobbyListu();
-	    			//response.success("added new lobby");
+	    			var created = theLobbyList.createdAt;
+	    			var startTime = new Date();
 		    		theLobbyList.set("lobbyId", Number(request.params.gameNumber));
 		    		theLobbyList.addUnique("players", request.user.attributes.username);
-		    		theLobbyList.save();
-		    		response.success(request.user.attributes.username);
+		    		theLobbyList.save(null,{
+		    			success: function(theLobbyList){
+		    				response.success(theLobbyList);
+		    				setStartTime(theLobbyList);
+		    			}
+		    		});
+	    			//response.success("created new lobby");
 		    		
 	    		}
 	    	},

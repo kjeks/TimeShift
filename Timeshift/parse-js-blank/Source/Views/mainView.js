@@ -157,7 +157,7 @@ $(function() {
   		 localStorage.setItem("Quizid", id)
   		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
 			 success: function(result){
-				 console.warn(result);
+				console.warn(result);
 				Parse.history.navigate("lobby", {trigger:true});
 			 },
 			 failure: function(error){
@@ -197,6 +197,8 @@ $(function() {
 	  		lobbyQuery.equalTo("lobbyId", quizId);
 	  		lobbyQuery.first({
 	  			success:function(results){
+	  				theLobby=results;
+	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
 	  					$("#playerList").append('<li><span class="tab">' + playerArray[a] + '</span></li>');
@@ -206,7 +208,10 @@ $(function() {
 	  		
 	  	 },
 	  	 redir: function(){
+	  		 var startTime = theLobby.get("startTime");
+	  		 var currentTime = Date.now();
 	  		 
+	  		 console.log((startTime.getTime()-currentTime)/1000);
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 
