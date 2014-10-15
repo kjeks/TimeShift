@@ -213,11 +213,11 @@ $(function() {
 	   		Parse.Cloud.run("getTime", {},{
 	  	  		success: function(result){
 	  	  			currentTime=result;
+	  	  			console.warn(result);
+	  	  			console.log((startTime.getTime()-currentTime)/1000);
 	  	  		}
 	  	  	});
 	  		 
-	  		 
-	  		 console.log((startTime.getTime()-currentTime)/1000);
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 
