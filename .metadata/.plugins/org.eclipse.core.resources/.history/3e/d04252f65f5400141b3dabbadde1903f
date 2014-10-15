@@ -63,8 +63,14 @@
 			<h2 id="waiting">Waiting for players..</h2>
 			<ul id="playerList">
 				
-			</ul>		
+			</ul>
+			
+			
+			<button class="readyButton" id="readyButton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
 		</div>
+		
+
+
     </script>
     
         

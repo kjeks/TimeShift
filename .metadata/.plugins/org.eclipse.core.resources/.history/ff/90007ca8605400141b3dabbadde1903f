@@ -63,7 +63,6 @@ function progressbar(){
 	time = (1000/max)*20,	
 	value = 0,
 	start = Date.now();
-	console.log("Start now " + start);
 		
 	var loading = function() {
 		value += 1;
@@ -74,7 +73,6 @@ function progressbar(){
 		if (value == max) {
 			clearInterval(animate);
 	        $('.progress-value').html(max + '%');
-	        console.warn(Date.now() - start);
 	    }
 		if (answer) {
 			clearInterval(animate);
@@ -85,7 +83,7 @@ function progressbar(){
 		loading();
 	}, time);
 	
-	
+	console.warn(Date.now() - start);
 }
 
 function getScore(){

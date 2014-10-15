@@ -59,12 +59,18 @@
 	
 	<script type="text/template" id="lobby-template">
 		<div class="centering">
-			<img id="ghostDOts" src="images/logo1.png" class="hidez">
-			<h2 id="waiting">Waiting for players..</h2>
+			<img id="ghostDOts" src="images/logo1.png" class="hidez" onload="dots()">
+			<h2 onclick="addBots(10)">Waiting for players<span id="waitDots">.</h2>
 			<ul id="playerList">
 				
-			</ul>		
+			</ul>
+			
+			
+			<button class="readyButton" id="readyButton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
 		</div>
+		
+
+
     </script>
     
         

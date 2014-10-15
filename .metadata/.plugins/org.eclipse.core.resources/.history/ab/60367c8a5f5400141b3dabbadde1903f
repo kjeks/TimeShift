@@ -26,8 +26,9 @@
 		<div class="logo">
 			<img src="images/logo1.png" alt="Logo">
 		</div>
+		<img id="ghostDOts" src="images/logo1.png" class="hidez" onload="dots()">
+		<h2>Waiting for players..</h2>
 
-		<div class="content"></div>
 	</div>
 
 	<script type="text/template" id="quizSelector-template">
@@ -59,12 +60,17 @@
 	
 	<script type="text/template" id="lobby-template">
 		<div class="centering">
-			<img id="ghostDOts" src="images/logo1.png" class="hidez">
-			<h2 id="waiting">Waiting for players..</h2>
+			
 			<ul id="playerList">
 				
-			</ul>		
+			</ul>
+			
+			
+			<button class="readyButton" id="readyButton" onclick="readyClicked()"><span id="readyIcon" class="glyphicon glyphicon-ok glyphiconGreen hidez"></span> Ready</button>
 		</div>
+		
+
+
     </script>
     
         

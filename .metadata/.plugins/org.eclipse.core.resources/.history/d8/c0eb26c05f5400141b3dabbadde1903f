@@ -128,10 +128,6 @@ a:link, a:hover, a:visited{
 	color: #8282ff;
 }
 
-#waiting{
-	margin-left: 20px;
-}
-
 .logo{
 	margin-top: 20px;
 	margin-right: auto;

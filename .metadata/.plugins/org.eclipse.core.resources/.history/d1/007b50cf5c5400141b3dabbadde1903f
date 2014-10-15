@@ -41,15 +41,15 @@ function randomNumber(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-//TODO: Force score screen og når neste spm kommer opp. Add bots med random timer. Vis og sorter score screen
+//TODO: Force score screen og når neste spm kommer opp. Add bots med random timer. Vi og sorter score screen
 function addBots(amount){
 	botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
 	var name;
 	var wait;
 	for(i = 0; i<amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
-		//wait = randomNumber(200, 1000);
-		setTimeout($("#playerList").append('<li><span class="tab">' + name + '</span></li>'), 750);
+		wait = randomNumber(500, 3000);
+		setTimeout($("#playerList").append('<li><span class="tab">' + name + '</span></li>'), wait);
 	}
 }
 
@@ -61,9 +61,7 @@ function progressbar(){
 	max = progressbar.attr('max'),
 	zero = 0,
 	time = (1000/max)*20,	
-	value = 0,
-	start = Date.now();
-	console.log("Start now " + start);
+	value = 0;
 		
 	var loading = function() {
 		value += 1;
@@ -74,17 +72,17 @@ function progressbar(){
 		if (value == max) {
 			clearInterval(animate);
 	        $('.progress-value').html(max + '%');
-	        console.warn(Date.now() - start);
 	    }
 		if (answer) {
 			clearInterval(animate);
 			$('.progress-value').html(zero + '%');
+			console.log(progressbar.val(value));
+			console.log("zero?");
 		}
 	};
 	var animate = setInterval(function() {
 		loading();
 	}, time);
-	
 	
 }
 
