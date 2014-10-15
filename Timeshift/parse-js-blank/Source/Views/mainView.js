@@ -208,16 +208,29 @@ $(function() {
 	  		
 	  	 },
 	  	 redir: function(){
-	  		 var startTime = theLobby.get("startTime");
-	  		 var currentTime;
-	   		Parse.Cloud.run("getTime", {},{
-	  	  		success: function(result){
-	  	  			currentTime=result;
-	  	  			console.warn(result);
-	  	  			console.log((startTime.getTime()-currentTime)/1000);
-	  	  		}
-	  	  	});
+	  		var timeToStart=30000;
+	  		
+	  		function updateTime(){
+	  			if (timeToStart>0){
+	  				Parse.Cloud.run("getTime", {},{
+			  	  		success: function(result){
+			  	  			currentTime=result;
+			  	  			console.warn(result);
+			  	  			timeToStart=(startTime.getTime()-currentTime);
+			  	  			console.log((startTime.getTime()-currentTime));
+			  	  			
+			  	  		}
+			  	  	});
+	  			}
+	  			else{
+	  				clearInterval(updater);
+	  				Parse.history.navigate("quiz", {trigger:true});
+	  			}
+	  		}
 	  		 
+	  		var startTime = theLobby.get("startTime");
+	  		var currentTime;
+		  		var updater=setInterval(updateTime, 500);
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 
