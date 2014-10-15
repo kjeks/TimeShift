@@ -6,7 +6,6 @@ $(function() {
   function authenticate(){
 	Parse.Cloud.run("loggedIn", {},{
 	 success:function(result){
-		 console.log(result);
 		 },
 	 error: function(error){
 		 console.log(error);
@@ -27,8 +26,7 @@ $(function() {
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
-		  score.set("scores",[0]);
-		  console.warn(score.get("scores"));
+		  score.set("scores",[0]);;
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -53,7 +51,6 @@ $(function() {
 			 answer: function(e){
 				  answer=$(e.target).text();
 				  if(answer==this.correctAnswer){
-					  console.warn("how many times?");
 					  this.correct();
 				  }
 				  else{
@@ -90,7 +87,6 @@ $(function() {
 				  else{
 					  this.score.save();
 					  self.undelegateEvents();
-					  console.warn(this.score.get("scores"));
 					  alert("no more questions");
 					  Parse.history.navigate("score", {trigger:true});					  
 				  }
@@ -159,12 +155,9 @@ $(function() {
   	 toLobby: function(){
   		 var id= $("#quizID").val();
   		 localStorage.setItem("Quizid", id)
-  		 console.warn("quizid");
-  		 console.warn(localStorage.getItem("Quizid"));
   		Parse.Cloud.run("toLobby", {gameNumber : localStorage.getItem("Quizid")}, {
 			 success: function(result){
-				console.log("result");
-				console.log(result);
+				 console.warn(result);
 				Parse.history.navigate("lobby", {trigger:true});
 			 },
 			 failure: function(error){
@@ -178,7 +171,6 @@ $(function() {
   		localStorage.setItem("Quizid", Number(123));
   		Parse.Cloud.run("checkLobby", {gameNumber : localStorage.getItem("Quizid") },{
   	  		success: function(result){
-  	  			console.log(result);
   	  		}
   	  	});
   	}, 
@@ -188,28 +180,33 @@ $(function() {
 		this.delegateEvents(); 
   	 }
   });
-  
+  var theLobby;
   var lobbyView = Parse.View.extend({
 		 events: {
 			 "click #readyButton": "startQuiz"
 		 }, 
 	  	 el: ".content",
-	  	 
 	  	 initialize: function(){
-	  		 this.render();
+	  		 //trenger en funksjon som henter ut starttime fra database og sender til viewet når den tiden går ut. starttime-currentTime delay start
+	  		var self= this;
+	  		this.render();
 	  		authenticate();
 	  		var quizId = Number(localStorage.getItem("Quizid"));
-	  		console.warn(quizId);
 	  		var lobby = Parse.Object.extend("LobbyList");
 	  		var lobbyQuery = new Parse.Query(lobby);
 	  		lobbyQuery.equalTo("lobbyId", quizId);
 	  		lobbyQuery.first({
 	  			success:function(results){
-	  				console.warn("seher");
-	  				console.warn(results.attributes.players.length);
+	  				var playerArray= results.attributes.players;
+	  				for(a=0; a<playerArray.length; a++){
+	  					$("#playerList").append('<li><span class="tab">' + playerArray[a] + '</span></li>');
+	  				}
 	  			}
 	  		});
 	  		
+	  	 },
+	  	 redir: function(){
+	  		 
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 
@@ -306,12 +303,9 @@ $(function() {
 		 topQuery.descending("totalScore");
 		 topQuery.find({
 			 success:function(result){
-				 console.warn(result);
 				 opponents=result;
 				 for(a=0; a<opponents.length; a++){
 					 var test=opponents[a].attributes.scores[1];
-					 console.log("test");
-					 console.log(test);
 				 }
 			 }
 		 });
