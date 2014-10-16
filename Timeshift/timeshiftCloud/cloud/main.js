@@ -39,7 +39,7 @@ Parse.Cloud.define("checkLobby", function(request, response) {
 function setStartTime(lobbyList){
 	var created= lobbyList.createdAt;
 	var startTime = new Date();
-	startTime.setTime(created.getTime()+(30*1000));
+	startTime.setTime(created.getTime()+(5*1000));
 	lobbyList.set("startTime", startTime);
 	lobbyList.save();
 }

@@ -172,7 +172,10 @@ $(function() {
 		 }, 
 	  	 el: ".content",
 	  	 initialize: function(){
-
+<<<<<<< HEAD
+	  		 //trenger en funksjon som henter ut starttime fra database og sender til viewet n�r den tiden g�r ut. starttime-currentTime delay start
+=======
+>>>>>>> origin/master
 	  		var self= this;
 	  		this.render();
 	  		authenticate();
