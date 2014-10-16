@@ -67,13 +67,13 @@ $(function() {
 				question= this.attributes.questions.length;
 				if(question>0){
 					self.undelegateEvents();
-					Parse.history.navigate("score", {trigger: true});
+					//Parse.history.navigate("score", {trigger: true});
 				}
 				else{
 					this.score.save();
 					console.log("wrong more questions");
 					self.undelegateEvents();
-					Parse.history.navigate("answer", {trigger:true});
+					//Parse.history.navigate("score", {trigger:true});
 				}
 			  },
 			  correct: function(){
@@ -82,14 +82,14 @@ $(function() {
 				  question= this.attributes.questions.length;
 				  if(question>0){
 					  self.undelegateEvents();
-					  Parse.history.navigate("answer", {trigger: true});
+					  //Parse.history.navigate("score", {trigger: true});
 					  //this.newQuestion(question);  
 				  }
 				  else{
 					  this.score.save();
 					  self.undelegateEvents();
 					  alert("no more questions");
-					  Parse.history.navigate("score", {trigger:true});					  
+					 // Parse.history.navigate("score", {trigger:true});					  
 				  }
 			  },
 	  });
@@ -106,8 +106,9 @@ $(function() {
 	 initialize: function(){
 		 this.render();
 		 authenticate();
+		 
 	 },
-	 
+
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
 		Parse.history.navigate("quizSelector", {trigger:true});
@@ -237,6 +238,7 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
+		  var timer= setTimeout(this.toScore, 24500);
 		  if(query==undefined){
 			  correctAnswer;
 			  self=this;	
@@ -261,6 +263,10 @@ $(function() {
 			  this.render();
 		  }
 	 },
+	 toScore: function(){
+		 Parse.history.navigate("score", {trigger:true});
+		 console.log("in toScore");
+	 },
 	  
 	  answer: function(e){
 		  this.undelegateEvents();
@@ -277,17 +283,7 @@ $(function() {
 		this.delegateEvents(); 
 	  }
   });
-  var answerView = Parse.View.extend({
-		 el: $("#timeshift"),
-		 
-		 initialize: function(){
-			 this.render();
-		 },
-		 render: function(){
-			 this.$el.html(_.template($("#answer-template").html()));
-		     this.delegateEvents();
-		 }
-	  });
+
   var scoreView = Parse.View.extend({
 	 events: { 
 		 "click #getUser": "getUser",
@@ -297,9 +293,13 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
+		 var timer= setTimeout(this.toScore, 5000);
 		 var self=this;
 		 authenticate();
 		 this.render();
+	 },
+	 toScore: function(){
+		 Parse.history.navigate("quiz", {trigger:true});
 	 },
 	 render: function(){
 		 
@@ -429,7 +429,6 @@ $(function() {
     routes: {
       "quiz": "quiz",
       "":	  "login",
-      "answer": "answer",
       "menu": "menu",
       "score": "score",
       "quizSelector": "quizSelector",
@@ -440,9 +439,6 @@ $(function() {
     initialize: function(options) {
     },
     
-    answer: function(){
-    	new answerView();
-    },
     quiz: function(){
     	new quizView();
     },

@@ -76,10 +76,6 @@ function progressbar(){
 	        $('.progress-value').html(max + '%');
 	        console.warn(Date.now() - start);
 	    }
-		if (answer) {
-			clearInterval(animate);
-			$('.progress-value').html(zero + '%');
-		}
 	};
 	var animate = setInterval(function() {
 		loading();
