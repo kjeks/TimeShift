@@ -1,3 +1,4 @@
+
 $(function() {
 
   Parse.initialize("6fr8ox9aLNZPnTF0kC0wVmbDusiQUmEen0jZzP39",
@@ -6,7 +7,8 @@ $(function() {
   function authenticate(){
 	Parse.Cloud.run("loggedIn", {},{
 	 success:function(result){
-		 },
+		 console.log(result);
+	 },
 	 error: function(error){
 		 console.log(error);
 		 Parse.history.navigate("", {trigger:true});
@@ -169,7 +171,6 @@ $(function() {
 		 }, 
 	  	 el: ".content",
 	  	 initialize: function(){
-	  		 //trenger en funksjon som henter ut starttime fra database og sender til viewet når den tiden går ut. starttime-currentTime delay start
 	  		var self= this;
 	  		this.render();
 	  		authenticate();
