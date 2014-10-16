@@ -48,7 +48,7 @@
 
 		<div class="answer">
 
-			<button class="answerButton hidez" id="alt1">alt1</button>
+			<button class="answerButton hidez" id="alt1" onClick="altSelected()">alt1</button>
 			<button class="answerButton hidez" id="alt2">alt2</button>
 			<button class="answerButton hidez" id="alt3">alt3</button>
 			<button class="answerButton hidez" id="alt4">alt4</button>
@@ -87,6 +87,8 @@
 			<button id="nextQuestion" class="menuButton"> Next question </button>
 			<button class="menuButton toMenu">Back to menu </button>
 		</div>
+		
+		
     </script>
 
 	<script type="text/template" id="menu-template">
@@ -99,7 +101,6 @@
 		</div>
 	</div>
 	</script>
-
 
 	<script type="text/template" id="login-template">
       <header id="header"></header>

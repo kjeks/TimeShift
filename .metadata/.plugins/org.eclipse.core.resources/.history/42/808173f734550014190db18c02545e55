@@ -114,5 +114,5 @@ function altSelected(e){
 }
 
 function waitingText(){
-	$("#question").text("Waiting for players to answer..");
+	$(#question).text("Waiting for players to answer..");
 }

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Timeshift/parse-js-blank/js/main.js&apos; to &apos;mainFunctions.js&apos;" description="Rename resource &apos;main.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="parse-js-blank/js/main.js" name="mainFunctions.js" stamp="1413464061292" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;Timeshift/parse-js-blank/js/mainFunctions.js&apos; to &apos;main.js&apos;" description="Rename resource &apos;mainFunctions.js&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="parse-js-blank/js/mainFunctions.js" name="main.js" stamp="1413464567062" updateReferences="true"/>
+</session>

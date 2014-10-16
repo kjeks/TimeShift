@@ -6,6 +6,14 @@ function altClicked(){
 	getScore();
 }
 
+function altSelected(){
+	$(this).css('background-color', 'white');
+	console.log("yolo");
+	console.log(this);
+	$(this).css("background", "transparent");
+	console.log("Changed color?");
+}
+
 function readyClicked(){
 	console.log("Clicked ready");
 	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphicon-remove(?!\S)/g , '' );
@@ -107,12 +115,4 @@ function gameSequence() {
 	setTimeout(function(){$("#alt4").show()}, 3000);
 	setTimeout(function(){$("#menubutton").show()}, 3000);
 	setTimeout(function(){progressbar()}, 3000);
-}
-
-function altSelected(e){
-	$(e.target).css("background-color", "#3c424c");
-}
-
-function waitingText(){
-	$("#question").text("Waiting for players to answer..");
 }

@@ -271,8 +271,8 @@ $(function() {
 	  
 	  answer: function(e){
 		  this.undelegateEvents();
-		  altSelected(e);
-		  waitingText();
+		  //altSelected(e);
+		  //waitingText();
 		  tQuiz.answer(e);
 	  },
 

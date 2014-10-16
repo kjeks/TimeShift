@@ -109,10 +109,3 @@ function gameSequence() {
 	setTimeout(function(){progressbar()}, 3000);
 }
 
-function altSelected(e){
-	$(e.target).css("background-color", "#3c424c");
-}
-
-function waitingText(){
-	$("#question").text("Waiting for players to answer..");
-}
