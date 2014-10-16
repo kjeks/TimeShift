@@ -6,10 +6,6 @@ function altClicked(){
 	getScore();
 }
 
-function altSelected(){
-	$(this).css('color', 'white');
-}
-
 function readyClicked(){
 	console.log("Clicked ready");
 	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphicon-remove(?!\S)/g , '' );

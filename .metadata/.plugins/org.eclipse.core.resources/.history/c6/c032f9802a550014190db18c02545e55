@@ -7,7 +7,7 @@ function altClicked(){
 }
 
 function altSelected(){
-	$(this).css('color', 'white');
+	$element.
 }
 
 function readyClicked(){

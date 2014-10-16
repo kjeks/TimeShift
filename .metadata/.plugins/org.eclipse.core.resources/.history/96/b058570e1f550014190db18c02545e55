@@ -6,10 +6,6 @@ function altClicked(){
 	getScore();
 }
 
-function altSelected(){
-	$(this).css('color', 'white');
-}
-
 function readyClicked(){
 	console.log("Clicked ready");
 	document.getElementById("userLine").className = document.getElementById("userLine").className.replace( /(?:^|\s)glyphicon-remove(?!\S)/g , '' );
@@ -53,7 +49,7 @@ function addBots(amount){
 	for(i = 0; i<amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
 		//wait = randomNumber(200, 1000);
-		setTimeout($("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>'), 750);
+		setTimeout($("#playerList").append('<li class="lobbyList><span class="tab">' + name + '</span></li>'), 750);
 	}
 }
 

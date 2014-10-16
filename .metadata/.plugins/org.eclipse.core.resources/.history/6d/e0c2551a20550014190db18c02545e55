@@ -187,7 +187,7 @@ $(function() {
 		 }, 
 	  	 el: ".content",
 	  	 initialize: function(){
-	  		 //trenger en funksjon som henter ut starttime fra database og sender til viewet nï¿½r den tiden gï¿½r ut. starttime-currentTime delay start
+	  		 //trenger en funksjon som henter ut starttime fra database og sender til viewet når den tiden går ut. starttime-currentTime delay start
 	  		var self= this;
 	  		this.render();
 	  		authenticate();
@@ -201,7 +201,7 @@ $(function() {
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
-	  					$("#playerList").append('<li id="lobbyListPlayer"><span id="player">' + playerArray[a] + '</span></li>');
+	  					$("#playerList").append('<li><span class="tab">' + playerArray[a] + '</span></li>');
 	  				}
 	  			}
 	  		});

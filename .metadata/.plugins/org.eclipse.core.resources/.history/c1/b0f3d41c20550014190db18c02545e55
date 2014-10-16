@@ -201,7 +201,7 @@ $(function() {
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
-	  					$("#playerList").append('<li id="lobbyListPlayer"><span id="player">' + playerArray[a] + '</span></li>');
+	  					$("#playerList").append('<li id="lobbyListPlayer"><span class="tab">' + playerArray[a] + '</span></li>');
 	  				}
 	  			}
 	  		});
