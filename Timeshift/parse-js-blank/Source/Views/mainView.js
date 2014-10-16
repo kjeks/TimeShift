@@ -33,22 +33,26 @@ $(function() {
 		return 1000-$("#progressbar").val(); 
 	  },
 	  newQuestion: function(q){
-			  var self= this;
-			  var question= Parse.Object.extend("Question");
-			  var questionQuery = new Parse.Query(question);
-			  questionQuery.equalTo("objectId", q);
-			  questionQuery.first({
-				success:function(res){
-					self.correctAnswer=res.get("correctAnswer");
-					
-					$("#question").html(res.get("text"));
-					$("#alt1").html(res.get("answers").shift());
-					$("#alt2").html(res.get("answers").shift());
-					$("#alt3").html(res.get("answers").shift());
-					$("#alt4").html(res.get("answers").shift());
-				}
-		  });
-		  },
+			  if(q==undefined){
+				Parse.history.navigate("finalScore", {trigger: true});
+			  }
+			  else{
+				  var self= this;
+				  var question= Parse.Object.extend("Question");
+				  var questionQuery = new Parse.Query(question);
+				  questionQuery.equalTo("objectId", q);
+				  questionQuery.first({
+					  success:function(res){
+						  self.correctAnswer=res.get("correctAnswer");
+						  $("#question").html(res.get("text"));
+						  $("#alt1").html(res.get("answers").shift());
+						  $("#alt2").html(res.get("answers").shift());
+						  $("#alt3").html(res.get("answers").shift());
+						  $("#alt4").html(res.get("answers").shift());
+					  },	
+				  });
+			 }
+		},
 			 answer: function(e){
 				  answer=$(e.target).text();
 				  if(answer==this.correctAnswer){
@@ -93,8 +97,6 @@ $(function() {
 				  }
 			  },
 	  });
-  
-  
   var theQuiz = new quiz();
   var menuView = Parse.View.extend({
 	 events: {
@@ -106,9 +108,7 @@ $(function() {
 	 initialize: function(){
 		 this.render();
 		 authenticate();
-		 
 	 },
-
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
 		Parse.history.navigate("quizSelector", {trigger:true});
@@ -149,7 +149,6 @@ $(function() {
 				 alert(error);
 			 }
 		 });
-  		 
   	 },
 
   	checkLobby: function(){
@@ -159,7 +158,6 @@ $(function() {
   	  		}
   	  	});
   	}, 
-
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
 		this.delegateEvents(); 
@@ -190,7 +188,6 @@ $(function() {
 	  				}
 	  			}
 	  		});
-	  		
 	  	 },
 	  	 redir: function(){
 	  		var timeToStart=30000;
@@ -260,13 +257,25 @@ $(function() {
 			  });
 		  }
 		  else{
-			  theQuiz.newQuestion(theQuiz.attributes.questions.shift());
-			  this.render();
+			  var question = theQuiz.attributes.questions.shift();
+			  if(question==undefined){
+				  Parse.history.navigate("finalScore", {trigger:true});
+			  }
+			  else
+				  theQuiz.newQuestion(question);
+			  	  this.render();
 		  }
 	 },
 	 toScore: function(){
-		 Parse.history.navigate("score", {trigger:true});
-		 console.log("in toScore");
+		 if(tQuiz.attributes.questions.length==0){
+			console.warn("to final from quiz");
+			 Parse.history.navigate("finalScore", {trigger:true}); 
+		 }
+		 else{
+			 console.log(tQuiz.attributes.questions);
+			 Parse.history.navigate("score", {trigger:true});
+			 console.log("in toScore");
+		 }
 	 },
 	  
 	  answer: function(e){
@@ -284,7 +293,16 @@ $(function() {
 		this.delegateEvents(); 
 	  }
   });
-
+  var finalScoreView = Parse.View.extend({
+	  el: ".content",
+	  initialize: function(){
+		  console.log("in final Score");
+		  this.render();
+	  },
+	  render: function(){
+		  this.$el.html(_.template($("#final-score-template").html()));
+	  }
+  });
   var scoreView = Parse.View.extend({
 	 events: { 
 		 "click #getUser": "getUser",
@@ -294,12 +312,12 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
-		 var timer= setTimeout(this.toScore, 5000);
+		 var timer= setTimeout(this.toQuiz, 5000);
 		 var self=this;
 		 authenticate();
 		 this.render();
 	 },
-	 toScore: function(){
+	 toQuiz: function(){
 		 Parse.history.navigate("quiz", {trigger:true});
 	 },
 	 render: function(){
@@ -432,6 +450,7 @@ $(function() {
       "":	  "login",
       "menu": "menu",
       "score": "score",
+      "finalScore": "finalScore",
       "quizSelector": "quizSelector",
       "lobby": "lobby"
       
@@ -443,13 +462,14 @@ $(function() {
     quiz: function(){
     	new quizView();
     },
-
-
     login: function(){	
     	new LogInView();
     },
     menu: function(){
     	new menuView();
+    },
+    finalScore: function(){
+    	new finalScoreView();
     },
     score: function(){
     	new scoreView();
