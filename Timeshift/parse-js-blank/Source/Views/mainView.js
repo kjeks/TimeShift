@@ -304,6 +304,9 @@ $(function() {
 	  }
   });
   var questionNr=0;
+  var p1Score=0;
+  var p2Score=0;
+  var p3Score=0;
   var scoreView = Parse.View.extend({
 	 events: { 
 		 "click #getUser": "getUser",
@@ -344,14 +347,19 @@ $(function() {
 			 success:function(result){
 				 opponents=result;
 				 var test=[];
+				 
 				 for(a=0; a<opponents.length; a++){ 
-					 test.push(opponents[a].attributes.scores[questionNr]);
+					 test.push(opponents[a].attributes.scores[questionNr]); 
 				 }
-				 $("#goldPoints").html(opponents[0].attributes.totalScore);
+				 p1Score = p1Score + opponents[0].attributes.scores[questionNr];
+				 p2Score = p2Score + opponents[1].attributes.scores[questionNr];
+				 p3Score = p3Score + opponents[2].attributes.scores[questionNr];
+				 
+				 $("#goldPoints").html(p1Score);
 				 $("#goldName").html(opponents[0].attributes.userid);
-				 $("#silverPoints").html(opponents[1].attributes.totalScore);
+				 $("#silverPoints").html(p2Score);
 				 $("#silverName").html(opponents[1].attributes.userid);
-				 $("#bronzePoints").html(opponents[2].attributes.totalScore);
+				 $("#bronzePoints").html(p3Score);
 				 $("#bronzeName").html(opponents[2].attributes.userid);
 
 			 }
