@@ -71,13 +71,12 @@ $(function() {
 				question= this.attributes.questions.length;
 				if(question>0){
 					self.undelegateEvents();
-					//Parse.history.navigate("score", {trigger: true});
 				}
 				else{
 					this.score.save();
 					console.log("wrong more questions");
 					self.undelegateEvents();
-					//Parse.history.navigate("score", {trigger:true});
+
 				}
 			  },
 			  correct: function(){
@@ -86,14 +85,13 @@ $(function() {
 				  question= this.attributes.questions.length;
 				  if(question>0){
 					  self.undelegateEvents();
-					  //Parse.history.navigate("score", {trigger: true});
-					  //this.newQuestion(question);  
+
 				  }
 				  else{
 					  this.score.save();
 					  self.undelegateEvents();
 					  alert("no more questions");
-					 // Parse.history.navigate("score", {trigger:true});					  
+					  
 				  }
 			  },
 	  });
@@ -236,7 +234,7 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
-		  var timer= setTimeout(this.toScore, 24500);
+		  var timer= setTimeout(this.toScore, 24500);  //24500 denne passer akkurat
 		  if(query==undefined){
 			  correctAnswer;
 			  self=this;	
@@ -305,6 +303,7 @@ $(function() {
 		  this.$el.html(_.template($("#final-score-template").html()));
 	  }
   });
+  var questionNr=0;
   var scoreView = Parse.View.extend({
 	 events: { 
 		 "click #getUser": "getUser",
@@ -314,10 +313,14 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
+		 questionNr=questionNr+1;
 		 var timer= setTimeout(this.toQuiz, 5000);
 		 var self=this;
+		 theQuiz.score.save();
 		 authenticate();
 		 this.render();
+		 
+		 
 	 },
 	 toQuiz: function(){
 		 Parse.history.navigate("quiz", {trigger:true});
@@ -335,13 +338,20 @@ $(function() {
 		 var topQuery = new Parse.Query(topScores);
 		 var opponents;
 		 topQuery.limit(3);
+		 topQuery.equalTo("quizid", theQuiz.get("code"));
 		 topQuery.descending("totalScore");
 		 topQuery.find({
 			 success:function(result){
 				 opponents=result;
+				 var test=[];
 				 for(a=0; a<opponents.length; a++){
-					 var test=opponents[a].attributes.scores[1];
+					 
+					 test.push(opponents[a].attributes.scores[questionNr]);
+
 				 }
+				 console.log("test");
+				 console.log(questionNr);
+				 console.log(test);
 			 }
 		 });
 
