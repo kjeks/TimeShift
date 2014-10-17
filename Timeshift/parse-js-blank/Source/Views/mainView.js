@@ -344,18 +344,16 @@ $(function() {
 			 success:function(result){
 				 opponents=result;
 				 var test=[];
-				 for(a=0; a<opponents.length; a++){
-					 
+				 for(a=0; a<opponents.length; a++){ 
 					 test.push(opponents[a].attributes.scores[questionNr]);
-
 				 }
-				 console.log(opponents[0].attributes.userid);
-				 $(".gold").html(opponents[0].attributes.userid);
-				 $(".silver").html(opponents[1].attributes.userid);
-				 $(".bronze").html(opponents[2].attributes.userid);
-				 console.log("test");
-				 console.log(questionNr);
-				 console.log(test);
+				 $("#goldPoints").html(opponents[0].attributes.totalScore);
+				 $("#goldName").html(opponents[0].attributes.userid);
+				 $("#silverPoints").html(opponents[1].attributes.totalScore);
+				 $("#silverName").html(opponents[1].attributes.userid);
+				 $("#bronzePoints").html(opponents[2].attributes.totalScore);
+				 $("#bronzeName").html(opponents[2].attributes.userid);
+
 			 }
 		 });
 
