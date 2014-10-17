@@ -349,6 +349,10 @@ $(function() {
 					 test.push(opponents[a].attributes.scores[questionNr]);
 
 				 }
+				 console.log(opponents[0].attributes.userid);
+				 $(".gold").html(opponents[0].attributes.userid);
+				 $(".silver").html(opponents[1].attributes.userid);
+				 $(".bronze").html(opponents[2].attributes.userid);
 				 console.log("test");
 				 console.log(questionNr);
 				 console.log(test);
