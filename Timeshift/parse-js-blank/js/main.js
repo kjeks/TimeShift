@@ -53,6 +53,24 @@ function addBots(amount){
 	}
 }
 
+function notifyPlayer(){
+	$("#notification").css({ opacity: 0 });
+	$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+	$("#notificationSound").get(0).play();
+	$("#notification").text(Math.random() + " has answered!");
+	$("#notification").fadeTo( 1200, 0 );
+}
+
+function notifyPlayer2(name){
+	var e = document.getElementById("notification")
+	e.className.replace(/\bfadeOut\b/,'');
+	$("#notification").css("visibility", "visible");
+	$("#notificationSound").get(0).play();
+	$("#notification").text(name + " has answered!");
+	$("#notification").fadeIn(2000);
+}
+
+
 function progressbar(){
 	$("#progressbar").show();
 	answer = false;
@@ -74,7 +92,6 @@ function progressbar(){
 		if (value == max) {
 			clearInterval(animate);
 	        $('.progress-value').html(max + '%');
-	        console.warn(Date.now() - start);
 	    }
 	};
 	var animate = setInterval(function() {
@@ -97,10 +114,12 @@ function gameSequence() {
 	console.log("Started sequence");
 	document.getElementById("number").src = "images/number3.png";
 	$("#number").show();
+	$("#notification").hide();
 	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
 	setTimeout(function(){document.getElementById("number").src = "images/number1.png"}, 2000);
 	setTimeout(function(){$("#number").hide()}, 3000);
 	setTimeout(function(){$("#question").show()}, 3000);
+	setTimeout(function(){$("#notification").show()}, 3000);
 	setTimeout(function(){$("#alt1").show()}, 3000);
 	setTimeout(function(){$("#alt2").show()}, 3000);
 	setTimeout(function(){$("#alt3").show()}, 3000);
