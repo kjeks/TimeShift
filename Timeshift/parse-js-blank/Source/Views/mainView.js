@@ -22,12 +22,14 @@ $(function() {
 		  var self= this;
 		  var scores = Parse.Object.extend("Scores");
 		  var score = new scores();
+		  var question;
 		  this.score= score;
 		  if(Parse.User.current()!=undefined){
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);;
+		  score.set("totalScore", 0);
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -38,7 +40,7 @@ $(function() {
 			  }
 			  else{
 				  var self= this;
-				  var question= Parse.Object.extend("Question");
+				  question= Parse.Object.extend("Question");
 				  var questionQuery = new Parse.Query(question);
 				  questionQuery.equalTo("objectId", q);
 				  questionQuery.first({
@@ -82,7 +84,9 @@ $(function() {
 			  correct: function(){
 				  console.log("correct");
 				  this.score.add("scores", this.getProgress());
+				  this.score.set("totalScore", this.score.get("totalScore")+this.getProgress());
 				  question= this.attributes.questions.length;
+				  
 				  if(question>0){
 					  self.undelegateEvents();
 
@@ -219,11 +223,13 @@ $(function() {
 			this.delegateEvents(); 
 	  	 }
 	  });
-  
+  var ScoreUpdate=Parse.Object.extend("ScoreUpdate");
+  var scoreUpdate=new ScoreUpdate();
   var correctAnswer;
   var score;
   var tQuiz;
   var query;
+  var updater;
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -233,9 +239,14 @@ $(function() {
 	  el: ".content",
 	  
 	  initialize: function (){
+		  scoreUpdate.set("userName", Parse.User.current().attributes.username);
 		  authenticate();
-		  var timer= setTimeout(this.toScore, 24500);  //24500 denne passer akkurat
+		  
+		  updater = setInterval(this.quizUpdater, 5000);
+		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
+			  scoreUpdate.set("oldScore", 0);
+			  scoreUpdate.save();
 			  correctAnswer;
 			  self=this;	
 			  this.render();
@@ -255,6 +266,8 @@ $(function() {
 			  });
 		  }
 		  else{
+			  scoreUpdate.set("oldScore", theQuiz.score.attributes.totalScore);
+			  scoreUpdate.save();
 			  var question = theQuiz.attributes.questions.shift();
 			  if(question==undefined){
 				  Parse.history.navigate("finalScore", {trigger:true});
@@ -264,7 +277,16 @@ $(function() {
 			  	  this.render();
 		  }
 	 },
+	 quizUpdater: function(){
+		 Parse.Cloud.run("quizUpdate", {totalScore: tQuiz.score.get("totalScore"), scoreUpdate: scoreUpdate.id, lobby: theLobby.id},{
+			 success:function(result){
+				 console.log(result);
+			 },
+		 
+		 })
+	 },
 	 toScore: function(){
+		 clearInterval(updater);
 		 if(tQuiz.attributes.questions.length==0){
 			console.warn("to final from quiz");
 			 Parse.history.navigate("finalScore", {trigger:true}); 

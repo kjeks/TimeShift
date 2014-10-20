@@ -1,18 +1,9 @@
 
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!, this is the new version");
-});
-Parse.Cloud.define("testu", function(request, response) {
-	  var returnVal = request.params.test;
-	  if(returnVal!=undefined){
-		  response.success(returnVal);
-	  }
-	  else{
-		  response.error("error");  
-	  }  
-});
+var _ = require('underscore');
+
+
 Parse.Cloud.define("loggedIn", function(request,response){
 	var user = request.user;
 	if(user==undefined){
@@ -46,6 +37,33 @@ function setStartTime(lobbyList){
 Parse.Cloud.define("getTime", function(request, response){
 	response.success(Date.now());
 });
+Parse.Cloud.define("quizUpdate", function(request, response){
+	var Lobby = Parse.Object.extend("LobbyList");
+	var query = new Parse.Query(Lobby);
+	query.get(request.params.lobby,{
+		success:function(lobby){
+			response.success(lobby.get("players"));
+		}
+	});
+	var oldScore;
+	var ScoreUpdate = Parse.Object.extend("ScoreUpdate");
+	var sQuery= new Parse.Query(ScoreUpdate);
+	sQuery.get(request.params.scoreUpdate,{
+		success: function(scoreUpdate){
+			oldScore=scoreUpdate.get("oldScore");
+			if(oldScore!=request.params.totalScore){
+				//response.success(true);
+			}
+			else{
+				//response.success(false);
+			}
+		},
+		error: function(error){
+			response.error(error);
+		}
+	});
+});
+
 Parse.Cloud.define("toLobby", function(request, response) {
 		var self = this;
 		var lobbyQuery = new Parse.Query(lobbyListu);
