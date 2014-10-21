@@ -10,13 +10,11 @@ h1 {
 
 h2 {
     font-size: 2em; /* 30px/16=1.875em */
-    text-align: center;
 }
 
 .h3.small {
 	font-size: 1.3em;
 	font-family: "Orator Std";
-	text-align: center;
 }
 
 p {
@@ -146,13 +144,13 @@ li.userlobbyelement {
 	width: 304px;
 	margin-left: auto;
 	margin-right: auto;
+	/*background-color: hsl(217, 6%, 70%);*/
 }
 
 .questionCentering{
 	margin-right: auto;
 	margin-left: auto;
 }
-
 .hidez{
 	display: none;
 }

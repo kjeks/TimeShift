@@ -152,7 +152,6 @@ li.userlobbyelement {
 	margin-right: auto;
 	margin-left: auto;
 }
-
 .hidez{
 	display: none;
 }

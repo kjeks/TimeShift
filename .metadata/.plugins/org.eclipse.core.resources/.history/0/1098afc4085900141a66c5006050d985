@@ -66,7 +66,7 @@
 	<script type="text/template" id="lobby-template">
 		<div class="centering">
 			<img id="ghostDOts" src="images/logo1.png" class="hidez">
-			<h2 id="waiting" onclick="addBots(10)">Waiting for players..</h2>
+			<h2 id="waiting" onclick="addBots(1)">Waiting for players..</h2>
 			
 			<ul id="playerList">
 				

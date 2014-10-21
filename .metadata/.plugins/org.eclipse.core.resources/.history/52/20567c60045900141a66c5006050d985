@@ -1,22 +1,17 @@
 h1, h2, h3, p, button, input, li, ul {
-	//font-family: "Liberation Mono";
-	font-family: "Orator Std";
+	font-family: "Liberation Mono";
 }
 
 h1 {
     font-size: 2.5em; /* 40px/16=2.5em */
-    text-align: center;
 }
 
 h2 {
-    font-size: 2em; /* 30px/16=1.875em */
-    text-align: center;
+    font-size: 1em; /* 30px/16=1.875em */
 }
 
 .h3.small {
 	font-size: 1.3em;
-	font-family: "Orator Std";
-	text-align: center;
 }
 
 p {
@@ -146,13 +141,13 @@ li.userlobbyelement {
 	width: 304px;
 	margin-left: auto;
 	margin-right: auto;
+	/*background-color: hsl(217, 6%, 70%);*/
 }
 
 .questionCentering{
 	margin-right: auto;
 	margin-left: auto;
 }
-
 .hidez{
 	display: none;
 }

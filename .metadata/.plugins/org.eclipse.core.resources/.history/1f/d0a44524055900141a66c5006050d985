@@ -45,17 +45,11 @@ function randomNumber(min,max){
 function addBots(amount){
 	botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
 	var name;
-	var scores = ["0"];
 	var wait;
 	for(i = 0; i<amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
-		wait = randomNumber(200, 8000);
-		for(j = 0; j<5; j++){
-			scores.push(randomNumber(0, 975).toString());
-		}
-		console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
-		setTimeout(function(){$("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>')}, wait);
-		scores = ["0"];
+		//wait = randomNumber(200, 1000);
+		setTimeout($("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>'), 750);
 	}
 }
 
@@ -66,6 +60,16 @@ function notifyPlayer(){
 	$("#notification").text(Math.random() + " has answered!");
 	$("#notification").fadeTo( 1200, 0 );
 }
+
+function notifyPlayer2(name){
+	var e = document.getElementById("notification")
+	e.className.replace(/\bfadeOut\b/,'');
+	$("#notification").css("visibility", "visible");
+	$("#notificationSound").get(0).play();
+	$("#notification").text(name + " has answered!");
+	$("#notification").fadeIn(2000);
+}
+
 
 function progressbar(){
 	$("#progressbar").show();
@@ -129,5 +133,5 @@ function altSelected(e){
 }
 
 function waitingText(){
-	$("#question").text("You answered!");
+	$("#question").text("Waiting for players to answer..");
 }

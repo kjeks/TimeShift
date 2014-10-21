@@ -55,7 +55,6 @@ function addBots(amount){
 		}
 		console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
 		setTimeout(function(){$("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>')}, wait);
-		scores = ["0"];
 	}
 }
 

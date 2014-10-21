@@ -23,13 +23,10 @@
 	<audio id="notificationSound" src="sounds/waterdrop.wav"></audio>
 	
 	<div id="timeshift">
-		<div class="centering">
-			<div class="logo">
-				<img src="images/logo1.png" alt="Logo" onclick="notifyPlayer()">
-			</div>
-			
+		<div class="logo">
+			<img src="images/logo1.png" alt="Logo" onclick="notifyPlayer()">
 		</div>
-		
+
 		<div class="content"></div>
 	</div>
 
@@ -66,7 +63,7 @@
 	<script type="text/template" id="lobby-template">
 		<div class="centering">
 			<img id="ghostDOts" src="images/logo1.png" class="hidez">
-			<h2 id="waiting" onclick="addBots(10)">Waiting for players..</h2>
+			<h2 id="waiting" onclick="addBots(1)">Waiting for players..</h2>
 			
 			<ul id="playerList">
 				

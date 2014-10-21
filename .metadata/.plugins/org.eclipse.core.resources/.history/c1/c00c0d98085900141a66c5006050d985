@@ -49,13 +49,14 @@ function addBots(amount){
 	var wait;
 	for(i = 0; i<amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
-		wait = randomNumber(200, 8000);
+		wait = randomNumber(200, 15000);
 		for(j = 0; j<5; j++){
 			scores.push(randomNumber(0, 975).toString());
+			console.log("pushed value");
 		}
-		console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
+		console.log(scores);
+		console.log("Added bot " + name + ". Joining in " + wait + " ms.");
 		setTimeout(function(){$("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>')}, wait);
-		scores = ["0"];
 	}
 }
 
