@@ -1,3 +1,28 @@
+h1, h2, h3, p, button, input, li, ul {
+	//font-family: "Liberation Mono";
+	font-family: "Orator Std";
+}
+
+h1 {
+    font-size: 2.5em; /* 40px/16=2.5em */
+    text-align: center;
+}
+
+h2 {
+    font-size: 2em; /* 30px/16=1.875em */
+    text-align: center;
+}
+
+.h3.small {
+	font-size: 1.3em;
+	font-family: "Orator Std";
+	text-align: center;
+}
+
+p {
+    font-size: 0.875em; /* 14px/16=0.875em */
+}
+
 body {
 	background-color: hsl(217, 6%, 41%);
 	display: box;
@@ -26,7 +51,7 @@ input {
     margin-bottom: 20px;
     width: 300px;
 }
-
+    
 *::-webkit-input-placeholder {
     color: black;
 }
@@ -54,18 +79,22 @@ li {
 
 li span{
 	color: #2b2f36;
+	font-size: 18px;
 }
 
-li.gold{
-    color: #FFD700;
+li span#player{
+	font-size: 22px;
 }
 
-li.silver {
-	color: #C0C0C0;
+li#lobbyListPlayer {
+	font-size: 22px !important;
 }
 
-li.bronze {
-	color: #cd7f32
+li.lobbyList {
+	list-style-type: none;
+	margin-top: 10px;
+	line-height: 30px;
+	font-size: 18px;
 }
 
 li.lobbyelement:nth-child(odd) {
@@ -101,25 +130,29 @@ li.userlobbyelement {
 	background-color: #7f8286;
 }
 
-.glyphiconGreen {
-	color: green;
+.fadeIn {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
 }
 
-.glyphiconRed {
-	color: #e50000;
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
 }
 
 .centering{
 	width: 304px;
 	margin-left: auto;
 	margin-right: auto;
-	/*background-color: hsl(217, 6%, 70%);*/
 }
 
 .questionCentering{
 	margin-right: auto;
 	margin-left: auto;
 }
+
 .hidez{
 	display: none;
 }
@@ -129,7 +162,7 @@ a:link, a:hover, a:visited{
 }
 
 #waiting{
-	
+	margin-left: 20px;
 }
 
 .logo{
