@@ -53,14 +53,10 @@ function addBots(amount){
 		for(j = 0; j<5; j++){
 			scores.push(randomNumber(0, 975).toString());
 		}
-		addToList(name, scores, wait);
+		console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
+		setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-play"></span><span class="tab">' + name + '</span></li>')}, wait);
 		scores = ["0"];
 	}
-}
-
-function addToList(name, scores, wait){
-	console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
-	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
 }
 
 function notifyPlayer(){

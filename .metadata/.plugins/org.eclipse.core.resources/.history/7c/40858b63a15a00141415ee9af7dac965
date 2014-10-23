@@ -43,24 +43,19 @@ function randomNumber(min,max){
 
 function addBots(amount){
 	botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
-	var name;
+	var names = [];
 	var scores = ["0"];
 	var wait;
-	
-	for(i = 0; i < amount; i++){
-		name = botNames[Math.floor(Math.random()*botNames.length)];
-		wait = randomNumber(200, 800);
+	for(i = 0; i<amount; i++){
+		names[i] = botNames[Math.floor(Math.random()*botNames.length)];
+		wait = randomNumber(200, 8000);
 		for(j = 0; j<5; j++){
 			scores.push(randomNumber(0, 975).toString());
 		}
-		addToList(name, scores, wait);
+		console.log("Added bot " + names[i] + ". Joining in " + wait + " ms. with this score array: " + scores);
+		setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-play"></span><span class="tab">' + name + '</span></li>')}, wait);
 		scores = ["0"];
 	}
-}
-
-function addToList(name, scores, wait){
-	console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
-	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
 }
 
 function notifyPlayer(){

@@ -30,7 +30,7 @@ function dots(){
 		}, 400);
 }
 
-function addPlayerToList(name){
+/*function addPlayerToList(name){
 	var ul = document.getElementById("playerList");
 	var li = document.createElement("li");
 	li.appendChild(document.createTextNode(name));
@@ -46,21 +46,16 @@ function addBots(amount){
 	var name;
 	var scores = ["0"];
 	var wait;
-	
-	for(i = 0; i < amount; i++){
+	for(i = 0; i<amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
-		wait = randomNumber(200, 800);
+		wait = randomNumber(200, 8000);
 		for(j = 0; j<5; j++){
 			scores.push(randomNumber(0, 975).toString());
 		}
-		addToList(name, scores, wait);
+		console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
+		setTimeout(function(){$("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>')}, wait);
 		scores = ["0"];
 	}
-}
-
-function addToList(name, scores, wait){
-	console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
-	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
 }
 
 function notifyPlayer(){
@@ -69,7 +64,7 @@ function notifyPlayer(){
 	$("#notificationSound").get(0).play();
 	$("#notification").text(Math.random() + " has answered!");
 	$("#notification").fadeTo( 1200, 0 );
-}
+}*/
 
 function progressbar(){
 	$("#progressbar").show();
@@ -77,8 +72,9 @@ function progressbar(){
 	clearInterval(animate);
 	var progressbar = $('#progressbar'),
 	max = progressbar.attr('max'),
+	zero = 0,
 	time = (1000/max)*20,	
-	value = 0;
+	value = 0,
 		
 	var loading = function() {
 		value += 1;
@@ -94,6 +90,14 @@ function progressbar(){
 	var animate = setInterval(function() {
 		loading();
 	}, time);
+	
+	
+}
+
+function getScore(){
+	var 
+	progressbar = $('#progressbar'),
+	value = progressbar.val();
 }
 
 function gameSequence() {

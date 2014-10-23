@@ -75,9 +75,8 @@
     </script>
     
     <script type="text/template" id="final-score-template">
-    	<h1> Final score </h1>
-    	<ul id="finalScore">
-		<ul>
+    	<h1> final score </h1>
+    
     </script>    
 	<script type="text/template" id="score-template">
 		<div class="centering">
@@ -100,8 +99,11 @@
 	<script type="text/template" id="menu-template">
 
 	<div class="centering">
-		<button id="startGameButton" class="menuButton">Start new game</button><br>
-		<button id="logOutButton" class="menuButton">Log out</button>
+		<div class="">
+			<button id="startGameButton" class="menuButton">Start new game</button><br>
+			<button id="logOutButton" class="menuButton">Log out</button>
+			
+		</div>
 	</div>
 	</script>
 

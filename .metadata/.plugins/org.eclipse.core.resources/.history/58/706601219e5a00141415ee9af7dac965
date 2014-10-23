@@ -1,4 +1,4 @@
-h1, h2, h3, p, button{
+h1, h2, h3, p, button, li, ul {
 	//font-family: "Liberation Mono";
 	font-family: "Orator Std";
 	text-align: center;
@@ -69,14 +69,12 @@ input {
 
 .blueText{
 	color: #8282ff;
-	text-align: right;
 }
 /*gold #FFD700, silver #C0C0C0, bronze #cd7f32*/
 
 li {
-	list-style-type: none;
-	font-family: "Orator Std";
-	}
+	list-style-type: disc;
+}
 
 li span{
 	color: #2b2f36;

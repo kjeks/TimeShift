@@ -60,7 +60,7 @@ function addBots(amount){
 
 function addToList(name, scores, wait){
 	console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
-	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
+	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab">' + name +'</span></li>')}, wait);
 }
 
 function notifyPlayer(){

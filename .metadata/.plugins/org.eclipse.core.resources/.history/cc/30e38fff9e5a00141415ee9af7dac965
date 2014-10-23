@@ -1,4 +1,4 @@
-h1, h2, h3, p, button{
+h1, h2, h3, p, button, ul {
 	//font-family: "Liberation Mono";
 	font-family: "Orator Std";
 	text-align: center;
@@ -76,7 +76,7 @@ input {
 li {
 	list-style-type: none;
 	font-family: "Orator Std";
-	}
+}
 
 li span{
 	color: #2b2f36;

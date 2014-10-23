@@ -76,7 +76,7 @@ input {
 li {
 	list-style-type: none;
 	font-family: "Orator Std";
-	}
+}
 
 li span{
 	color: #2b2f36;
