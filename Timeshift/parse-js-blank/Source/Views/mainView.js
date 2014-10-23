@@ -200,6 +200,8 @@ $(function() {
 	  			if (timeToStart>0){
 	  				Parse.Cloud.run("getTime", {},{
 			  	  		success: function(result){
+			  	  			theLobby.fetch();
+			  	  			console.warn(theLobby.get("players"));
 			  	  			currentTime=result;
 			  	  			console.warn(result);
 			  	  			timeToStart=(startTime.getTime()-currentTime);
