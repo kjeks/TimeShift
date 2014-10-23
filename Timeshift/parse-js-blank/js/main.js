@@ -72,9 +72,8 @@ function progressbar(){
 	clearInterval(animate);
 	var progressbar = $('#progressbar'),
 	max = progressbar.attr('max'),
-	zero = 0,
 	time = (1000/max)*20,	
-	value = 0,
+	value = 0;
 		
 	var loading = function() {
 		value += 1;
@@ -90,7 +89,6 @@ function progressbar(){
 	var animate = setInterval(function() {
 		loading();
 	}, time);
-	
 	
 }
 

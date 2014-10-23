@@ -30,7 +30,7 @@ $(function() {
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);
 		  score.set("totalScore", 0);
-		  score.save();
+		 // score.save();
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -241,7 +241,18 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
-		  theLobby.increment("currentQuestion");
+		  var id = localStorage.getItem("Quizid");
+		  var numberId=Number(id);
+		  var Score2 = Parse.Object.extend("Scores");
+		  var sQuery = new Parse.Query(Score2);
+		  sQuery.equalTo("quizid", numberId);
+		  sQuery.descending("totalScore");
+		  sQuery.first({
+		  success:function(result){
+			  theLobby.set("currentQuestion", result.attributes.scores.length);
+			  }
+		  });
+		  
 		  theLobby.save();
 		  updater = setInterval(this.quizUpdater, 5000);
 		  var timer= setTimeout(this.toScore, 24500); 
@@ -250,11 +261,12 @@ $(function() {
 			  self=this;	
 			  this.render();
 			  query = new Parse.Query(quiz);
-			  var id = localStorage.getItem("Quizid");
-			  var numberId=Number(id);
+			  console.log(query);
+			  
 			  query.equalTo("code", numberId);
 			  query.first({
 				  success: function(results){	 
+					  console.warn(results);
 					  theQuiz=results;
 					  tQuiz=results;
 					  results.newQuestion(results.attributes.questions.shift());
