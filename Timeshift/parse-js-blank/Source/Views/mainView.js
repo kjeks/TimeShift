@@ -30,7 +30,6 @@ $(function() {
 		  score.set("quizid", Number("12345"));
 		  score.set("scores",[0]);
 		  score.set("totalScore", 0);
-		 // score.save();
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -249,7 +248,10 @@ $(function() {
 		  sQuery.descending("totalScore");
 		  sQuery.first({
 		  success:function(result){
+			  console.log("se her");
+			  console.log(result.attributes.scores.length);
 			  theLobby.set("currentQuestion", result.attributes.scores.length);
+			  theLobby.save();
 			  }
 		  });
 		  
@@ -404,7 +406,7 @@ $(function() {
 		 });
 
 		 theQuiz.score.set("totalScore", totSum);
-		 theQuiz.score.save();
+		 //theQuiz.score.save();
 		 $("#getUser").html(totSum);
 	 },
 	 getUser: function(){

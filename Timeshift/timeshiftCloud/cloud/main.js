@@ -50,11 +50,11 @@ Parse.Cloud.define("quizUpdate", function(request, response){
 			sQuery.equalTo("quizid", theLobby.get("lobbyId"))
 			sQuery.first({
 				success:function(theScore){
-					if(currentQuestion+1==theScore.get("scores").length){
-						response.success([currentQuestion+1, theScore.get("scores").length, "if"]);
+					if(currentQuestion==theScore.get("scores").length){
+						response.success([currentQuestion, theScore.get("scores").length, "no changes"]);
 					}
 					else{
-						response.success([currentQuestion+1, theScore.get("scores").length, "else"]);
+						response.success([currentQuestion, theScore.get("scores").length, "changes"]);
 					}
 				}
 			});
