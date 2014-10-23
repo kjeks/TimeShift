@@ -28,8 +28,9 @@ $(function() {
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
-		  score.set("scores",[0]);;
+		  score.set("scores",[0]);
 		  score.set("totalScore", 0);
+		  score.save();
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -84,6 +85,7 @@ $(function() {
 			  correct: function(){
 				  console.log("correct");
 				  this.score.add("scores", this.getProgress());
+				  this.score.save();
 				  this.score.set("totalScore", this.score.get("totalScore")+this.getProgress());
 				  question= this.attributes.questions.length;
 				  
@@ -183,6 +185,7 @@ $(function() {
 	  		lobbyQuery.first({
 	  			success:function(results){
 	  				theLobby=results;
+	  				theLobby.set("currentQuestion", 0);
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
@@ -223,8 +226,6 @@ $(function() {
 			this.delegateEvents(); 
 	  	 }
 	  });
-  var ScoreUpdate=Parse.Object.extend("ScoreUpdate");
-  var scoreUpdate=new ScoreUpdate();
   var correctAnswer;
   var score;
   var tQuiz;
@@ -239,14 +240,12 @@ $(function() {
 	  el: ".content",
 	  
 	  initialize: function (){
-		  scoreUpdate.set("userName", Parse.User.current().attributes.username);
 		  authenticate();
-		  
+		  theLobby.increment("currentQuestion");
+		  theLobby.save();
 		  updater = setInterval(this.quizUpdater, 5000);
 		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
-			  scoreUpdate.set("oldScore", 0);
-			  scoreUpdate.save();
 			  correctAnswer;
 			  self=this;	
 			  this.render();
@@ -266,8 +265,6 @@ $(function() {
 			  });
 		  }
 		  else{
-			  scoreUpdate.set("oldScore", theQuiz.score.attributes.totalScore);
-			  scoreUpdate.save();
 			  var question = theQuiz.attributes.questions.shift();
 			  if(question==undefined){
 				  Parse.history.navigate("finalScore", {trigger:true});
@@ -278,12 +275,19 @@ $(function() {
 		  }
 	 },
 	 quizUpdater: function(){
-		 Parse.Cloud.run("quizUpdate", {totalScore: tQuiz.score.get("totalScore"), scoreUpdate: scoreUpdate.id, lobby: theLobby.id},{
-			 success:function(result){
-				 console.log(result);
-			 },
-		 
-		 })
+		 var players= theLobby.get("players");
+		 for(a=0; a<players.length; a++){
+			 Parse.Cloud.run("quizUpdate", {name: players[a], lobby: theLobby.id},{
+				 success:function(result){
+					 console.log("result");
+					 console.log(result);
+				 },
+				 error:function(error){
+					 console.log(error);
+				 }
+			 })
+		 }
+		
 	 },
 	 toScore: function(){
 		 clearInterval(updater);

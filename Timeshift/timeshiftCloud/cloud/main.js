@@ -38,31 +38,70 @@ Parse.Cloud.define("getTime", function(request, response){
 	response.success(Date.now());
 });
 Parse.Cloud.define("quizUpdate", function(request, response){
-	var Lobby = Parse.Object.extend("LobbyList");
+	var lobby = Parse.Object.extend("LobbyList");
+	var query = new Parse.Query(lobby);
+	
+	query.get(request.params.lobby,{
+		success:function(theLobby){
+			var currentQuestion=theLobby.get("currentQuestion");
+			var score = Parse.Object.extend("Scores");
+			var sQuery = new Parse.Query(score);
+			sQuery.equalTo("userid", request.params.name);
+			sQuery.equalTo("quizid", theLobby.get("lobbyId"))
+			sQuery.first({
+				success:function(theScore){
+					if(currentQuestion+1==theScore.get("scores").length){
+						response.success(request.user);
+					}
+					else{
+						response.success([currentQuestion, theScore.get("scores").length, theScore]);
+					}
+				}
+			});
+		
+		},
+		error:function(error){
+			request.error(error);
+		}
+	});
+			
+});	
+
+	
+/*	var Lobby = Parse.Object.extend("LobbyList");
 	var query = new Parse.Query(Lobby);
+	var players;
+	var bool=false;
 	query.get(request.params.lobby,{
 		success:function(lobby){
-			response.success(lobby.get("players"));
+			players=lobby.get("players");
+			for(a=0; a<players.length; a++){
+				if(bool==false){
+					var score = Parse.Object.extend("Scores");
+					var pQuery = new Parse.Query(score);
+					pQuery.equalTo("userid", players[a]);
+					pQuery.equalTo("quizid", lobby.get("lobbyId"));
+					pQuery.first({
+						success:function(result){
+							if(lobby.get("currentQuestion")==result.get("scores").length-1){
+								bool = true;
+								response.success(a);
+							}
+							else{
+								//response.error("no changes");
+							}
+						},
+						error:function(error){
+							response.error(error);
+						}
+					});	
+				}
+	
+			}
 		}
 	});
-	var oldScore;
-	var ScoreUpdate = Parse.Object.extend("ScoreUpdate");
-	var sQuery= new Parse.Query(ScoreUpdate);
-	sQuery.get(request.params.scoreUpdate,{
-		success: function(scoreUpdate){
-			oldScore=scoreUpdate.get("oldScore");
-			if(oldScore!=request.params.totalScore){
-				//response.success(true);
-			}
-			else{
-				//response.success(false);
-			}
-		},
-		error: function(error){
-			response.error(error);
-		}
-	});
-});
+*/	
+
 
 Parse.Cloud.define("toLobby", function(request, response) {
 		var self = this;
