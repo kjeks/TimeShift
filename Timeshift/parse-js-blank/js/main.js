@@ -41,16 +41,34 @@ function randomNumber(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-//TODO: Force score screen og når neste spm kommer opp. Add bots med random timer. Vis og sorter score screen
 function addBots(amount){
 	botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
 	var name;
+	var scores = ["0"];
 	var wait;
-	for(i = 0; i<amount; i++){
+	
+	for(i = 0; i < amount; i++){
 		name = botNames[Math.floor(Math.random()*botNames.length)];
-		//wait = randomNumber(200, 1000);
-		setTimeout($("#playerList").append('<li class="lobbyList"><span class="tab">' + name + '</span></li>'), 750);
+		wait = randomNumber(200, 800);
+		for(j = 0; j<5; j++){
+			scores.push(randomNumber(0, 975).toString());
+		}
+		addToList(name, scores, wait);
+		scores = ["0"];
 	}
+}
+
+function addToList(name, scores, wait){
+	console.log("Added bot " + name + ". Joining in " + wait + " ms. with this score array: " + scores);
+	setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
+}
+
+function notifyPlayer(){
+	$("#notification").css({ opacity: 0 });
+	$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+	$("#notificationSound").get(0).play();
+	$("#notification").text(Math.random() + " has answered!");
+	$("#notification").fadeTo( 1200, 0 );
 }
 
 function progressbar(){
@@ -59,11 +77,8 @@ function progressbar(){
 	clearInterval(animate);
 	var progressbar = $('#progressbar'),
 	max = progressbar.attr('max'),
-	zero = 0,
 	time = (1000/max)*20,	
-	value = 0,
-	start = Date.now();
-	console.log("Start now " + start);
+	value = 0;
 		
 	var loading = function() {
 		value += 1;
@@ -74,33 +89,22 @@ function progressbar(){
 		if (value == max) {
 			clearInterval(animate);
 	        $('.progress-value').html(max + '%');
-	        console.warn(Date.now() - start);
 	    }
 	};
 	var animate = setInterval(function() {
 		loading();
 	}, time);
-	
-	
-}
-
-function getScore(){
-	var 
-	progressbar = $('#progressbar'),
-	value = progressbar.val();
-	
-	console.log("Value: " + value);
-	console.log("Score: " + (1000-value));
 }
 
 function gameSequence() {
-	console.log("Started sequence");
 	document.getElementById("number").src = "images/number3.png";
 	$("#number").show();
+	$("#notification").hide();
 	setTimeout(function(){document.getElementById("number").src = "images/number2.png"}, 1000);
 	setTimeout(function(){document.getElementById("number").src = "images/number1.png"}, 2000);
 	setTimeout(function(){$("#number").hide()}, 3000);
 	setTimeout(function(){$("#question").show()}, 3000);
+	setTimeout(function(){$("#notification").show()}, 3000);
 	setTimeout(function(){$("#alt1").show()}, 3000);
 	setTimeout(function(){$("#alt2").show()}, 3000);
 	setTimeout(function(){$("#alt3").show()}, 3000);
@@ -114,5 +118,5 @@ function altSelected(e){
 }
 
 function waitingText(){
-	$("#question").text("Waiting for players to answer..");
+	$("#question").text("You answered!");
 }

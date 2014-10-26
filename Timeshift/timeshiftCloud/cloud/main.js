@@ -1,18 +1,9 @@
 
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!, this is the new version");
-});
-Parse.Cloud.define("testu", function(request, response) {
-	  var returnVal = request.params.test;
-	  if(returnVal!=undefined){
-		  response.success(returnVal);
-	  }
-	  else{
-		  response.error("error");  
-	  }  
-});
+var _ = require('underscore');
+
+
 Parse.Cloud.define("loggedIn", function(request,response){
 	var user = request.user;
 	if(user==undefined){
@@ -46,6 +37,72 @@ function setStartTime(lobbyList){
 Parse.Cloud.define("getTime", function(request, response){
 	response.success(Date.now());
 });
+Parse.Cloud.define("quizUpdate", function(request, response){
+	var lobby = Parse.Object.extend("LobbyList");
+	var query = new Parse.Query(lobby);
+	
+	query.get(request.params.lobby,{
+		success:function(theLobby){
+			var currentQuestion=theLobby.get("currentQuestion");
+			var score = Parse.Object.extend("Scores");
+			var sQuery = new Parse.Query(score);
+			sQuery.equalTo("userid", request.params.name);
+			sQuery.equalTo("quizid", theLobby.get("lobbyId"))
+			sQuery.first({
+				success:function(theScore){
+					if(currentQuestion==theScore.get("scores").length){
+						response.success([currentQuestion, theScore.get("scores").length, "no changes"]);
+					}
+					else{
+						response.success([currentQuestion, theScore.get("scores").length, "changes"]);
+					}
+				}
+			});
+		
+		},
+		error:function(error){
+			request.error(error);
+		}
+	});
+			
+});	
+
+	
+/*	var Lobby = Parse.Object.extend("LobbyList");
+	var query = new Parse.Query(Lobby);
+	var players;
+	var bool=false;
+	query.get(request.params.lobby,{
+		success:function(lobby){
+			players=lobby.get("players");
+			for(a=0; a<players.length; a++){
+				if(bool==false){
+					var score = Parse.Object.extend("Scores");
+					var pQuery = new Parse.Query(score);
+					pQuery.equalTo("userid", players[a]);
+					pQuery.equalTo("quizid", lobby.get("lobbyId"));
+					pQuery.first({
+						success:function(result){
+							if(lobby.get("currentQuestion")==result.get("scores").length-1){
+								bool = true;
+								response.success(a);
+							}
+							else{
+								//response.error("no changes");
+							}
+						},
+						error:function(error){
+							response.error(error);
+						}
+					});	
+				}
+	
+			}
+		}
+	});
+*/	
+
+
 Parse.Cloud.define("toLobby", function(request, response) {
 		var self = this;
 		var lobbyQuery = new Parse.Query(lobbyListu);

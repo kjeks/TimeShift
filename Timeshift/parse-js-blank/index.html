@@ -20,19 +20,22 @@
 
 <body>
 	<!-- Todo App Interface -->
+	<audio id="notificationSound" src="sounds/waterdrop.wav"></audio>
 	
-
 	<div id="timeshift">
-		<div class="logo">
-			<img src="images/logo1.png" alt="Logo">
+		<div class="centering">
+			<div class="logo">
+				<img src="images/logo1.png" alt="Logo" onclick="notifyPlayer()">
+			</div>
+			
 		</div>
-
+		
 		<div class="content"></div>
 	</div>
 
 	<script type="text/template" id="quizSelector-template">
 	<div class="centering">
-		<h1 id= "test"> test </h1>
+		<h1 id= "quizSelect">Select quiz</h1>
 		<input type="textbox" id="quizID" placeholder="Enter quiz code">
 		<button id="IDSubmit" class="menuButton">Submit</button>
 	</div>
@@ -40,9 +43,11 @@
     <script type="text/template" id="quiz-template">
 	<div class="centering">
 		
-		<h2 class="questionCentering hidez" id="question"></h2>
+		<h1 class="questionCentering hidez" id="question"></h1>
 		<img id="ghost" src="images/logo1.png" class="hidez" onload="setTimeout(function(){gameSequence()}, 100)">
 		<img id="number" src="images/number3.png" alt="number">
+
+		<h3 id="notification" class="h3 small">Waiting for first answer</h3>
 		
 		<progress class="hidez" id="progressbar" value="0" max="1000"></progress> 
 
@@ -61,8 +66,8 @@
 	<script type="text/template" id="lobby-template">
 		<div class="centering">
 			<img id="ghostDOts" src="images/logo1.png" class="hidez">
-			<h2 id="waiting" onclick="addBots(1)">Waiting for players..</h2>
-			<hr>
+			<h3 id="waiting" onclick="addBots(10)">Waiting for players..</h3>
+			
 			<ul id="playerList">
 				
 			</ul>		
@@ -70,13 +75,14 @@
     </script>
     
     <script type="text/template" id="final-score-template">
-    	<h1> final score </h1>
-    
+    	<h1> Final score </h1>
+    	<ul id="finalScore">
+		<ul>
     </script>    
 	<script type="text/template" id="score-template">
 		<div class="centering">
 			<h2>Top 3:</h2>
-			<h3>
+			
 			<ul>
 				<li class="gold"><span id="goldName" >Adam</span>  <span id="goldPoints">: 1337</span></li>
 				<li class="silver" ><span id="silverName" >bernt</span>  <span id="silverPoints">1000</span></li>
@@ -84,7 +90,7 @@
 			</ul>
 			
 			Your score is: <span id="getUser">if you can read this, something went wrong:(</span>
-			</h3>
+			
 			
 			<button id="nextQuestion" class="menuButton"> Next question </button>
 			<button class="menuButton toMenu">Back to menu </button>
@@ -94,11 +100,8 @@
 	<script type="text/template" id="menu-template">
 
 	<div class="centering">
-		<div class="">
-			<button id="startGameButton" class="menuButton">Start new game</button><br>
-			<button id="toTests" class="menuButton">To tests</button><br>
-			<button id="logOutButton" class="menuButton">Log out</button>
-		</div>
+		<button id="startGameButton" class="menuButton">Start new game</button><br>
+		<button id="logOutButton" class="menuButton">Log out</button>
 	</div>
 	</script>
 
@@ -113,7 +116,7 @@
           <button class="menuButton">Log In</button>
         </form>
 		
-		<p id="showsignuptext" align="right" class="blueText" onclick="showSignup()">Don't have an account?</p>
+		<p id="showsignuptext" class="blueText" onclick="showSignup()">Don't have an account?</p>
 
         <form id="signupForm" class="signup-form hidez">
           <h2>Sign Up</h2>

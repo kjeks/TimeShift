@@ -22,12 +22,14 @@ $(function() {
 		  var self= this;
 		  var scores = Parse.Object.extend("Scores");
 		  var score = new scores();
+		  var question;
 		  this.score= score;
 		  if(Parse.User.current()!=undefined){
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
-		  score.set("scores",[0]);;
+		  score.set("scores",[0]);
+		  score.set("totalScore", 0);
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
@@ -38,7 +40,7 @@ $(function() {
 			  }
 			  else{
 				  var self= this;
-				  var question= Parse.Object.extend("Question");
+				  question= Parse.Object.extend("Question");
 				  var questionQuery = new Parse.Query(question);
 				  questionQuery.equalTo("objectId", q);
 				  questionQuery.first({
@@ -82,7 +84,10 @@ $(function() {
 			  correct: function(){
 				  console.log("correct");
 				  this.score.add("scores", this.getProgress());
+				  this.score.save();
+				  this.score.set("totalScore", this.score.get("totalScore")+this.getProgress());
 				  question= this.attributes.questions.length;
+				  
 				  if(question>0){
 					  self.undelegateEvents();
 
@@ -179,6 +184,7 @@ $(function() {
 	  		lobbyQuery.first({
 	  			success:function(results){
 	  				theLobby=results;
+	  				theLobby.set("currentQuestion", 0);
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
@@ -194,6 +200,8 @@ $(function() {
 	  			if (timeToStart>0){
 	  				Parse.Cloud.run("getTime", {},{
 			  	  		success: function(result){
+			  	  			theLobby.fetch();
+			  	  			console.warn(theLobby.get("players"));
 			  	  			currentTime=result;
 			  	  			console.warn(result);
 			  	  			timeToStart=(startTime.getTime()-currentTime);
@@ -219,11 +227,11 @@ $(function() {
 			this.delegateEvents(); 
 	  	 }
 	  });
-  
   var correctAnswer;
   var score;
   var tQuiz;
   var query;
+  var updater;
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -234,17 +242,35 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
-		  var timer= setTimeout(this.toScore, 24500);  //24500 denne passer akkurat
+		  var id = localStorage.getItem("Quizid");
+		  var numberId=Number(id);
+		  var Score2 = Parse.Object.extend("Scores");
+		  var sQuery = new Parse.Query(Score2);
+		  sQuery.equalTo("quizid", numberId);
+		  sQuery.descending("totalScore");
+		  sQuery.first({
+		  success:function(result){
+			  console.log("se her");
+			  console.log(result.attributes.scores.length);
+			  theLobby.set("currentQuestion", result.attributes.scores.length);
+			  theLobby.save();
+			  }
+		  });
+		  
+		  theLobby.save();
+		  updater = setInterval(this.quizUpdater, 5000);
+		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
 			  correctAnswer;
 			  self=this;	
 			  this.render();
 			  query = new Parse.Query(quiz);
-			  var id = localStorage.getItem("Quizid");
-			  var numberId=Number(id);
+			  console.log(query);
+			  
 			  query.equalTo("code", numberId);
 			  query.first({
 				  success: function(results){	 
+					  console.warn(results);
 					  theQuiz=results;
 					  tQuiz=results;
 					  results.newQuestion(results.attributes.questions.shift());
@@ -266,8 +292,25 @@ $(function() {
 	 },
 	 tull: function(){
 		 console.log("tull");
+
+	 quizUpdater: function(){
+		 var players= theLobby.get("players");
+		 for(a=0; a<players.length; a++){
+			 Parse.Cloud.run("quizUpdate", {name: players[a], lobby: theLobby.id},{
+				 success:function(result){
+					 console.log("result");
+					 console.log(result);
+				 },
+				 error:function(error){
+					 console.log(error);
+				 }
+			 })
+		 }
+		
+
 	 },
 	 toScore: function(){
+		 clearInterval(updater);
 		 if(tQuiz.attributes.questions.length==0){
 			console.warn("to final from quiz");
 			 Parse.history.navigate("finalScore", {trigger:true}); 
@@ -369,7 +412,7 @@ $(function() {
 		 });
 
 		 theQuiz.score.set("totalScore", totSum);
-		 theQuiz.score.save();
+		 //theQuiz.score.save();
 		 $("#getUser").html(totSum);
 	 },
 	 getUser: function(){
