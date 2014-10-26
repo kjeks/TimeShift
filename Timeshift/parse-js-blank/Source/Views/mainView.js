@@ -264,6 +264,9 @@ $(function() {
 			  	  this.render();
 		  }
 	 },
+	 tull: function(){
+		 console.log("tull");
+	 },
 	 toScore: function(){
 		 if(tQuiz.attributes.questions.length==0){
 			console.warn("to final from quiz");
