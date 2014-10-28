@@ -28,6 +28,7 @@ $(function() {
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
+		  score.set("bot", false);
 		  score.set("scores",[0]);
 		  score.set("totalScore", 0);
 	  },
@@ -190,7 +191,7 @@ $(function() {
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
-	  					$("#playerList").append('<li id="lobbyListPlayer"><span class="glyphicon glyphicon-user"></span><span id="player">' + playerArray[a] + '</span></li>');
+	  					$("#playerList").append('<li id="lobbyListPlayer"><span class="glyphicon glyphicon-user"></span><span id="player"> ' + playerArray[a] + '</span></li>');
 	  				}
 	  			}
 	  		});
@@ -226,7 +227,7 @@ $(function() {
 	  		 
 	  		var startTime = theLobby.get("startTime");
 	  		var currentTime;
-		  		var updater=setInterval(updateTime, 500);
+		  	var updater=setInterval(updateTime, 500);
 	  	 },
 	  	 startQuiz: function(){
 	  		Parse.history.navigate("quiz", {trigger:true}); 
@@ -252,6 +253,8 @@ $(function() {
 	  el: ".content",
 	  
 	  initialize: function (){
+		  self=this;
+		  
 		  authenticate();
 		  hasAnswered=[];
 		  queue=[];
@@ -260,6 +263,7 @@ $(function() {
 		  var Score2 = Parse.Object.extend("Scores");
 		  var sQuery = new Parse.Query(Score2);
 		  sQuery.equalTo("quizid", numberId);
+		  sQuery.equalTo("bot", false);
 		  sQuery.descending("totalScore");
 		  sQuery.first({
 		  success:function(result){
@@ -267,11 +271,12 @@ $(function() {
 			  console.log(result.attributes.scores.length);
 			  theLobby.set("currentQuestion", result.attributes.scores.length);
 			  theLobby.save();
+			  
 			  }
 		  });
 		  
 		  theLobby.save();
-		  updater = setInterval(this.quizUpdater, 500);
+		  updater = setInterval(this.quizUpdater, 600);
 		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
 			  correctAnswer;
@@ -302,6 +307,7 @@ $(function() {
 				  theQuiz.newQuestion(question);
 			  	  this.render();
 		  }
+		  self.botAnswer();
 	 },
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
@@ -325,7 +331,7 @@ $(function() {
 						console.log("hasAnswered");
 						console.log(hasAnswered);
 						console.log(queue);
-						var names;
+						var names="";
 						for(b=0; b<queue.length; b++){
 							names+=queue.pop()+" ";
 							}
@@ -334,22 +340,38 @@ $(function() {
 						$("#notificationSound").get(0).play();
 						$("#notification").text(names + " has answered!");
 						$("#notification").fadeTo( 1200, 0 );
-						
 					}
-						 
-					 
-					 
-					
-
-					 
 				 },
 				 error:function(error){
 					 console.log(error);
 				 }
 			 })
 		 }
-		
-
+	 },
+	 botAnswer: function(){
+		console.log("botAnswer");
+		var botScore = Parse.Object.extend("Scores");
+		botQuery = new Parse.Query(botScore);
+		botQuery.equalTo("bot", true);
+		botQuery.equalTo("quizid", theLobby.get("lobbyId"));
+		var currentQuestion=theLobby.get("currentQuestion");
+		botQuery.find({
+			success:function(result){
+				if(currentQuestion==undefined){
+					for(a=0; a<result.length; a++){
+						console.log("en bot");
+						console.log(result[a].get("scores")[1]);
+					}
+				}
+				else{
+					for(a=0; a<result.length; a++){
+						console.log("en bot");
+						console.log(result[a].get("scores")[currentQuestion+1]);
+					}
+					
+				}
+			}
+		});
 	 },
 	 toScore: function(){
 		 clearInterval(updater);
