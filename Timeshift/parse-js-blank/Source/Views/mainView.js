@@ -167,13 +167,14 @@ $(function() {
   	 }
   });
   var theLobby;
+  var playerList;
   var lobbyView = Parse.View.extend({
 		 events: {
 			 "click #readyButton": "startQuiz"
 		 }, 
 	  	 el: ".content",
 	  	 initialize: function(){
-
+	  		
 	  		var self= this;
 	  		this.render();
 	  		authenticate();
@@ -185,10 +186,11 @@ $(function() {
 	  			success:function(results){
 	  				theLobby=results;
 	  				theLobby.set("currentQuestion", 0);
+	  				playerList=theLobby.get("players");
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
-	  					$("#playerList").append('<li id="lobbyListPlayer"><span id="player">' + playerArray[a] + '</span></li>');
+	  					$("#playerList").append('<li id="lobbyListPlayer"><span class="glyphicon glyphicon-user"></span><span id="player">' + playerArray[a] + '</span></li>');
 	  				}
 	  			}
 	  		});
@@ -197,15 +199,22 @@ $(function() {
 	  		var timeToStart=30000;
 	  		
 	  		function updateTime(){
+	  			
 	  			if (timeToStart>0){
 	  				Parse.Cloud.run("getTime", {},{
 			  	  		success: function(result){
+			  	  			var newPlayerList = theLobby.get("players");
 			  	  			theLobby.fetch();
+			  	  			var newPlayers = _.difference(newPlayerList, playerList);
+			  	  			for(a=0; a<newPlayers.length; a++){
+			  	  			$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + newPlayers[a] +'</span></li>')
+			  	  			}
+			  	  			console.log(newPlayers);
 			  	  			console.warn(theLobby.get("players"));
 			  	  			currentTime=result;
-			  	  			console.warn(result);
 			  	  			timeToStart=(startTime.getTime()-currentTime);
 			  	  			console.log((startTime.getTime()-currentTime));
+			  	  			playerList=newPlayerList;
 			  	  		}
 			  	  	});
 	  			}
@@ -290,9 +299,6 @@ $(function() {
 			  	  this.render();
 		  }
 	 },
-	 tull: function(){
-		 console.log("tull");
-
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
 		 for(a=0; a<players.length; a++){
