@@ -51,10 +51,12 @@ Parse.Cloud.define("quizUpdate", function(request, response){
 			sQuery.first({
 				success:function(theScore){
 					if(currentQuestion==theScore.get("scores").length){
-						response.success([currentQuestion, theScore.get("scores").length, "no changes"]);
+						response.error([currentQuestion, theScore.get("scores").length, "no changes"]);
+						
 					}
 					else{
-						response.success([currentQuestion, theScore.get("scores").length, "changes"]);
+						response.success(request.params.name);
+						//response.success([currentQuestion, theScore.get("scores").length, "changes"]);
 					}
 				}
 			});

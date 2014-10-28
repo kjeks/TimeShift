@@ -241,6 +241,8 @@ $(function() {
   var tQuiz;
   var query;
   var updater;
+  var hasAnswered= [];
+  var queue=[];
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -251,6 +253,8 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
+		  hasAnswered=[];
+		  queue=[];
 		  var id = localStorage.getItem("Quizid");
 		  var numberId=Number(id);
 		  var Score2 = Parse.Object.extend("Scores");
@@ -267,7 +271,7 @@ $(function() {
 		  });
 		  
 		  theLobby.save();
-		  updater = setInterval(this.quizUpdater, 5000);
+		  updater = setInterval(this.quizUpdater, 500);
 		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
 			  correctAnswer;
@@ -301,11 +305,43 @@ $(function() {
 	 },
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
+		 
+		// hasAnswered =_.uniq(hasAnswered);
 		 for(a=0; a<players.length; a++){
 			 Parse.Cloud.run("quizUpdate", {name: players[a], lobby: theLobby.id},{
 				 success:function(result){
 					 console.log("result");
 					 console.log(result);
+					 var bool=false;
+					 for(b=0; b<hasAnswered.length; b++){
+						 if(result==hasAnswered[b]){
+							 console.log("already in list");
+							 bool=true;
+						 }
+					 }
+					if(!bool){
+						queue.push(result);
+						hasAnswered.push(result);
+						console.log("hasAnswered");
+						console.log(hasAnswered);
+						console.log(queue);
+						var names;
+						for(b=0; b<queue.length; b++){
+							names+=queue.pop()+" ";
+							}
+						$("#notification").css({ opacity: 0 });
+						$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+						$("#notificationSound").get(0).play();
+						$("#notification").text(names + " has answered!");
+						$("#notification").fadeTo( 1200, 0 );
+						
+					}
+						 
+					 
+					 
+					
+
+					 
 				 },
 				 error:function(error){
 					 console.log(error);
