@@ -290,6 +290,9 @@ $(function() {
 			  	  this.render();
 		  }
 	 },
+	 tull: function(){
+		 console.log("tull");
+
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
 		 for(a=0; a<players.length; a++){
