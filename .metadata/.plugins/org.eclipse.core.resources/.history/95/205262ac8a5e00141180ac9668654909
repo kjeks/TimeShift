@@ -22,33 +22,39 @@ $(function() {
 		  var self= this;
 		  var scores = Parse.Object.extend("Scores");
 		  var score = new scores();
+		  var question;
 		  this.score= score;
 		  if(Parse.User.current()!=undefined){
 			  score.set("userid", Parse.User.current().getUsername());
 		  }
 		  score.set("quizid", Number("12345"));
-		  score.set("scores",[0]);;
+		  score.set("scores",[0]);
+		  score.set("totalScore", 0);
 	  },
 	  getProgress: function(){
 		return 1000-$("#progressbar").val(); 
 	  },
 	  newQuestion: function(q){
-			  var self= this;
-			  var question= Parse.Object.extend("Question");
-			  var questionQuery = new Parse.Query(question);
-			  questionQuery.equalTo("objectId", q);
-			  questionQuery.first({
-				success:function(res){
-					self.correctAnswer=res.get("correctAnswer");
-					
-					$("#question").html(res.get("text"));
-					$("#alt1").html(res.get("answers").shift());
-					$("#alt2").html(res.get("answers").shift());
-					$("#alt3").html(res.get("answers").shift());
-					$("#alt4").html(res.get("answers").shift());
-				}
-		  });
-		  },
+			  if(q==undefined){
+				Parse.history.navigate("finalScore", {trigger: true});
+			  }
+			  else{
+				  var self= this;
+				  question= Parse.Object.extend("Question");
+				  var questionQuery = new Parse.Query(question);
+				  questionQuery.equalTo("objectId", q);
+				  questionQuery.first({
+					  success:function(res){
+						  self.correctAnswer=res.get("correctAnswer");
+						  $("#question").html(res.get("text"));
+						  $("#alt1").html(res.get("answers").shift());
+						  $("#alt2").html(res.get("answers").shift());
+						  $("#alt3").html(res.get("answers").shift());
+						  $("#alt4").html(res.get("answers").shift());
+					  },	
+				  });
+			 }
+		},
 			 answer: function(e){
 				  answer=$(e.target).text();
 				  if(answer==this.correctAnswer){
@@ -67,34 +73,33 @@ $(function() {
 				question= this.attributes.questions.length;
 				if(question>0){
 					self.undelegateEvents();
-					//Parse.history.navigate("score", {trigger: true});
 				}
 				else{
 					this.score.save();
 					console.log("wrong more questions");
 					self.undelegateEvents();
-					//Parse.history.navigate("score", {trigger:true});
+
 				}
 			  },
 			  correct: function(){
 				  console.log("correct");
 				  this.score.add("scores", this.getProgress());
+				  this.score.save();
+				  this.score.set("totalScore", this.score.get("totalScore")+this.getProgress());
 				  question= this.attributes.questions.length;
+				  
 				  if(question>0){
 					  self.undelegateEvents();
-					  //Parse.history.navigate("score", {trigger: true});
-					  //this.newQuestion(question);  
+
 				  }
 				  else{
 					  this.score.save();
 					  self.undelegateEvents();
 					  alert("no more questions");
-					 // Parse.history.navigate("score", {trigger:true});					  
+					  
 				  }
 			  },
 	  });
-  
-  
   var theQuiz = new quiz();
   var menuView = Parse.View.extend({
 	 events: {
@@ -106,9 +111,7 @@ $(function() {
 	 initialize: function(){
 		 this.render();
 		 authenticate();
-		 
 	 },
-
 	 startGame: function(){
 		console.log("TODO: add gameView"); 
 		Parse.history.navigate("quizSelector", {trigger:true});
@@ -149,7 +152,6 @@ $(function() {
 				 alert(error);
 			 }
 		 });
-  		 
   	 },
 
   	checkLobby: function(){
@@ -159,7 +161,6 @@ $(function() {
   	  		}
   	  	});
   	}, 
-
   	 render: function(){
  		this.$el.html(_.template($("#quizSelector-template").html()));
 		this.delegateEvents(); 
@@ -183,6 +184,7 @@ $(function() {
 	  		lobbyQuery.first({
 	  			success:function(results){
 	  				theLobby=results;
+	  				theLobby.set("currentQuestion", 0);
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
 	  				for(a=0; a<playerArray.length; a++){
@@ -190,15 +192,16 @@ $(function() {
 	  				}
 	  			}
 	  		});
-	  		
 	  	 },
 	  	 redir: function(){
-	  		var timeToStart=30000;
+	  		var timeToStart=3000;
 	  		
 	  		function updateTime(){
 	  			if (timeToStart>0){
 	  				Parse.Cloud.run("getTime", {},{
 			  	  		success: function(result){
+			  	  			theLobby.fetch();
+			  	  			console.warn(theLobby.get("players"));
 			  	  			currentTime=result;
 			  	  			console.warn(result);
 			  	  			timeToStart=(startTime.getTime()-currentTime);
@@ -224,11 +227,11 @@ $(function() {
 			this.delegateEvents(); 
 	  	 }
 	  });
-  
   var correctAnswer;
   var score;
   var tQuiz;
   var query;
+  var updater;
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -239,17 +242,35 @@ $(function() {
 	  
 	  initialize: function (){
 		  authenticate();
-		  var timer= setTimeout(this.toScore, 24500);
+		  var id = localStorage.getItem("Quizid");
+		  var numberId=Number(id);
+		  var Score2 = Parse.Object.extend("Scores");
+		  var sQuery = new Parse.Query(Score2);
+		  sQuery.equalTo("quizid", numberId);
+		  sQuery.descending("totalScore");
+		  sQuery.first({
+		  success:function(result){
+			  console.log("se her");
+			  console.log(result.attributes.scores.length);
+			  theLobby.set("currentQuestion", result.attributes.scores.length);
+			  theLobby.save();
+			  }
+		  });
+		  
+		  theLobby.save();
+		  updater = setInterval(this.quizUpdater, 5000);
+		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
 			  correctAnswer;
 			  self=this;	
 			  this.render();
 			  query = new Parse.Query(quiz);
-			  var id = localStorage.getItem("Quizid");
-			  var numberId=Number(id);
+			  console.log(query);
+			  
 			  query.equalTo("code", numberId);
 			  query.first({
 				  success: function(results){	 
+					  console.warn(results);
 					  theQuiz=results;
 					  tQuiz=results;
 					  results.newQuestion(results.attributes.questions.shift());
@@ -260,17 +281,47 @@ $(function() {
 			  });
 		  }
 		  else{
-			  theQuiz.newQuestion(theQuiz.attributes.questions.shift());
-			  this.render();
+			  var question = theQuiz.attributes.questions.shift();
+			  if(question==undefined){
+				  Parse.history.navigate("finalScore", {trigger:true});
+			  }
+			  else
+				  theQuiz.newQuestion(question);
+			  	  this.render();
 		  }
 	 },
+	 quizUpdater: function(){
+		 var players= theLobby.get("players");
+		 for(a=0; a<players.length; a++){
+			 Parse.Cloud.run("quizUpdate", {name: players[a], lobby: theLobby.id},{
+				 success:function(result){
+					 console.log("result");
+					 console.log(result);
+				 },
+				 error:function(error){
+					 console.log(error);
+				 }
+			 })
+		 }
+		
+	 },
 	 toScore: function(){
-		 Parse.history.navigate("score", {trigger:true});
-		 console.log("in toScore");
+		 clearInterval(updater);
+		 if(tQuiz.attributes.questions.length==0){
+			console.warn("to final from quiz");
+			 Parse.history.navigate("finalScore", {trigger:true}); 
+		 }
+		 else{
+			 console.log(tQuiz.attributes.questions);
+			 Parse.history.navigate("score", {trigger:true});
+			 console.log("in toScore");
+		 }
 	 },
 	  
 	  answer: function(e){
 		  this.undelegateEvents();
+		  altSelected(e);
+		  waitingText();
 		  tQuiz.answer(e);
 	  },
 
@@ -284,7 +335,20 @@ $(function() {
 		this.delegateEvents(); 
 	  }
   });
-
+  var finalScoreView = Parse.View.extend({
+	  el: ".content",
+	  initialize: function(){
+		  console.log("in final Score");
+		  this.render();
+	  },
+	  render: function(){
+		  this.$el.html(_.template($("#final-score-template").html()));
+	  }
+  });
+  var questionNr=0;
+  var p1Score=0;
+  var p2Score=0;
+  var p3Score=0;
   var scoreView = Parse.View.extend({
 	 events: { 
 		 "click #getUser": "getUser",
@@ -294,12 +358,16 @@ $(function() {
 	 el: ".content",
 	 
 	 initialize: function(){
-		 var timer= setTimeout(this.toScore, 5000);
+		 questionNr=questionNr+1;
+		 var timer= setTimeout(this.toQuiz, 5000);
 		 var self=this;
+		 theQuiz.score.save();
 		 authenticate();
 		 this.render();
+		 
+		 
 	 },
-	 toScore: function(){
+	 toQuiz: function(){
 		 Parse.history.navigate("quiz", {trigger:true});
 	 },
 	 render: function(){
@@ -315,18 +383,32 @@ $(function() {
 		 var topQuery = new Parse.Query(topScores);
 		 var opponents;
 		 topQuery.limit(3);
+		 topQuery.equalTo("quizid", theQuiz.get("code"));
 		 topQuery.descending("totalScore");
 		 topQuery.find({
 			 success:function(result){
 				 opponents=result;
-				 for(a=0; a<opponents.length; a++){
-					 var test=opponents[a].attributes.scores[1];
+				 var test=[];
+				 
+				 for(a=0; a<opponents.length; a++){ 
+					 test.push(opponents[a].attributes.scores[questionNr]); 
 				 }
+				 p1Score = p1Score + opponents[0].attributes.scores[questionNr];
+				 p2Score = p2Score + opponents[1].attributes.scores[questionNr];
+				 p3Score = p3Score + opponents[2].attributes.scores[questionNr];
+				 
+				 $("#goldPoints").html(p1Score);
+				 $("#goldName").html(opponents[0].attributes.userid);
+				 $("#silverPoints").html(p2Score);
+				 $("#silverName").html(opponents[1].attributes.userid);
+				 $("#bronzePoints").html(p3Score);
+				 $("#bronzeName").html(opponents[2].attributes.userid);
+
 			 }
 		 });
 
 		 theQuiz.score.set("totalScore", totSum);
-		 theQuiz.score.save();
+		 //theQuiz.score.save();
 		 $("#getUser").html(totSum);
 	 },
 	 getUser: function(){
@@ -342,15 +424,11 @@ $(function() {
 			 this.undelegateEvents();		  
 		  }
   });
-	 
-  
-
   var LogInView = Parse.View.extend({
     events: {
       "submit form.login-form": "logIn",
       "submit form.signup-form": "signUp"
     },
-
     el: ".content",
     
     initialize: function() {
@@ -432,6 +510,7 @@ $(function() {
       "":	  "login",
       "menu": "menu",
       "score": "score",
+      "finalScore": "finalScore",
       "quizSelector": "quizSelector",
       "lobby": "lobby"
       
@@ -443,13 +522,14 @@ $(function() {
     quiz: function(){
     	new quizView();
     },
-
-
     login: function(){	
     	new LogInView();
     },
     menu: function(){
     	new menuView();
+    },
+    finalScore: function(){
+    	new finalScoreView();
     },
     score: function(){
     	new scoreView();
