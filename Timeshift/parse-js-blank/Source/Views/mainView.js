@@ -245,6 +245,7 @@ $(function() {
   var query;
   var updater;
   var hasAnswered= [];
+  var botAnswered=[];
   var queue=[];
   var workAround=false;
   var quizView = Parse.View.extend({
@@ -257,7 +258,7 @@ $(function() {
 	  
 	  initialize: function (){
 		  self=this;
-		 
+		  botAnswered=[];
 		  authenticate();
 		  hasAnswered=[];
 		  queue=[];
@@ -310,7 +311,6 @@ $(function() {
 				  theQuiz.newQuestion(question);
 			  	  this.render();
 		  }
-		  self.botAnswer();
 	 },
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
@@ -364,43 +364,21 @@ $(function() {
 		
 		botQuery.find({
 			success:function(result){
-				if(currentQuestion==undefined&&workAround==false){
-					for(a=0; a<result.length; a++){
-						
-						
-						if(theQuiz.getProgress()<=result[a].get("scores")[1]){
-							workAround=true;
-							$("#notification").css({ opacity: 0 });
-							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
-							$("#notificationSound").get(0).play();
-							$("#notification").text(result[a].get("userid") + " has answered!");
-							$("#notification").fadeTo( 1200, 0 );
-						}
-					}
-				}
-				else if(currentQuestion==undefined&&workAround==true){
-					for(a=0; a<result.length; a++){
 
-						if(theQuiz.getProgress()<=result[a].get("scores")[2]){
-							$("#notification").css({ opacity: 0 });
-							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
-							$("#notificationSound").get(0).play();
-							$("#notification").text(result[a].get("userid") + " has answered!");
-							$("#notification").fadeTo( 1200, 0 );
-						}
+				for(a=0; a<result.length; a++){
+					console.warn("prog");
+					console.log(result[a].get("scores")[currentQuestion]);
+					var time=theQuiz.getProgress();
+					var botName=result[a].get("userid");
+					if(time<=result[a].get("scores")[currentQuestion]&&!_.contains(botAnswered,botName)){;
+						botAnswered.push(botName);
+						console.log(time);
+						$("#notification").css({ opacity: 0 });
+						$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+						$("#notificationSound").get(0).play();
+						$("#notification").text(result[a].get("userid") + " has answered!");
+						$("#notification").fadeTo( 1200, 0 );
 					}
-				}
-				else{
-					for(a=0; a<result.length; a++){
-						if(theQuiz.getProgress()<=result[a].get("scores")[currentQuestion]){
-							$("#notification").css({ opacity: 0 });
-							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
-							$("#notificationSound").get(0).play();
-							$("#notification").text(result[a].get("userid") + " has answered!");
-							$("#notification").fadeTo( 1200, 0 );
-						}
-					}
-					
 				}
 			}
 		});

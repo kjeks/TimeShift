@@ -70,39 +70,7 @@ Parse.Cloud.define("quizUpdate", function(request, response){
 });	
 
 	
-/*	var Lobby = Parse.Object.extend("LobbyList");
-	var query = new Parse.Query(Lobby);
-	var players;
-	var bool=false;
-	query.get(request.params.lobby,{
-		success:function(lobby){
-			players=lobby.get("players");
-			for(a=0; a<players.length; a++){
-				if(bool==false){
-					var score = Parse.Object.extend("Scores");
-					var pQuery = new Parse.Query(score);
-					pQuery.equalTo("userid", players[a]);
-					pQuery.equalTo("quizid", lobby.get("lobbyId"));
-					pQuery.first({
-						success:function(result){
-							if(lobby.get("currentQuestion")==result.get("scores").length-1){
-								bool = true;
-								response.success(a);
-							}
-							else{
-								//response.error("no changes");
-							}
-						},
-						error:function(error){
-							response.error(error);
-						}
-					});	
-				}
-	
-			}
-		}
-	});
-*/	
+
 
 
 Parse.Cloud.define("toLobby", function(request, response) {
