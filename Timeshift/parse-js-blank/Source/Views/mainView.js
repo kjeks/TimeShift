@@ -18,11 +18,16 @@ $(function() {
   function addBots(amount, id){
 		botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
 		var name;
-		var scores = ["0"];
+		var scores = [0];
 		var wait;
+		var random;
 		
 		for(i = 0; i < amount; i++){
-			name = botNames[Math.floor(Math.random()*botNames.length)];
+			random = Math.floor(Math.random()*botNames.length)
+			name = botNames[random];
+			if (random > -1) {
+			    botNames.splice(random, 1);
+			}
 			wait = randomNumber(1200, 6000);
 			for(j = 0; j<5; j++){
 				scores.push(randomNumber(250, 975));
@@ -35,7 +40,7 @@ $(function() {
 			score.set("quizid", id);
 			score.save();
 			addToList(name, scores, wait);
-			scores = ["0"];
+			scores = [0];
 		}
 	}
   	function addToList(name, scores, wait){
@@ -106,7 +111,6 @@ $(function() {
 					this.score.save();
 					console.log("wrong more questions");
 					self.undelegateEvents();
-
 				}
 			  },
 			  correct: function(){
@@ -207,7 +211,7 @@ $(function() {
 	  		this.render();
 	  		authenticate();
 	  		var quizId = Number(localStorage.getItem("Quizid"));
-	  		addBots(5, quizId);
+	  		addBots(9, quizId);
 	  		var lobby = Parse.Object.extend("LobbyList");
 	  		var lobbyQuery = new Parse.Query(lobby);
 	  		lobbyQuery.equalTo("lobbyId", quizId);
@@ -364,11 +368,9 @@ $(function() {
 						for(b=0; b<queue.length; b++){
 							names+=queue.pop()+" ";
 							}
-						$("#notification").css({ opacity: 0 });
-						$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
 						$("#notificationSound").get(0).play();
+						$("#notification").css({ opacity: 1 });
 						$("#notification").text(names + " has answered!");
-						$("#notification").fadeTo( 1200, 0 );
 					}
 				 },
 				 error:function(error){
@@ -400,11 +402,9 @@ $(function() {
 					if(time<=result[a].get("scores")[currentQuestion]&&!_.contains(botAnswered,botName)){;
 						botAnswered.push(botName);
 						console.log(time);
-						$("#notification").css({ opacity: 0 });
-						$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
 						$("#notificationSound").get(0).play();
+						$("#notification").css({ opacity: 1 });
 						$("#notification").text(result[a].get("userid") + " has answered!");
-						$("#notification").fadeTo( 1200, 0 );
 					}
 				}
 			}
@@ -464,7 +464,7 @@ $(function() {
 	 
 	 initialize: function(){
 		 questionNr=questionNr+1;
-		 var timer= setTimeout(this.toQuiz, 5000);
+		 var timer= setTimeout(this.toQuiz, 30000);
 		 var self=this;
 		 theQuiz.score.save();
 		 authenticate();
@@ -487,12 +487,25 @@ $(function() {
 		 var topScores = Parse.Object.extend("Scores");
 		 var topQuery = new Parse.Query(topScores);
 		 var opponents;
-		 topQuery.limit(3);
+		 var opponentCollection= Parse.Collection.extend({
+			model: Scores,
+			query: (new Parse.Query(Scores)).equalTo("quizid",theQuiz.get("code"))
+		 });
+		 var collection = opponentCollection();
+		 console.warn("se her");
+		 console.warn(collection);
+		 //topQuery.limit(3);
 		 topQuery.equalTo("quizid", theQuiz.get("code"));
-		 topQuery.descending("totalScore");
+		 //topQuery.descending("totalScore");
+		 //topQuery.descending("scores")[theLobby.get("totalscore")];
 		 topQuery.find({
 			 success:function(result){
-				 opponents=result;
+				opponents=results;
+
+				 
+				 
+				 
+				 /* opponents=result;
 				 var test=[];
 				 
 				 for(a=0; a<opponents.length; a++){ 
@@ -508,7 +521,7 @@ $(function() {
 				 $("#silverName").html(opponents[1].attributes.userid);
 				 $("#bronzePoints").html(p3Score);
 				 $("#bronzeName").html(opponents[2].attributes.userid);
-
+			*/
 			 }
 		 });
 
