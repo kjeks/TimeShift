@@ -56,7 +56,7 @@ Parse.Cloud.define("quizUpdate", function(request, response){
 					}
 					else{
 						response.success(request.params.name);
-						//response.success([currentQuestion, theScore.get("scores").length, "changes"]);
+						
 					}
 				}
 			});

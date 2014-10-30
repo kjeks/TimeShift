@@ -15,6 +15,32 @@ $(function() {
 			 }
 		 });	  
   }
+  function addBots(amount, id){
+		botNames = ["Anne", "Arne", "Are" , "Alex" , "Amalie" , "Berit" , "Bernt" , "Charlotte" , "Carl" , "Desire" , "Daniel" , "Dagrun" , "Erik" , "Eirill" , "Fredrik" , "Geir" , "Guro" , "Gerd" , "Heidi" , "Hallvard" , "Isa" , "Jonas" , "Jon" , "Josefine" , "Klaus" , "Kari" , "Line" , "Lars" , "Magnus" , "Mari" , "Nils" , "Nora" , "Oskar" , "Olivia" , "Per" , "Pernille" , "Rasmus" , "Reidun" , "Stian" , "Solvei" , "Thea" , "Thomas" , "Vilde" , "Vegar" , "Øystein" , "Åse" , "Ådmund"]
+		var name;
+		var scores = ["0"];
+		var wait;
+		
+		for(i = 0; i < amount; i++){
+			name = botNames[Math.floor(Math.random()*botNames.length)];
+			wait = randomNumber(1200, 6000);
+			for(j = 0; j<5; j++){
+				scores.push(randomNumber(250, 975));
+			}
+			var Score = Parse.Object.extend("Scores");
+			var score = new Score();
+			score.set("scores", scores);
+			score.set("userid", name);
+			score.set("bot", true);
+			score.set("quizid", id);
+			score.save();
+			addToList(name, scores, wait);
+			scores = ["0"];
+		}
+	}
+  	function addToList(name, scores, wait){
+		setTimeout(function(){$("#playerList").append('<li class="lobbyList "><span class="glyphicon glyphicon-user"></span><span class="tab"> ' + name +'</span></li>')}, wait);
+	}
   var quiz = Parse.Object.extend("Quiz",{
 	  	  
 	  initialize: function(){
@@ -181,6 +207,7 @@ $(function() {
 	  		this.render();
 	  		authenticate();
 	  		var quizId = Number(localStorage.getItem("Quizid"));
+	  		addBots(5, quizId);
 	  		var lobby = Parse.Object.extend("LobbyList");
 	  		var lobbyQuery = new Parse.Query(lobby);
 	  		lobbyQuery.equalTo("lobbyId", quizId);
