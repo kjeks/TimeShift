@@ -332,7 +332,13 @@ $(function() {
 					if(!bool){
 						queue.push(result);
 						hasAnswered.push(result);
+<<<<<<< HEAD
+						console.log("hasAnswered");
+						console.log(hasAnswered);
+						console.log(queue);
+=======
 
+>>>>>>> origin/master
 						var names="";
 						for(b=0; b<queue.length; b++){
 							names+=queue.pop()+" ";
