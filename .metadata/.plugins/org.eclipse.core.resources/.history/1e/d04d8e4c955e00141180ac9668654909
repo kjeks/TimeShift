@@ -271,7 +271,7 @@ $(function() {
 		  });
 		  
 		  theLobby.save();
-		  updater = setInterval(this.quizUpdater, 600);
+		  updater = setInterval(this.quizUpdater, 500);
 		  var timer= setTimeout(this.toScore, 24500); 
 		  if(query==undefined){
 			  correctAnswer;
@@ -325,7 +325,7 @@ $(function() {
 						console.log("hasAnswered");
 						console.log(hasAnswered);
 						console.log(queue);
-						var names="";
+						var names;
 						for(b=0; b<queue.length; b++){
 							names+=queue.pop()+" ";
 							}
