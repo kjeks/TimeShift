@@ -40,6 +40,7 @@ $(function() {
 				Parse.history.navigate("finalScore", {trigger: true});
 			  }
 			  else{
+				  
 				  var self= this;
 				  question= Parse.Object.extend("Question");
 				  var questionQuery = new Parse.Query(question);
@@ -186,7 +187,8 @@ $(function() {
 	  		lobbyQuery.first({
 	  			success:function(results){
 	  				theLobby=results;
-	  				theLobby.set("currentQuestion", 0);
+	  				theLobby.set("currentQuestion", 1);
+	  				theLobby.save();
 	  				playerList=theLobby.get("players");
 	  				self.redir();
 	  				var playerArray= results.attributes.players;
@@ -244,6 +246,7 @@ $(function() {
   var updater;
   var hasAnswered= [];
   var queue=[];
+  var workAround=false;
   var quizView = Parse.View.extend({
 
 	  events: {
@@ -254,7 +257,7 @@ $(function() {
 	  
 	  initialize: function (){
 		  self=this;
-		  
+		 
 		  authenticate();
 		  hasAnswered=[];
 		  queue=[];
@@ -311,7 +314,8 @@ $(function() {
 	 },
 	 quizUpdater: function(){
 		 var players= theLobby.get("players");
-		 
+		 self.botAnswer();
+
 		// hasAnswered =_.uniq(hasAnswered);
 		 for(a=0; a<players.length; a++){
 			 Parse.Cloud.run("quizUpdate", {name: players[a], lobby: theLobby.id},{
@@ -328,9 +332,7 @@ $(function() {
 					if(!bool){
 						queue.push(result);
 						hasAnswered.push(result);
-						console.log("hasAnswered");
-						console.log(hasAnswered);
-						console.log(queue);
+
 						var names="";
 						for(b=0; b<queue.length; b++){
 							names+=queue.pop()+" ";
@@ -355,18 +357,48 @@ $(function() {
 		botQuery.equalTo("bot", true);
 		botQuery.equalTo("quizid", theLobby.get("lobbyId"));
 		var currentQuestion=theLobby.get("currentQuestion");
+		console.log("workAround");
+		console.log(workAround);
+		console.log("progress");
+		console.log(theQuiz.getProgress());
+		
 		botQuery.find({
 			success:function(result){
-				if(currentQuestion==undefined){
+				if(currentQuestion==undefined&&workAround==false){
 					for(a=0; a<result.length; a++){
-						console.log("en bot");
-						console.log(result[a].get("scores")[1]);
+						
+						
+						if(theQuiz.getProgress()<=result[a].get("scores")[1]){
+							workAround=true;
+							$("#notification").css({ opacity: 0 });
+							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+							$("#notificationSound").get(0).play();
+							$("#notification").text(result[a].get("userid") + " has answered!");
+							$("#notification").fadeTo( 1200, 0 );
+						}
+					}
+				}
+				else if(currentQuestion==undefined&&workAround==true){
+					for(a=0; a<result.length; a++){
+
+						if(theQuiz.getProgress()<=result[a].get("scores")[2]){
+							$("#notification").css({ opacity: 0 });
+							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+							$("#notificationSound").get(0).play();
+							$("#notification").text(result[a].get("userid") + " has answered!");
+							$("#notification").fadeTo( 1200, 0 );
+						}
 					}
 				}
 				else{
 					for(a=0; a<result.length; a++){
-						console.log("en bot");
-						console.log(result[a].get("scores")[currentQuestion+1]);
+						if(theQuiz.getProgress()<=result[a].get("scores")[currentQuestion]){
+							$("#notification").css({ opacity: 0 });
+							$("#notification").fadeTo( 1200, 1 ); //kan spare tid ved å droppe denne
+							$("#notificationSound").get(0).play();
+							$("#notification").text(result[a].get("userid") + " has answered!");
+							$("#notification").fadeTo( 1200, 0 );
+						}
 					}
 					
 				}
